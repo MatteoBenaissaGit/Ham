@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: CharacterControllerDevData
   m_EditorClassIdentifier: 
   <WalkSpeed>k__BackingField: 1
+  <JumpForce>k__BackingField: 15
+  <ForceAddedPerInputAfterJump>k__BackingField: 0.025
+  <MaximumAddedInputAfterJump>k__BackingField: 40
+  <RaycastTowardGroundToDetectFallDistance>k__BackingField: 0.62

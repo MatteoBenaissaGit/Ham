@@ -10,7 +10,7 @@ namespace Character
         /// <summary>
         /// The CharacterController the state is attached to 
         /// </summary>
-        public CharacterController Controller { get; private set; }
+        protected CharacterController Controller { get; private set; }
 
         public CharacterStateBase(CharacterController controller)
         {
@@ -31,5 +31,10 @@ namespace Character
         /// This method is called when the state is exited by the controller
         /// </summary>
         public abstract void Quit();
+        
+        /// <summary>
+        /// This method is called when the controller collide on something
+        /// </summary>
+        public abstract void OnColliderEnter(Collision collision);
     }
 }

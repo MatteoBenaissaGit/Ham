@@ -1,4 +1,6 @@
-﻿namespace Character
+﻿using UnityEngine;
+
+namespace Character
 {
     /// <summary>
     /// This state handle the character when he's not moving at all
@@ -15,10 +17,19 @@
 
         public override void Update()
         {
+            if (Controller.Input.CharacterControllerInput.Jump)
+            {
+                Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
+            }
         }
 
         public override void Quit()
         {
+        }
+
+        public override void OnColliderEnter(Collision collision)
+        {
+            
         }
     }
 }
