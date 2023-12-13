@@ -2,6 +2,9 @@
 
 namespace Character
 {
+    /// <summary>
+    /// This class handle the management of the character states
+    /// </summary>
     public class CharacterStateManager
     {
         public CharacterStateBase CurrentState { get; private set; }
