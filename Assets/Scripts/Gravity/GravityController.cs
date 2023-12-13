@@ -8,10 +8,15 @@ namespace Gravity
     /// </summary>
     public class GravityController : MonoBehaviour
     {
-        public bool ApplyOrbitGravity { get; set; } = true;
+        public bool ApplyOrbitGravity { get; set; }
         public GravityOrbit Orbit { get; set; }
         
         [SerializeField] private Rigidbody _rigidbody;
+
+        private void Awake()
+        {
+            ApplyOrbitGravity = true;
+        }
 
         private void FixedUpdate()
         {
