@@ -35,6 +35,8 @@ namespace Character
         public override void Quit()
         {
             Controller.Animator.SetBool("isWalking", false);
+            
+            Controller.Rigidbody.velocity = new Vector3(0,Controller.Rigidbody.velocity.y, 0);
         }
 
         public override void OnColliderEnter(Collision collision)
@@ -45,8 +47,12 @@ namespace Character
         private void HandleMovement()
         {
             CharacterControllerInput input = Controller.Input.CharacterControllerInput;
-            Vector2 movementInput = new Vector2(input.HorizontalMovement, -input.VerticalMovement).normalized;
-            Vector3 walkMovement = new Vector3(movementInput.x, 0, movementInput.y) * Controller.Data.WalkSpeed;
+            Vector2 movementInput = new Vector2(input.HorizontalMovement, input.VerticalMovement).normalized;
+
+            Vector3 moveDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
+            Vector3 localMovement = Controller.Camera.transform.TransformDirection(moveDirection) * Controller.Data.WalkSpeed;
+
+            Controller.Rigidbody.velocity = new Vector3(localMovement.x, Controller.Rigidbody.velocity.y, localMovement.z);
         }
     }
 }

@@ -12,10 +12,12 @@ namespace Inputs
         private PlayerInput _input;
         
         public CharacterControllerInput CharacterControllerInput { get; private set; }
+        public CameraMovementInput CameraMovementInput { get; private set; }
 
         public void Initialize()
         {
             CharacterControllerInput = new CharacterControllerInput();
+            CameraMovementInput = new CameraMovementInput();
 
             _input = new PlayerInput();
             _input.Enable();
@@ -27,16 +29,25 @@ namespace Inputs
             _input.CharacterController.MoveVertical.canceled += CharacterControllerInput.SetVerticalMovement;
             _input.CharacterController.Jump.performed += CharacterControllerInput.SetJump;
             _input.CharacterController.Jump.canceled += CharacterControllerInput.SetJump;
+            
+            //camera movement
+            _input.CameraMovement.XMovement.performed += CameraMovementInput.SetXMovement;
+            _input.CameraMovement.XMovement.canceled += CameraMovementInput.SetXMovement;
         }
 
         public void Disable()
         {
+            //Character controller
             _input.CharacterController.MoveHorizontal.performed -= CharacterControllerInput.SetHorizontalMovement;
             _input.CharacterController.MoveHorizontal.canceled -= CharacterControllerInput.SetHorizontalMovement;
             _input.CharacterController.MoveVertical.performed -= CharacterControllerInput.SetVerticalMovement;
             _input.CharacterController.MoveVertical.canceled -= CharacterControllerInput.SetVerticalMovement;
             _input.CharacterController.Jump.performed -= CharacterControllerInput.SetJump;
             _input.CharacterController.Jump.canceled -= CharacterControllerInput.SetJump;
+            
+            //camera movement
+            _input.CameraMovement.XMovement.performed -= CameraMovementInput.SetXMovement;
+            _input.CameraMovement.XMovement.canceled -= CameraMovementInput.SetXMovement;
         }
     }
     
@@ -45,9 +56,9 @@ namespace Inputs
     /// </summary>
     public class CharacterControllerInput
     {
-        public float HorizontalMovement { get; set; }
-        public float VerticalMovement { get; set; }
-        public bool Jump { get; set; }
+        public float HorizontalMovement { get; private set; }
+        public float VerticalMovement { get; private set; }
+        public bool Jump { get; private set; }
 
         public bool IsMovingHorizontalOrVertical()
         {
@@ -85,6 +96,25 @@ namespace Inputs
             }
 
             Jump = true;
+        }
+    }
+
+    /// <summary>
+    /// This class receive and store the camera control inputs
+    /// </summary>
+    public class CameraMovementInput
+    {
+        public float CameraXMovement { get; private set; }
+        
+        public void SetXMovement(InputAction.CallbackContext context)
+        {
+            if (context.performed == false)
+            {
+                CameraXMovement = 0;
+                return;
+            }
+
+            CameraXMovement = context.ReadValue<float>();
         }
     }
 }

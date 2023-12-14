@@ -112,7 +112,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
+                    "name": "positive",
                     "id": "90efbfa9-7047-4633-b82b-64f043b8d46d",
                     "path": "<Keyboard>/w",
                     "interactions": "",
@@ -123,7 +123,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
+                    "name": "negative",
                     "id": "66560b09-c678-4a7c-926c-e11ba49df078",
                     "path": "<Keyboard>/s",
                     "interactions": "",
@@ -145,7 +145,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
+                    "name": "positive",
                     "id": "6b27f132-908c-418d-8909-96afcf14d593",
                     "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
@@ -156,7 +156,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
+                    "name": "negative",
                     "id": "9cffd68d-4f53-4660-b500-88284d39cfec",
                     "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
@@ -187,6 +187,89 @@
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "CameraMovement",
+            "id": "f91ac92b-6657-4252-9025-ed127aab7e27",
+            "actions": [
+                {
+                    "name": "XMovement",
+                    "type": "Value",
+                    "id": "393639c8-d26d-4658-a7cb-c4bd7800a7d5",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Mouse",
+                    "id": "dda792f5-286f-46d8-9df9-44e0174ee212",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "Scale(factor=0.1)",
+                    "groups": "",
+                    "action": "XMovement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "47fd91e2-59bb-491d-81ae-8bc0f0c5cf8d",
+                    "path": "<Mouse>/delta/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "XMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "136e8097-3acf-4fa4-becb-a196a9cb21f5",
+                    "path": "<Mouse>/delta/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "XMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Stick",
+                    "id": "4b277e56-5413-4cfd-ba8e-48dd378f2d02",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "Scale(factor=4)",
+                    "groups": "",
+                    "action": "XMovement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "6f7e58ba-8a42-4402-a8d9-4845a4e5434e",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "XMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "31bd9704-1d18-4321-bf42-3deadd5358df",
+                    "path": "<Gamepad>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "XMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
