@@ -16,7 +16,7 @@ namespace Camera
 
         private void Update()
         {
-            _cameraTarget.Rotate(Vector3.up, _characterController.Input.CameraMovementInput.CameraXMovement * _rotationSpeed * Time.deltaTime);
+            _cameraTarget.Rotate(transform.up, _characterController.Input.CameraMovementInput.CameraXMovement * _rotationSpeed * Time.deltaTime);
         }
     }
 }

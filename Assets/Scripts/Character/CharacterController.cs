@@ -63,14 +63,14 @@ namespace Character
             forward.y = 0f;
             forward.Normalize();
 
-            Vector3 right = Camera.transform.right;
-
-            Vector3 moveDirection = (horizontal * right + vertical * forward).normalized;
+            Vector3 localForward = Camera.transform.forward * vertical;
+            Vector3 localSide= Camera.transform.right * horizontal;
+            Vector3 moveDirection = (localForward + localSide).normalized;
 
             if (moveDirection.magnitude > 0.1f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-                Mesh.rotation = Quaternion.Slerp(Mesh.rotation, targetRotation, Time.deltaTime * 10f);
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Rigidbody.transform.up);
+                Mesh.rotation = Quaternion.Lerp(Mesh.rotation, targetRotation, Time.deltaTime * 10f);
             }
         }
         
