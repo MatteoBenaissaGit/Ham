@@ -32,7 +32,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8661196597464387812}
   - {fileID: 460254059089795787}
   - {fileID: 5543117450850651505}
   m_Father: {fileID: 2286283210560445179}
@@ -105,6 +104,7 @@ MonoBehaviour:
   <Gravity>k__BackingField: {fileID: 7389586166183848589}
   <Rigidbody>k__BackingField: {fileID: 4024694935359832087}
   <Animator>k__BackingField: {fileID: 7413568160920925767}
+  <Camera>k__BackingField: {fileID: 5547664369398408464}
 --- !u!114 &7389586166183848589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,10 +146,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8661196597464387812}
   - {fileID: 5914914943777404696}
   - {fileID: 4208333123706383468}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4846531326408993374
 GameObject:
@@ -182,7 +183,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5914914943777404696}
+  m_Father: {fileID: 2286283210560445179}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 10.372, y: 0, z: 0}
 --- !u!20 &5547664369398408464
@@ -416,7 +417,7 @@ PrefabInstance:
     - target: {fileID: 3917398686300492767, guid: 534dba09ab7ebef428d13ac2a579c4fd,
         type: 3}
       propertyPath: m_Name
-      value: Model
+      value: Mesh
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

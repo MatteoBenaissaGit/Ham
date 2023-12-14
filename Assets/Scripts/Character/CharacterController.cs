@@ -12,6 +12,7 @@ namespace Character
         [field:SerializeField] public GravityController Gravity { get; private set; }
         [field:SerializeField] public Rigidbody Rigidbody { get; private set; }
         [field:SerializeField] public Animator Animator { get; private set; }
+        [field:SerializeField] public Camera Camera { get; private set; }
         
         public CharacterStateManager StateManager { get; private set; }
         public InputManager Input { get; private set; }

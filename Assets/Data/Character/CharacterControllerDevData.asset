@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12b7944bde84f33bfd8c363343197ce, type: 3}
   m_Name: CharacterControllerDevData
   m_EditorClassIdentifier: 
-  <WalkSpeed>k__BackingField: 1
+  <WalkSpeed>k__BackingField: 10
   <JumpForce>k__BackingField: 15
   <ForceAddedPerInputAfterJump>k__BackingField: 0.025
   <MaximumAddedInputAfterJump>k__BackingField: 40

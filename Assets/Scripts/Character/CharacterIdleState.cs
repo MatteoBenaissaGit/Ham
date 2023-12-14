@@ -21,6 +21,11 @@ namespace Character
             {
                 Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
             }
+
+            if (Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical())
+            {
+                Controller.StateManager.SwitchState(Controller.StateManager.WalkState);
+            }
         }
 
         public override void Quit()
