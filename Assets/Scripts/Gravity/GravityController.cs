@@ -34,7 +34,7 @@ namespace Gravity
 
             rigidbodyTransform.up = Vector3.Lerp(rigidbodyTransform.up, gravityOrbitUp, Orbit.Data.RotationSpeed);
             
-            _rigidbody.AddForce(-gravityOrbitUp * (Orbit.Data.GravityForce * _rigidbody.mass));
+            _rigidbody.AddForce(-rigidbodyTransform.up * (Orbit.Data.GravityForce * _rigidbody.mass));
         }
     }
 }

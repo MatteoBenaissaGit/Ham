@@ -73,7 +73,7 @@ namespace Character
         {
             Vector3 planetCenter = Controller.Gravity.Orbit.transform.position;
             float dotProduct = Vector3.Dot(Controller.Rigidbody.velocity, (Controller.transform.position - planetCenter).normalized);
-            bool isGoingUp = dotProduct >= 0;
+            bool isGoingUp = dotProduct > 0;
 
             _currentJumpState = isGoingUp ? JumpState.Up : JumpState.Down;
         }

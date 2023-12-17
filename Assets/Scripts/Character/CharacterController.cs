@@ -33,7 +33,7 @@ namespace Character
         {
             StateManager.UpdateState();
 
-            FollowRigidbodyRotation();
+            MakeMeshRotationFollowInputs();
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -48,7 +48,7 @@ namespace Character
 
         #endregion
 
-        private void FollowRigidbodyRotation()
+        private void MakeMeshRotationFollowInputs()
         {
             if (Input.CharacterControllerInput.IsMovingHorizontalOrVertical() == false)
             {

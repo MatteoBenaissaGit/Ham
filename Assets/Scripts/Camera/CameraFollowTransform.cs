@@ -25,7 +25,7 @@ namespace Camera
             Vector3 desiredPosition = _cameraTarget.position + (-_cameraTarget.forward * _positionDistance) + _cameraTarget.up * _height;
             transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * _positionSmoothSpeed);
 
-            Quaternion desiredRotation = _cameraTarget.rotation;
+            Quaternion desiredRotation = Quaternion.Euler(_cameraTarget.rotation.eulerAngles + _baseRotation);
             transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, _rotationSmoothSpeed);
         }
     }
