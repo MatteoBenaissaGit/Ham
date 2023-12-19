@@ -10,12 +10,16 @@ namespace Common
         private void OnGUI()
         {
             GUIStyle style = new GUIStyle();
-            style.fontSize = 20;
+            style.fontSize = 30;
             style.normal.textColor = Color.white;
 
-            string labelText = _character.Rigidbody.velocity.ToString();
+            //velocity
+            string velocityLabelText = "velocity : " + _character.Rigidbody.velocity;
+            GUILayout.Label(velocityLabelText, style);
             
-            GUILayout.Label(labelText, style);
+            //dot product gravity
+            string dotProductGravityLabelText = "dot product gravity : " + Vector3.Dot(_character.Rigidbody.transform.up, _character.Gravity.GravityOrbitUp);
+            GUILayout.Label(dotProductGravityLabelText, style);
         }
     }
 }

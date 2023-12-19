@@ -11,6 +11,7 @@ namespace Character
         public CharacterIdleState IdleState { get; private set; }
         public CharacterWalkState WalkState { get; private set; }
         public CharacterJumpState JumpState { get; private set; }
+        public CharacterFallState FallState { get; private set; }
         
         /// <summary>
         /// This method initialize the state classes
@@ -21,6 +22,7 @@ namespace Character
             IdleState = new CharacterIdleState(controller);
             WalkState = new CharacterWalkState(controller);
             JumpState = new CharacterJumpState(controller);
+            FallState = new CharacterFallState(controller);
             
             SwitchState(IdleState);
         }

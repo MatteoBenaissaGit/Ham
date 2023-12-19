@@ -10,6 +10,7 @@ namespace Gravity
     {
         public bool ApplyOrbitGravity { get; set; }
         public GravityOrbit Orbit { get; set; }
+        public Vector3 GravityOrbitUp { get; private set; }
         
         [SerializeField] private Rigidbody _rigidbody;
 
@@ -27,12 +28,12 @@ namespace Gravity
             
             Transform rigidbodyTransform = _rigidbody.transform;
             
-            Vector3 gravityOrbitUp = 
+            GravityOrbitUp = 
                 Orbit.Data.FixedDirection ? 
                     Orbit.transform.up : 
                     (rigidbodyTransform.position - Orbit.transform.position).normalized;
 
-            rigidbodyTransform.up = Vector3.Lerp(rigidbodyTransform.up, gravityOrbitUp, Orbit.Data.RotationSpeed);
+            rigidbodyTransform.up = Vector3.Lerp(rigidbodyTransform.up, GravityOrbitUp, Orbit.Data.RotationSpeed);
             
             _rigidbody.AddForce(-rigidbodyTransform.up * (Orbit.Data.GravityForce * _rigidbody.mass));
         }

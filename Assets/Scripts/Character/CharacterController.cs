@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace Character
 {
+    public class CharacterGameplayData
+    {
+        public bool IsGrounded { get; set; }
+    }
+    
     public class CharacterController : MonoBehaviour
     {
         [field:SerializeField] public CharacterControllerData Data { get; private set; }
@@ -17,11 +22,14 @@ namespace Character
         
         public CharacterStateManager StateManager { get; private set; }
         public InputManager Input { get; private set; }
+        public CharacterGameplayData GameplayData { get; private set; }
 
         #region MonoBehaviour methods
 
         private void Awake()
         {
+            GameplayData = new CharacterGameplayData();
+            
             Input = new InputManager();
             Input.Initialize();
             
@@ -48,6 +56,9 @@ namespace Character
 
         #endregion
 
+        /// <summary>
+        /// This method rotate the mesh toward where he is moving depending on inputs
+        /// </summary>
         private void MakeMeshRotationFollowInputs()
         {
             if (Input.CharacterControllerInput.IsMovingHorizontalOrVertical() == false)
@@ -72,6 +83,36 @@ namespace Character
                 Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Rigidbody.transform.up);
                 Mesh.rotation = Quaternion.Lerp(Mesh.rotation, targetRotation, Time.deltaTime * 10f);
             }
+        }
+
+        /// <summary>
+        /// Create and get the result of a raycast hit toward the ground from the character's feet
+        /// </summary>
+        /// <returns>The RaycastHit of the raycast</returns>
+        public RaycastHit GetRaycastTowardGround()
+        {
+            float raycastDistance = Data.RaycastTowardGroundToDetectFallDistance;
+            Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, raycastDistance);
+            return hit;
+        }
+
+        /// <summary>
+        /// This method allows you to get the local velocity 
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 GetLocalVelocity()
+        {
+            return Rigidbody.transform.InverseTransformDirection(Rigidbody.velocity);
+        }
+
+        /// <summary>
+        /// This method allows you to set the controller's rigidbody velocity from a localVelocity
+        /// </summary>
+        /// <param name="localVelocity">the local velocity you want to apply</param>
+        public void SetRigidbodyLocalVelocity(Vector3 localVelocity)
+        {
+            Vector3 worldVelocity = Rigidbody.transform.TransformDirection(localVelocity);
+            Rigidbody.velocity = worldVelocity;
         }
         
 #if UNITY_EDITOR

@@ -29,5 +29,16 @@ namespace Gravity
 
             gravityController.Orbit = this;
         }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.TryGetComponent(out GravityController gravityController) == false
+                || gravityController.Orbit != this)
+            {
+                return;
+            }
+
+            gravityController.Orbit = null;
+        }
     }
 }

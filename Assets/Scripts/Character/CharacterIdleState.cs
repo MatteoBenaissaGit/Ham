@@ -27,7 +27,9 @@ namespace Character
                 Controller.StateManager.SwitchState(Controller.StateManager.WalkState);
             }
 
-            Controller.Rigidbody.velocity = Vector3.Lerp(Controller.Rigidbody.velocity, Vector3.zero, 0.1f);
+            Vector3 localVelocity = Controller.GetLocalVelocity();
+            Vector3 newLocalVelocity = Vector3.Lerp(localVelocity, new Vector3(0, localVelocity.y, 0), 0.1f);
+            Controller.SetRigidbodyLocalVelocity(newLocalVelocity);
         }
 
         public override void Quit()

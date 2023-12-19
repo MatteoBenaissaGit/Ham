@@ -24,9 +24,8 @@ namespace Character
 
         public override void Enter()
         {
-            Debug.Log("Jump enter");
-            
             Controller.Animator.SetBool("isJumping", true);
+            Controller.GameplayData.IsGrounded = false;
             
             _numberOfJumpInputs = 0;
             _minimumTimeBeforeCheckingState = 0.1f;
@@ -54,10 +53,8 @@ namespace Character
 
         public override void Quit()
         {
-            Debug.Log("Jump quit");
-            
             Controller.Animator.SetBool("isJumping", false);
-            
+
             _numberOfJumpInputs = 0;
         }
 
@@ -96,18 +93,14 @@ namespace Character
         /// </summary>
         private void CheckForGroundFall()
         {
-            float raycastDistance = Controller.Data.RaycastTowardGroundToDetectFallDistance;
-            if (Physics.Raycast(Controller.transform.position, -Controller.transform.up, out RaycastHit hit, raycastDistance) == false)
-            {
-                return;
-            }
-
-            if (hit.collider.gameObject == Controller.gameObject)
+            RaycastHit hit = Controller.GetRaycastTowardGround();
+            if (hit.collider == null || hit.collider.gameObject == Controller.gameObject)
             {
                 return;
             }
 
             bool inputMoving = Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical(); 
+            Controller.GameplayData.IsGrounded = true;
             Controller.StateManager.SwitchState(inputMoving ? Controller.StateManager.WalkState : Controller.StateManager.IdleState);
         }
     }

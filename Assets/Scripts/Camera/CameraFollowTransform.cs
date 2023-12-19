@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Camera
@@ -28,5 +29,18 @@ namespace Camera
             Quaternion desiredRotation = Quaternion.Euler(_cameraTarget.rotation.eulerAngles + _baseRotation);
             transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, _rotationSmoothSpeed);
         }
+        
+#if UNITY_EDITOR
+
+        private void OnDrawGizmos()
+        {
+            Handles.color = Color.red;
+            Handles.DrawWireDisc(_cameraTarget.position, _cameraTarget.up, _positionDistance);
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position - new Vector3(0,_height,0));
+        }
+
+#endif
     }
 }

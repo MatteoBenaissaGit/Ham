@@ -30,13 +30,12 @@ namespace Character
             }
             
             HandleMovement();
+            CheckForFall();
         }
 
         public override void Quit()
         {
             Controller.Animator.SetBool("isWalking", false);
-            
-            Controller.Rigidbody.velocity = new Vector3(0,Controller.Rigidbody.velocity.y, 0);
         }
 
         public override void OnColliderEnter(Collision collision)
@@ -44,6 +43,9 @@ namespace Character
             
         }
 
+        /// <summary>
+        /// Handle the movement input and apply them to the rigidbody
+        /// </summary>
         private void HandleMovement()
         {
             CharacterControllerInput input = Controller.Input.CharacterControllerInput;
@@ -53,6 +55,21 @@ namespace Character
             Vector3 localMovement = Controller.Camera.transform.TransformDirection(moveDirection) * Controller.Data.WalkSpeed;
 
             Controller.Rigidbody.velocity = new Vector3(localMovement.x, Controller.Rigidbody.velocity.y, localMovement.z);
+        }
+        
+        /// <summary>
+        /// Check if the player is falling while walking and change its state if necessary
+        /// </summary>
+        private void CheckForFall()
+        {
+            RaycastHit hit = Controller.GetRaycastTowardGround();
+            if (hit.collider != null && hit.collider.gameObject != Controller.gameObject)
+            {
+                return;
+            }
+
+            Controller.GameplayData.IsGrounded = false;
+            Controller.StateManager.SwitchState(Controller.StateManager.FallState);
         }
     }
 }

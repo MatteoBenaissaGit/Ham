@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Camera
@@ -16,10 +17,19 @@ namespace Camera
 
         private void Update()
         {
-            Vector3 localRotation = _cameraTarget.localRotation.eulerAngles;
             float rotationInput = _characterController.Input.CameraMovementInput.CameraXMovement * _rotationSpeed * Time.deltaTime;
-            localRotation.y += rotationInput;
-            _cameraTarget.localRotation = Quaternion.Euler(localRotation);
+            _cameraTarget.Rotate(_characterController.Rigidbody.transform.up, rotationInput);
         }
+        
+#if UNITY_EDITOR
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(_cameraTarget.transform.position, _cameraTarget.transform.position + _characterController.Rigidbody.transform.up * 2);
+            Gizmos.DrawLine(_cameraTarget.transform.position, _characterController.Camera.transform.position);
+        }
+
+#endif
     }
 }

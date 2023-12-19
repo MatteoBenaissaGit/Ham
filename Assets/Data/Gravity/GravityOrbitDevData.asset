@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc243d393eb243369d60f5951dc99a86, type: 3}
   m_Name: GravityOrbitDevData
   m_EditorClassIdentifier: 
-  <RotationSpeed>k__BackingField: 10
+  <RotationSpeed>k__BackingField: 0.8
   <GravityForce>k__BackingField: 25
   <FixedDirection>k__BackingField: 0
