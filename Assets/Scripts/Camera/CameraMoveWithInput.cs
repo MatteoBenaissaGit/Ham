@@ -18,7 +18,9 @@ namespace Camera
         private void Update()
         {
             float rotationInput = _characterController.Input.CameraMovementInput.CameraXMovement * _rotationSpeed * Time.deltaTime;
-            _cameraTarget.Rotate(_characterController.Rigidbody.transform.up, rotationInput);
+            _cameraTarget.localRotation = Quaternion.Euler(new Vector3(_cameraTarget.localRotation.eulerAngles.x,
+                _cameraTarget.localRotation.eulerAngles.y + rotationInput
+                ,_cameraTarget.localRotation.eulerAngles.z));
         }
         
 #if UNITY_EDITOR
@@ -26,7 +28,7 @@ namespace Camera
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(_cameraTarget.transform.position, _cameraTarget.transform.position + _characterController.Rigidbody.transform.up * 2);
+            Gizmos.DrawLine(_cameraTarget.transform.position, _cameraTarget.transform.position + _cameraTarget.transform.up * 2);
             Gizmos.DrawLine(_cameraTarget.transform.position, _characterController.Camera.transform.position);
         }
 

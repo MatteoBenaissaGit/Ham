@@ -38,7 +38,7 @@ namespace Camera
             Handles.DrawWireDisc(_cameraTarget.position, _cameraTarget.up, _positionDistance);
             
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position - new Vector3(0,_height,0));
+            Gizmos.DrawLine(transform.position, transform.position - transform.up * _height);
         }
 
 #endif
