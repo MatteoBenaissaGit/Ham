@@ -18,7 +18,7 @@ namespace Common
             GUILayout.Label(velocityLabelText, style);
             
             //dot product gravity
-            string dotProductGravityLabelText = "dot product gravity : " + Vector3.Dot(_character.Rigidbody.transform.up, _character.Gravity.GravityOrbitUp);
+            string dotProductGravityLabelText = "dot product gravity rb/orbit : " + Vector3.Dot(_character.Rigidbody.transform.up, _character.Gravity.GravityOrbitUp);
             GUILayout.Label(dotProductGravityLabelText, style);
         }
     }

@@ -12,7 +12,7 @@ namespace Gravity
         public GravityOrbit Orbit { get; set; }
         public Vector3 GravityOrbitUp { get; private set; }
         
-        [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField] private Character.CharacterController _characterController;
 
         private void Awake()
         {
@@ -26,16 +26,21 @@ namespace Gravity
                 return;
             }
             
-            Transform rigidbodyTransform = _rigidbody.transform;
+            Transform rigidbodyTransform = _characterController.Rigidbody.transform;
             
             GravityOrbitUp = 
                 Orbit.Data.FixedDirection ? 
                     Orbit.transform.up : 
                     (rigidbodyTransform.position - Orbit.transform.position).normalized;
 
-            rigidbodyTransform.up = Vector3.Lerp(rigidbodyTransform.up, GravityOrbitUp, Orbit.Data.RotationSpeed);
-            
-            _rigidbody.AddForce(-rigidbodyTransform.up * (Orbit.Data.GravityForce * _rigidbody.mass));
+            //rigidbodyTransform.up = Vector3.Lerp(rigidbodyTransform.up, GravityOrbitUp, Orbit.Data.RotationSpeed);
+            rigidbodyTransform.up = GravityOrbitUp;
+
+            Vector3 forceToAdd = -GravityOrbitUp * (Orbit.Data.GravityForce * _characterController.Rigidbody.mass);
+            Vector3 localForce = _characterController.Rigidbody.transform.InverseTransformDirection(forceToAdd);
+            localForce.x = 0;
+            localForce.z = 0;
+            _characterController.Rigidbody.AddForce(localForce);
         }
     }
 }

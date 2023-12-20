@@ -114,13 +114,25 @@ namespace Character
             Vector3 worldVelocity = Rigidbody.transform.TransformDirection(localVelocity);
             Rigidbody.velocity = worldVelocity;
         }
-        
+
 #if UNITY_EDITOR
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, transform.position + (-transform.up * Data.RaycastTowardGroundToDetectFallDistance));
+
+
+            if (Gravity.Orbit != null)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(Rigidbody.transform.position, - Rigidbody.transform.up * 100);
+                Gizmos.color = new Color(1f, 0.48f, 0f);
+                Gizmos.DrawLine(Rigidbody.transform.position, Gravity.Orbit.transform.position);
+                Gizmos.color = new Color(0.99f, 0f, 1f);
+                Gizmos.DrawLine(Rigidbody.transform.position, (Rigidbody.position - Gravity.Orbit.transform.position).normalized * 110);
+                
+            }
         }
 
 #endif
