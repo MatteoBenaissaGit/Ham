@@ -26,12 +26,14 @@ namespace Character
         {
             Controller.Animator.SetBool("isJumping", true);
             Controller.GameplayData.IsGrounded = false;
-            
+
             _numberOfJumpInputs = 0;
             _minimumTimeBeforeCheckingState = 0.1f;
             _currentJumpState = JumpState.Up;
-            
-            Controller.Rigidbody.AddForce(Controller.Rigidbody.transform.up * Controller.Data.JumpForce, ForceMode.Impulse);
+
+            Vector3 currentWalkVelocity = Controller.GetLocalInputDirection() * Controller.Data.WalkSpeed;
+            Vector3 jumpForce = Controller.Rigidbody.transform.up * Controller.Data.JumpForce;
+            Controller.Rigidbody.AddForce(jumpForce + currentWalkVelocity, ForceMode.Impulse);
         }
 
         public override void Update()
@@ -51,6 +53,11 @@ namespace Character
             }
         }
 
+        public override void FixedUpdate()
+        {
+            
+        }
+
         public override void Quit()
         {
             Controller.Animator.SetBool("isJumping", false);
@@ -68,8 +75,7 @@ namespace Character
         /// </summary>
         private void CheckJumpState()
         {
-            Vector3 planetCenter = Controller.Gravity.Orbit.transform.position;
-            float dotProduct = Vector3.Dot(Controller.Rigidbody.velocity, (Controller.transform.position - planetCenter).normalized);
+            float dotProduct = Vector3.Dot(Controller.Rigidbody.velocity, (-Controller.GravityBody.GravityDirection));
             bool isGoingUp = dotProduct > 0;
 
             _currentJumpState = isGoingUp ? JumpState.Up : JumpState.Down;

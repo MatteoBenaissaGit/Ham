@@ -15,11 +15,19 @@ namespace Character
         {
             Controller.Animator.SetBool("isJumping", true);
             Controller.GameplayData.IsGrounded = false;
+            
+            Vector3 currentWalkVelocity = Controller.GetLocalInputDirection() * Controller.Data.WalkSpeed;
+            Controller.Rigidbody.AddForce(currentWalkVelocity, ForceMode.Impulse);
         }
 
         public override void Update()
         {
             CheckForGround();
+        }
+
+        public override void FixedUpdate()
+        {
+            
         }
 
         public override void Quit()

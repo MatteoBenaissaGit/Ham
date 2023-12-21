@@ -29,8 +29,12 @@ namespace Character
                 Controller.StateManager.SwitchState(Controller.StateManager.IdleState);
             }
             
-            HandleMovement();
             CheckForFall();
+        }
+
+        public override void FixedUpdate()
+        {
+            HandleMovement();
         }
 
         public override void Quit()
@@ -48,13 +52,8 @@ namespace Character
         /// </summary>
         private void HandleMovement()
         {
-            CharacterControllerInput input = Controller.Input.CharacterControllerInput;
-            Vector2 movementInput = new Vector2(input.HorizontalMovement, input.VerticalMovement).normalized;
-
-            Vector3 moveDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
-            Vector3 localMovement = Controller.Camera.transform.TransformDirection(moveDirection) * Controller.Data.WalkSpeed;
-
-            Controller.Rigidbody.velocity = new Vector3(localMovement.x, Controller.Rigidbody.velocity.y, localMovement.z);
+            Rigidbody rigidbody = Controller.Rigidbody;
+            rigidbody.MovePosition(rigidbody.position + Controller.GetLocalInputDirection() * (Controller.Data.WalkSpeed * Time.fixedDeltaTime));
         }
         
         /// <summary>

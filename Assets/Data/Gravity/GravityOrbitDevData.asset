@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: GravityOrbitDevData
   m_EditorClassIdentifier: 
   <RotationSpeed>k__BackingField: 1
-  <GravityForce>k__BackingField: 25
-  <FixedDirection>k__BackingField: 0
+  <GravityForce>k__BackingField: 800

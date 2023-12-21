@@ -28,6 +28,11 @@ namespace Character
         public abstract void Update();
 
         /// <summary>
+        /// This method is called every fixed time by the controller
+        /// </summary>
+        public abstract void FixedUpdate();
+        
+        /// <summary>
         /// This method is called when the state is exited by the controller
         /// </summary>
         public abstract void Quit();

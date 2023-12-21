@@ -14,7 +14,7 @@ namespace Character
     public class CharacterController : MonoBehaviour
     {
         [field:SerializeField] public CharacterControllerData Data { get; private set; }
-        [field:SerializeField] public GravityController Gravity { get; private set; }
+        [field:SerializeField] public GravityBody GravityBody { get; private set; }
         [field:SerializeField] public Rigidbody Rigidbody { get; private set; }
         [field:SerializeField] public Transform Mesh { get; private set; }
         [field:SerializeField] public Animator Animator { get; private set; }
@@ -44,6 +44,11 @@ namespace Character
             MakeMeshRotationFollowInputs();
         }
 
+        private void FixedUpdate()
+        {
+            StateManager.FixedUpdateState();
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
             StateManager.CurrentState.OnColliderEnter(collision);
@@ -67,21 +72,22 @@ namespace Character
             }
             
             CharacterControllerInput input = Input.CharacterControllerInput;
-            float horizontal = input.HorizontalMovement;
-            float vertical = input.VerticalMovement;
+            float horizontalInput = input.HorizontalMovement;
+            float verticalInput = input.VerticalMovement;
 
-            Vector3 forward = Camera.transform.forward;
-            forward.y = 0f;
-            forward.Normalize();
+            Vector3 cameraForward = Camera.transform.forward;
+            cameraForward.y = 0f;
+            cameraForward.Normalize();
 
-            Vector3 localForward = Camera.transform.forward * vertical;
-            Vector3 localSide= Camera.transform.right * horizontal;
-            Vector3 moveDirection = (localForward + localSide).normalized;
+            Vector3 localForward = Camera.transform.forward * verticalInput;
+            Vector3 localSide = Camera.transform.right * horizontalInput;
+            Vector3 localMoveDirection = (localForward + localSide).normalized;
 
-            if (moveDirection.magnitude > 0.1f)
+            if (localMoveDirection.magnitude > 0.1f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Rigidbody.transform.up);
-                Mesh.rotation = Quaternion.Lerp(Mesh.rotation, targetRotation, Time.deltaTime * 10f);
+                Quaternion rightDirection = Quaternion.Euler(0f, localMoveDirection.x * (1 * Time.fixedDeltaTime), 0f);
+                Quaternion newRotation = Quaternion.Slerp(Rigidbody.rotation, Rigidbody.rotation * rightDirection, Time.fixedDeltaTime * 3f);;
+                Rigidbody.MoveRotation(newRotation);
             }
         }
 
@@ -97,22 +103,18 @@ namespace Character
         }
 
         /// <summary>
-        /// This method allows you to get the local velocity 
+        /// This method return the input direction relative to the camera
         /// </summary>
         /// <returns></returns>
-        public Vector3 GetLocalVelocity()
+        public Vector3 GetLocalInputDirection()
         {
-            return Rigidbody.transform.InverseTransformDirection(Rigidbody.velocity);
-        }
+            CharacterControllerInput input = Input.CharacterControllerInput;
+            Vector2 movementInput = new Vector2(input.HorizontalMovement, input.VerticalMovement).normalized;
 
-        /// <summary>
-        /// This method allows you to set the controller's rigidbody velocity from a localVelocity
-        /// </summary>
-        /// <param name="localVelocity">the local velocity you want to apply</param>
-        public void SetRigidbodyLocalVelocity(Vector3 localVelocity)
-        {
-            Vector3 worldVelocity = Rigidbody.transform.TransformDirection(localVelocity);
-            Rigidbody.velocity = worldVelocity;
+            Vector3 inputDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
+            Vector3 localDirection = Camera.transform.TransformDirection(inputDirection);
+
+            return localDirection;
         }
 
 #if UNITY_EDITOR
@@ -121,18 +123,8 @@ namespace Character
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, transform.position + (-transform.up * Data.RaycastTowardGroundToDetectFallDistance));
-
-
-            if (Gravity.Orbit != null)
-            {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(Rigidbody.transform.position, - Rigidbody.transform.up * 100);
-                Gizmos.color = new Color(1f, 0.48f, 0f);
-                Gizmos.DrawLine(Rigidbody.transform.position, Gravity.Orbit.transform.position);
-                Gizmos.color = new Color(0.99f, 0f, 1f);
-                Gizmos.DrawLine(Rigidbody.transform.position, (Rigidbody.position - Gravity.Orbit.transform.position).normalized * 110);
-                
-            }
+            Gizmos.color = new Color(0.03f, 1f, 0f);
+            Gizmos.DrawLine(transform.position, transform.position + (Rigidbody.velocity));
         }
 
 #endif

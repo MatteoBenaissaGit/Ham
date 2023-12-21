@@ -240,10 +240,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 279194713}
-  - component: {fileID: 279194714}
   - component: {fileID: 279194715}
+  - component: {fileID: 279194716}
   m_Layer: 0
-  m_Name: GravityOrbit
+  m_Name: GravityArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -264,20 +264,6 @@ Transform:
   m_Father: {fileID: 29251154}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &279194714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279194712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09b80538c06c46258d1e2019fd68e2b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Data>k__BackingField: {fileID: 11400000, guid: ffaedcdb3823e0f4cbdf44283eb29800,
-    type: 2}
 --- !u!135 &279194715
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -299,6 +285,21 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.6
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &279194716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279194712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4563d955313940f6a23e2b956a69b237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Priority>k__BackingField: 0
+  GizmoTransparency: 0.29
+  _sphereCollider: {fileID: 279194715}
 --- !u!1 &350512976
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,7 +881,8 @@ Transform:
   m_LocalPosition: {x: 0.0341, y: 0.4598, z: 0.094}
   m_LocalScale: {x: 0.017518478, y: 0.07914498, z: 0.15016665}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1571344185}
   m_Father: {fileID: 2042071798}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -7.783, y: 0, z: 0}
@@ -1162,6 +1164,76 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329631849}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1571344184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1571344185}
+  - component: {fileID: 1571344187}
+  - component: {fileID: 1571344186}
+  m_Layer: 0
+  m_Name: GravityArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1571344185
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571344184}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1079192455}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1571344186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571344184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a02b4ae3e7e54664a3450bc1d5f8099d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Priority>k__BackingField: 1
+  GizmoTransparency: 0.528
+  _inverseGravity: 0
+  _boxCollider: {fileID: 1571344187}
+--- !u!65 &1571344187
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571344184}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.6, z: 0.80450433}
+  m_Center: {x: 0, y: 0.0000000020824487, z: 0.097747594}
 --- !u!1 &2042071797
 GameObject:
   m_ObjectHideFlags: 0
@@ -1206,6 +1278,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1342637285171858835, guid: 5d716ef4735f5294ea3881ea3245256d,
+        type: 3}
+      propertyPath: <Gravity>k__BackingField
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2286283210560445179, guid: 5d716ef4735f5294ea3881ea3245256d,
         type: 3}
       propertyPath: m_RootOrder
@@ -1265,11 +1342,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Character
-      objectReference: {fileID: 0}
-    - target: {fileID: 4024694935359832087, guid: 5d716ef4735f5294ea3881ea3245256d,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

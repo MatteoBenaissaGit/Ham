@@ -52,5 +52,13 @@ namespace Character
         {
             CurrentState?.Update();
         }
+
+        /// <summary>
+        /// This method fixed update the current state
+        /// </summary>
+        public void FixedUpdateState()
+        {
+            CurrentState?.FixedUpdate();
+        }
     }
 }

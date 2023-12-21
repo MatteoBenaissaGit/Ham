@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 992437370583575013}
   - component: {fileID: 4024694935359832087}
   - component: {fileID: 1342637285171858835}
-  - component: {fileID: 7389586166183848589}
+  - component: {fileID: 1247605013316555765}
   m_Layer: 6
   m_Name: CharacterController
   m_TagString: Untagged
@@ -85,7 +85,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1342637285171858835
 MonoBehaviour:
@@ -101,12 +101,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Data>k__BackingField: {fileID: 11400000, guid: c13ac3f80008f7d41be7aac356623ac7,
     type: 2}
-  <Gravity>k__BackingField: {fileID: 7389586166183848589}
+  <GravityBody>k__BackingField: {fileID: 1247605013316555765}
   <Rigidbody>k__BackingField: {fileID: 4024694935359832087}
   <Mesh>k__BackingField: {fileID: 5543117450850651505}
   <Animator>k__BackingField: {fileID: 7413568160920925767}
   <Camera>k__BackingField: {fileID: 5547664369398408464}
---- !u!114 &7389586166183848589
+--- !u!114 &1247605013316555765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e99151b7f93749dda379e792264f2f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterController: {fileID: 1342637285171858835}
+  _data: {fileID: 11400000, guid: ffaedcdb3823e0f4cbdf44283eb29800, type: 2}
+  _rigidbody: {fileID: 4024694935359832087}
 --- !u!1 &3641891728593623553
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +152,7 @@ Transform:
   - {fileID: 5914914943777404696}
   - {fileID: 4208333123706383468}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4846531326408993374
 GameObject:

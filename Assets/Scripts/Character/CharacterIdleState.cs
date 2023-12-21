@@ -26,10 +26,11 @@ namespace Character
             {
                 Controller.StateManager.SwitchState(Controller.StateManager.WalkState);
             }
+        }
 
-            Vector3 localVelocity = Controller.GetLocalVelocity();
-            Vector3 newLocalVelocity = Vector3.Lerp(localVelocity, new Vector3(0, localVelocity.y, 0), 0.1f);
-            Controller.SetRigidbodyLocalVelocity(newLocalVelocity);
+        public override void FixedUpdate()
+        {
+            
         }
 
         public override void Quit()
