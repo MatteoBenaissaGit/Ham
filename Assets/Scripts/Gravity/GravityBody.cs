@@ -11,8 +11,6 @@ namespace Gravity
     [RequireComponent(typeof(Rigidbody))]
     public class GravityBody : MonoBehaviour
     {
-        [SerializeField] private GravityData _data;
-
         public Vector3 GravityDirection
         {
             get
@@ -23,6 +21,18 @@ namespace Gravity
                 }
                 _gravityAreas.Sort((area1, area2) => area1.Priority.CompareTo(area2.Priority));
                 return _gravityAreas.Last().GetGravityDirection(this).normalized;
+            }
+        }
+        public GravityAreaData AreaData
+        {
+            get
+            {
+                if (_gravityAreas.Count == 0)
+                {
+                    return null;
+                }
+                _gravityAreas.Sort((area1, area2) => area1.Priority.CompareTo(area2.Priority));
+                return _gravityAreas.Last().AreaData;
             }
         }
 
@@ -37,10 +47,14 @@ namespace Gravity
     
         private void FixedUpdate()
         {
-            _rigidbody.AddForce(GravityDirection * (_data.GravityForce * Time.fixedDeltaTime), ForceMode.Acceleration);
+            if (AreaData == null)
+            {
+                return;
+            }
+            _rigidbody.AddForce(GravityDirection * (AreaData.GravityForce * Time.fixedDeltaTime), ForceMode.Acceleration);
 
             Quaternion upRotation = Quaternion.FromToRotation(transform.up, -GravityDirection);
-            Quaternion newRotation = Quaternion.Slerp(_rigidbody.rotation, upRotation * _rigidbody.rotation, Time.fixedDeltaTime * 3f);;
+            Quaternion newRotation = Quaternion.Slerp(_rigidbody.rotation, upRotation, Time.fixedDeltaTime * AreaData.RotationSpeed);;
             _rigidbody.MoveRotation(newRotation);
         }
 

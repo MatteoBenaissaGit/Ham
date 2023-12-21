@@ -97,6 +97,11 @@ namespace Inputs
 
             Jump = true;
         }
+
+        public Vector2 GetInputVector()
+        {
+            return new Vector3(HorizontalMovement, VerticalMovement).normalized;
+        }
     }
 
     /// <summary>

@@ -2,6 +2,7 @@ using System;
 using Data.Character;
 using Gravity;
 using Inputs;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Character
@@ -40,7 +41,7 @@ namespace Character
         private void Update()
         {
             StateManager.UpdateState();
-
+            
             MakeMeshRotationFollowInputs();
         }
 
@@ -70,25 +71,20 @@ namespace Character
             {
                 return;
             }
-            
-            CharacterControllerInput input = Input.CharacterControllerInput;
-            float horizontalInput = input.HorizontalMovement;
-            float verticalInput = input.VerticalMovement;
 
-            Vector3 cameraForward = Camera.transform.forward;
-            cameraForward.y = 0f;
-            cameraForward.Normalize();
-
-            Vector3 localForward = Camera.transform.forward * verticalInput;
-            Vector3 localSide = Camera.transform.right * horizontalInput;
-            Vector3 localMoveDirection = (localForward + localSide).normalized;
-
-            if (localMoveDirection.magnitude > 0.1f)
+            if (GetLocalInputDirection().magnitude <= 0.1f)
             {
-                Quaternion rightDirection = Quaternion.Euler(0f, localMoveDirection.x * (1 * Time.fixedDeltaTime), 0f);
-                Quaternion newRotation = Quaternion.Slerp(Rigidbody.rotation, Rigidbody.rotation * rightDirection, Time.fixedDeltaTime * 3f);;
-                Rigidbody.MoveRotation(newRotation);
+                return;
             }
+            
+            Vector2 input = Input.CharacterControllerInput.GetInputVector();
+
+            Vector3 localForward = Camera.transform.forward * input.y;
+            Vector3 localSide = Camera.transform.right * input.x;
+            Vector3 localDirection = (localForward + localSide).normalized;
+            
+            Quaternion targetRotation = Quaternion.LookRotation(localDirection, Vector3.up);
+            Mesh.rotation = Quaternion.Slerp(Mesh.rotation, targetRotation, Data.WalkRotationSpeed * Time.deltaTime); 
         }
 
         /// <summary>

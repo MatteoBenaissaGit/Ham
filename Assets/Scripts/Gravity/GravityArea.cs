@@ -1,4 +1,5 @@
 ﻿using System;
+using Data.Gravity;
 using UnityEngine;
 
 namespace Gravity
@@ -11,6 +12,7 @@ namespace Gravity
     public abstract class GravityArea : MonoBehaviour
     {
         [field:SerializeField] public int Priority { get; private set; }
+        [field:SerializeField] public GravityAreaData AreaData { get; private set; }
         
         [SerializeField, Range(0,1)] protected float GizmoTransparency;
 
