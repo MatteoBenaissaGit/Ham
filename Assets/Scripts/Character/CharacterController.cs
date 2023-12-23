@@ -72,19 +72,14 @@ namespace Character
                 return;
             }
 
-            if (GetLocalInputDirection().magnitude <= 0.1f)
-            {
-                return;
-            }
-            
-            Vector2 input = Input.CharacterControllerInput.GetInputVector();
-
-            Vector3 localForward = Camera.transform.forward * input.y;
-            Vector3 localSide = Camera.transform.right * input.x;
-            Vector3 localDirection = (localForward + localSide).normalized;
-            
-            Quaternion targetRotation = Quaternion.LookRotation(localDirection, Vector3.up);
-            Mesh.rotation = Quaternion.Slerp(Mesh.rotation, targetRotation, Data.WalkRotationSpeed * Time.deltaTime); 
+            Quaternion baseLocalRotation = Mesh.localRotation;
+            Mesh.LookAt(Rigidbody.transform.position + GetCameraRelativeInputDirection());
+            Vector3 lookAtRotation = Mesh.localRotation.eulerAngles;
+            lookAtRotation.x = 0;
+            lookAtRotation.z = 0;
+            Mesh.localRotation = baseLocalRotation;
+            Quaternion desiredRotation = Quaternion.Euler(lookAtRotation);
+            Mesh.localRotation = Quaternion.Slerp(baseLocalRotation, desiredRotation, Data.WalkRotationSpeed * Time.deltaTime);
         }
 
         /// <summary>
@@ -102,7 +97,7 @@ namespace Character
         /// This method return the input direction relative to the camera
         /// </summary>
         /// <returns></returns>
-        public Vector3 GetLocalInputDirection()
+        public Vector3 GetCameraRelativeInputDirection()
         {
             CharacterControllerInput input = Input.CharacterControllerInput;
             Vector2 movementInput = new Vector2(input.HorizontalMovement, input.VerticalMovement).normalized;
@@ -119,8 +114,12 @@ namespace Character
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, transform.position + (-transform.up * Data.RaycastTowardGroundToDetectFallDistance));
-            Gizmos.color = new Color(0.03f, 1f, 0f);
-            Gizmos.DrawLine(transform.position, transform.position + (Rigidbody.velocity));
+
+            if (GravityBody != null && GravityBody.GravityDirection != Vector3.zero)
+            {
+                Gizmos.color = new Color(0f, 0.86f, 1f);
+                Gizmos.DrawLine(transform.position, transform.position + (-GravityBody.GravityDirection * 5));
+            }
         }
 
 #endif

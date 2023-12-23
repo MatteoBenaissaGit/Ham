@@ -53,7 +53,7 @@ namespace Character
         private void HandleMovement()
         {
             Rigidbody rigidbody = Controller.Rigidbody;
-            rigidbody.MovePosition(rigidbody.position + Controller.GetLocalInputDirection() * (Controller.Data.WalkSpeed * Time.fixedDeltaTime));
+            rigidbody.MovePosition(rigidbody.position + Controller.GetCameraRelativeInputDirection() * (Controller.Data.WalkSpeed * Time.fixedDeltaTime));
         }
         
         /// <summary>

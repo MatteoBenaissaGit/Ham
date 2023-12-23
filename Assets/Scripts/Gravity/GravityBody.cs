@@ -15,7 +15,7 @@ namespace Gravity
         {
             get
             {
-                if (_gravityAreas.Count == 0)
+                if (_gravityAreas == null || _gravityAreas.Count == 0)
                 {
                     return Vector3.zero;
                 }
@@ -54,7 +54,7 @@ namespace Gravity
             _rigidbody.AddForce(GravityDirection * (AreaData.GravityForce * Time.fixedDeltaTime), ForceMode.Acceleration);
 
             Quaternion upRotation = Quaternion.FromToRotation(transform.up, -GravityDirection);
-            Quaternion newRotation = Quaternion.Slerp(_rigidbody.rotation, upRotation, Time.fixedDeltaTime * AreaData.RotationSpeed);;
+            Quaternion newRotation = Quaternion.Slerp(_rigidbody.rotation, upRotation * _rigidbody.rotation, Time.fixedDeltaTime * AreaData.RotationSpeed);;
             _rigidbody.MoveRotation(newRotation);
         }
 

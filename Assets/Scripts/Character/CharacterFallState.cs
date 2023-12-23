@@ -16,7 +16,7 @@ namespace Character
             Controller.Animator.SetBool("isJumping", true);
             Controller.GameplayData.IsGrounded = false;
             
-            Vector3 currentWalkVelocity = Controller.GetLocalInputDirection() * Controller.Data.WalkSpeed;
+            Vector3 currentWalkVelocity = Controller.GetCameraRelativeInputDirection() * Controller.Data.WalkSpeed;
             Controller.Rigidbody.AddForce(currentWalkVelocity, ForceMode.Impulse);
         }
 
