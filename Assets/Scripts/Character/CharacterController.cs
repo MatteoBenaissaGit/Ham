@@ -1,4 +1,5 @@
 using System;
+using Camera;
 using Data.Character;
 using Gravity;
 using Inputs;
@@ -19,11 +20,13 @@ namespace Character
         [field:SerializeField] public Rigidbody Rigidbody { get; private set; }
         [field:SerializeField] public Transform Mesh { get; private set; }
         [field:SerializeField] public Animator Animator { get; private set; }
-        [field:SerializeField] public UnityEngine.Camera Camera { get; private set; }  
+        [field:SerializeField] public CameraController CameraController { get; private set; }  
         
         public CharacterStateManager StateManager { get; private set; }
         public InputManager Input { get; private set; }
         public CharacterGameplayData GameplayData { get; private set; }
+
+        private GameObject _cameraRelativeDirection;
 
         #region MonoBehaviour methods
 
@@ -36,6 +39,10 @@ namespace Character
             
             StateManager = new CharacterStateManager();
             StateManager.Initialize(this);
+
+            _cameraRelativeDirection = new GameObject("CameraRelativeDirection");
+            _cameraRelativeDirection.transform.parent = gameObject.transform;
+            _cameraRelativeDirection.transform.localPosition = Vector3.zero;
         }
 
         private void Update()
@@ -103,7 +110,12 @@ namespace Character
             Vector2 movementInput = new Vector2(input.HorizontalMovement, input.VerticalMovement).normalized;
 
             Vector3 inputDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
-            Vector3 localDirection = Camera.transform.TransformDirection(inputDirection);
+
+            Vector3 cameraRotationEuler = CameraController.Camera.transform.rotation.eulerAngles;
+            _cameraRelativeDirection.transform.rotation = Quaternion.Euler(
+                new Vector3(Rigidbody.transform.rotation.eulerAngles.x,cameraRotationEuler.y,cameraRotationEuler.z));
+            //Vector3 localDirection = _cameraRelativeDirection.transform.TransformDirection(inputDirection);
+            Vector3 localDirection = CameraController.Camera.transform.TransformDirection(inputDirection);
 
             return localDirection;
         }

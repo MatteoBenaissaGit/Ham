@@ -6,7 +6,7 @@ namespace Camera
 {
     public class CameraMoveWithInput : MonoBehaviour
     {
-        [SerializeField] private float _rotationSpeed = 40f;
+        [SerializeField] private float _rotationSpeed = 100f;
         [SerializeField] private Transform _cameraTarget;
         [SerializeField] private Character.CharacterController _characterController;
 
@@ -15,12 +15,13 @@ namespace Camera
             Cursor.visible = false;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            float rotationInput = _characterController.Input.CameraMovementInput.CameraXMovement * _rotationSpeed * Time.deltaTime;
-            _cameraTarget.localRotation = Quaternion.Euler(new Vector3(_cameraTarget.localRotation.eulerAngles.x,
-                _cameraTarget.localRotation.eulerAngles.y + rotationInput
-                ,_cameraTarget.localRotation.eulerAngles.z));
+            //TODO fixed ?
+            float rotationInput = _characterController.Input.CameraMovementInput.CameraXMovement * _rotationSpeed * Time.fixedDeltaTime;
+            Vector3 localRotation = _cameraTarget.transform.localRotation.eulerAngles;
+            localRotation.y += rotationInput;
+            _cameraTarget.localRotation = Quaternion.Euler(localRotation);
         }
         
 #if UNITY_EDITOR
@@ -28,8 +29,10 @@ namespace Camera
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(_cameraTarget.transform.position, _cameraTarget.transform.position + _cameraTarget.transform.up * 2);
-            Gizmos.DrawLine(_cameraTarget.transform.position, _characterController.Camera.transform.position);
+            Vector3 upPoint = _cameraTarget.transform.position + _cameraTarget.transform.up * 2;
+            Gizmos.DrawLine(_cameraTarget.transform.position, upPoint);
+            Gizmos.DrawLine(_cameraTarget.transform.position, _characterController.CameraController.Camera.transform.position);
+            Gizmos.DrawLine(upPoint, _characterController.CameraController.Camera.transform.position);
         }
 
 #endif
