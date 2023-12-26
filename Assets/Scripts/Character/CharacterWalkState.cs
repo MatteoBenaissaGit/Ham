@@ -8,6 +8,8 @@ namespace Character
     /// </summary>
     public class CharacterWalkState : CharacterStateBase
     {
+        private float _currentAccelerationTime;
+        
         public CharacterWalkState(CharacterController controller) : base(controller)
         {
         }
@@ -15,6 +17,8 @@ namespace Character
         public override void Enter()
         {
             Controller.Animator.SetBool("isWalking", true);
+
+            _currentAccelerationTime = 0;
         }
 
         public override void Update()
@@ -23,7 +27,7 @@ namespace Character
             {
                 Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
             }
-            
+
             if (Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical() == false)
             {
                 Controller.StateManager.SwitchState(Controller.StateManager.IdleState);
@@ -48,12 +52,18 @@ namespace Character
         }
 
         /// <summary>
-        /// Handle the movement input and apply them to the rigidbody
+        /// Handle the movement input and apply them to the rigidbody.
+        /// Is called in FixedUpdate.
         /// </summary>
         private void HandleMovement()
         {
+            _currentAccelerationTime += Time.fixedDeltaTime;
+            float accelerationValue = Mathf.Clamp01(_currentAccelerationTime / Controller.Data.AccelerationTime);
+            float accelerationMultiplier = Controller.Data.AccelerationCurve.Evaluate(accelerationValue);
+            
             Rigidbody rigidbody = Controller.Rigidbody;
-            rigidbody.MovePosition(rigidbody.position + Controller.GetCameraRelativeInputDirection() * (Controller.Data.WalkSpeed * Time.fixedDeltaTime));
+            float speed = Controller.Data.WalkSpeed * accelerationMultiplier;
+            rigidbody.MovePosition(rigidbody.position + Controller.GetCameraRelativeInputDirection() * (speed * Time.fixedDeltaTime));
         }
         
         /// <summary>
