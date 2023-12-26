@@ -8,6 +8,15 @@ using UnityEngine;
 
 namespace Character
 {
+    public enum CharacterGameplayAction
+    {
+        Walk = 0,
+        StopWalk = 1,
+        Jump = 2,
+        Fall = 3,
+        Land = 4
+    }
+    
     public class CharacterGameplayData
     {
         public bool IsGrounded { get; set; }
@@ -19,12 +28,12 @@ namespace Character
         [field:SerializeField] public GravityBody GravityBody { get; private set; }
         [field:SerializeField] public Rigidbody Rigidbody { get; private set; }
         [field:SerializeField] public Transform Mesh { get; private set; }
-        [field:SerializeField] public Animator Animator { get; private set; }
         [field:SerializeField] public CameraController CameraController { get; private set; }  
         
         public CharacterStateManager StateManager { get; private set; }
         public InputManager Input { get; private set; }
         public CharacterGameplayData GameplayData { get; private set; }
+        public Action<CharacterGameplayAction> OnCharacterAction { get; set; }
 
         #region MonoBehaviour methods
 

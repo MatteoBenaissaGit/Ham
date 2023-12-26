@@ -16,9 +16,9 @@ namespace Character
 
         public override void Enter()
         {
-            Controller.Animator.SetBool("isWalking", true);
-
             _currentAccelerationTime = 0;
+            
+            Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Walk);
         }
 
         public override void Update()
@@ -43,7 +43,7 @@ namespace Character
 
         public override void Quit()
         {
-            Controller.Animator.SetBool("isWalking", false);
+            Controller.OnCharacterAction.Invoke(CharacterGameplayAction.StopWalk);
         }
 
         public override void OnColliderEnter(Collision collision)

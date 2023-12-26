@@ -5,6 +5,9 @@ namespace Data.Character
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/CharacterController", order = 1)]
     public class CharacterControllerData : ScriptableObject
     {
+        [field: Header("View")]
+        [field: SerializeField] public float JumpTrailLength { get; private set; } = 0.5f;
+        
         [field: Header("Walk")]
         [field: SerializeField]
         public float WalkSpeed { get; private set; } = 1f;

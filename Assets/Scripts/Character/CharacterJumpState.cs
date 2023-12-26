@@ -24,7 +24,6 @@ namespace Character
 
         public override void Enter()
         {
-            Controller.Animator.SetBool("isJumping", true);
             Controller.GameplayData.IsGrounded = false;
 
             _numberOfJumpInputs = 0;
@@ -34,6 +33,8 @@ namespace Character
             Vector3 currentWalkVelocity = Controller.GetCameraRelativeInputDirection() * Controller.Data.WalkSpeed;
             Vector3 jumpForce = Controller.Rigidbody.transform.up * Controller.Data.JumpForce;
             Controller.Rigidbody.AddForce(jumpForce + currentWalkVelocity, ForceMode.Impulse);
+            
+            Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Jump);
         }
 
         public override void Update()
@@ -60,9 +61,7 @@ namespace Character
 
         public override void Quit()
         {
-            Controller.Animator.SetBool("isJumping", false);
-
-            _numberOfJumpInputs = 0;
+            Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Land);
         }
 
         public override void OnColliderEnter(Collision collision)

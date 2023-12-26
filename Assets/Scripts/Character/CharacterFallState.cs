@@ -26,7 +26,7 @@ namespace Character
             if (Controller.Data.DoCoyoteTime == false)
             {
                 _canDoCoyoteTime = false;
-                StartFallAnimation();
+                StartFall();
             }
         }
 
@@ -45,7 +45,7 @@ namespace Character
 
         public override void Quit()
         {
-            Controller.Animator.SetBool("isJumping", false);
+            Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Land);
             Controller.GameplayData.IsGrounded = true;
         }
 
@@ -74,13 +74,9 @@ namespace Character
         /// </summary>
         private void HandleCoyoteTime()
         {
-            if (_currentFallTime > Controller.Data.CoyoteTimeTimeToJumpAfterFall)
+            if (_currentFallTime > Controller.Data.CoyoteTimeTimeToJumpAfterFall && _canDoCoyoteTime)
             {
-                if (_canDoCoyoteTime)
-                {
-                    StartFallAnimation();
-                    return;
-                }
+                StartFall();
                 _canDoCoyoteTime = false;
                 return;
             }
@@ -94,9 +90,9 @@ namespace Character
         /// <summary>
         /// This method handle the start of the fall in animator
         /// </summary>
-        private void StartFallAnimation()
+        private void StartFall()
         {
-            Controller.Animator.SetBool("isJumping", true);
+            Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Fall);
         }
     }
 }
