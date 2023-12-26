@@ -17,7 +17,6 @@ namespace Camera
 
         private void FixedUpdate()
         {
-            //TODO fixed ?
             float rotationInput = _characterController.Input.CameraMovementInput.CameraXMovement * _rotationSpeed * Time.fixedDeltaTime;
             Vector3 localRotation = _cameraTarget.transform.localRotation.eulerAngles;
             localRotation.y += rotationInput;
