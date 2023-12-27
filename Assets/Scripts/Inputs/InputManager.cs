@@ -34,7 +34,7 @@ namespace Inputs
             _input.CameraMovement.XMovement.performed += CameraMovementInput.SetXMovement;
             _input.CameraMovement.XMovement.canceled += CameraMovementInput.SetXMovement;
         }
-
+        
         public void Disable()
         {
             //Character controller
@@ -49,6 +49,11 @@ namespace Inputs
             _input.CameraMovement.XMovement.performed -= CameraMovementInput.SetXMovement;
             _input.CameraMovement.XMovement.canceled -= CameraMovementInput.SetXMovement;
         }
+
+        public void Update()
+        {
+            CharacterControllerInput.LastJumpInputTime += Time.deltaTime;
+        }
     }
     
     /// <summary>
@@ -59,6 +64,7 @@ namespace Inputs
         public float HorizontalMovement { get; private set; }
         public float VerticalMovement { get; private set; }
         public bool Jump { get; private set; }
+        public float LastJumpInputTime { get; internal set; }
 
         public bool IsMovingHorizontalOrVertical()
         {
@@ -94,8 +100,14 @@ namespace Inputs
                 Jump = false;
                 return;
             }
-
+            
             Jump = true;
+
+            if (context.action.triggered)
+            {
+                Debug.Log("last jump input");
+                LastJumpInputTime = 0;
+            }
         }
 
         public Vector2 GetInputVector()

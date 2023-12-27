@@ -12,7 +12,7 @@ namespace Character
         public CharacterWalkState WalkState { get; private set; }
         public CharacterJumpState JumpState { get; private set; }
         public CharacterFallState FallState { get; private set; }
-        
+
         /// <summary>
         /// This method initialize the state classes
         /// </summary>
@@ -31,12 +31,13 @@ namespace Character
         /// This method handle the switch between two states
         /// </summary>
         /// <param name="state">the state to switch to</param>
-        public void SwitchState(CharacterStateBase state)
+        /// <param name="disableSecurityCheck">check if the state you want to switch to is already the current state</param>
+        public void SwitchState(CharacterStateBase state, bool disableSecurityCheck = false)
         {
-            if (state == CurrentState)
+            if (state == CurrentState && disableSecurityCheck == false)
             {
-                Debug.Log("You're trying to switch to a state you're already in.");
-                return;
+                Debug.LogWarning($"You're switching to a state you're already in. {CurrentState.ToString()}");
+                //return;
             }
 
             CurrentState?.Quit();

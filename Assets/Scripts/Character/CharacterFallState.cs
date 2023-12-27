@@ -66,6 +66,14 @@ namespace Character
 
             bool inputMoving = Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical(); 
             Controller.GameplayData.IsGrounded = true;
+            
+            if (Controller.Data.DoJumpBuffering && 
+                Controller.Input.CharacterControllerInput.LastJumpInputTime < Controller.Data.JumpBufferTimeMaxBeforeLand)
+            {
+                Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
+                return;
+            }
+            
             Controller.StateManager.SwitchState(inputMoving ? Controller.StateManager.WalkState : Controller.StateManager.IdleState);
         }
 

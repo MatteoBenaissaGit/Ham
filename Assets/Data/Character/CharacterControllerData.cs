@@ -28,5 +28,9 @@ namespace Data.Character
         [field: Header("Coyote Time")]
         [field: SerializeField] public bool DoCoyoteTime { get; private set; } = true;
         [field: SerializeField] public float CoyoteTimeTimeToJumpAfterFall { get; private set; } = 0.5f;
+        
+        [field: Header("Jump Buffer")]
+        [field: SerializeField] public bool DoJumpBuffering { get; private set; } = true;
+        [field: SerializeField] public float JumpBufferTimeMaxBeforeLand { get; private set; } = 0.25f;
     }
 }

@@ -51,6 +51,7 @@ namespace Character
 
         private void Update()
         {
+            Input.Update();
             StateManager.UpdateState();
             
             MakeMeshRotationFollowInputs();

@@ -104,7 +104,6 @@ namespace Character
                 return;
             }
             
-            Debug.Log("add jump");
             Controller.Rigidbody.AddForce(Controller.Rigidbody.velocity.normalized * Controller.Data.ForceAddedPerInputAfterJump, ForceMode.Impulse);
             _numberOfJumpInputs++;
         }
@@ -122,6 +121,14 @@ namespace Character
 
             bool inputMoving = Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical(); 
             Controller.GameplayData.IsGrounded = true;
+
+            if (Controller.Data.DoJumpBuffering && 
+                Controller.Input.CharacterControllerInput.LastJumpInputTime < Controller.Data.JumpBufferTimeMaxBeforeLand)
+            {
+                Controller.StateManager.SwitchState(Controller.StateManager.JumpState, true);
+                return;
+            }
+            
             Controller.StateManager.SwitchState(inputMoving ? Controller.StateManager.WalkState : Controller.StateManager.IdleState);
         }
     }
