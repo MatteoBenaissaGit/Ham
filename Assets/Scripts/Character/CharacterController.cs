@@ -124,14 +124,14 @@ namespace Character
         private Dictionary<Vector3, JumpState> _jumpGizmos = new Dictionary<Vector3, JumpState>();
         private void OnDrawGizmos()
         {
+            //ground detection
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + (-transform.up * Data.RaycastTowardGroundToDetectFallDistance));
+            
             if (Application.isPlaying == false)
             {
                 return;
             }
-            
-            //ground detection
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position + (-transform.up * Data.RaycastTowardGroundToDetectFallDistance));
             
             //gravity direction
             if (GravityBody != null && GravityBody.GravityDirection != Vector3.zero)

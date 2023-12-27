@@ -59,7 +59,7 @@ namespace Character
 
         public override void FixedUpdate()
         {
-            
+            HandleMovementInTheAir();
         }
 
         public override void Quit()
@@ -130,6 +130,22 @@ namespace Character
             }
             
             Controller.StateManager.SwitchState(inputMoving ? Controller.StateManager.WalkState : Controller.StateManager.IdleState);
+        }
+
+        /// <summary>
+        /// This method handle the player movement in the air
+        /// </summary>
+        private void HandleMovementInTheAir()
+        {
+            //TODO | have an acceleration vector the multiply the base movement amount if the player is continuously 
+            //TODO | moving in the same direction (dot product), so values are : baseMovementAmplitude, maxAmplitudeIfSameDirection, timeToAttainMaxAmplitude
+            // _currentAccelerationTime += Time.fixedDeltaTime;
+            // float accelerationValue = Mathf.Clamp01(_currentAccelerationTime / Controller.Data.AccelerationTime);
+            // float accelerationMultiplier = Controller.Data.AccelerationCurve.Evaluate(accelerationValue);
+            //
+            // Rigidbody rigidbody = Controller.Rigidbody;
+            // float speed = Controller.Data.WalkSpeed * accelerationMultiplier;
+            // rigidbody.MovePosition(rigidbody.position + Controller.GetCameraRelativeInputDirection() * (speed * Time.fixedDeltaTime));
         }
     }
 }
