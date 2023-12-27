@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Camera;
 using Data.Character;
 using Gravity;
@@ -119,6 +120,7 @@ namespace Character
 
 #if UNITY_EDITOR
 
+        private Dictionary<Vector3, JumpState> _jumpGizmos = new Dictionary<Vector3, JumpState>();
         private void OnDrawGizmos()
         {
             if (Application.isPlaying == false)
@@ -142,6 +144,32 @@ namespace Character
             Vector3 directionEndPoint = Rigidbody.transform.position + GetCameraRelativeInputDirection() * 3;
             Gizmos.DrawLine(Rigidbody.transform.position, directionEndPoint);
             Gizmos.DrawSphere(directionEndPoint, 0.25f);
+            
+            //jump
+            CharacterJumpState jump = StateManager.JumpState;
+            if (StateManager.CurrentState == jump)
+            {
+                Vector3 position = Rigidbody.transform.position;
+                if (_jumpGizmos.ContainsKey(position) == false)
+                {
+                    _jumpGizmos.Add(Rigidbody.transform.position, jump.CurrentJumpState);
+                }
+            }
+            else if (_jumpGizmos.Count > 200)
+            {
+                _jumpGizmos.Clear();
+            }
+            foreach (var jumpPosition in _jumpGizmos)
+            {
+                Gizmos.color = jumpPosition.Value switch
+                {
+                    JumpState.Up => new Color(0f, 1f, 0f, 0.74f),
+                    JumpState.Apex => new Color(1f, 0.92f, 0.02f, 0.56f),
+                    JumpState.Down => new Color(1f, 0f, 0f, 0.33f),
+                    _ => throw new Exception()
+                };
+                Gizmos.DrawSphere(jumpPosition.Key,0.25f);
+            }
         }
 
 #endif

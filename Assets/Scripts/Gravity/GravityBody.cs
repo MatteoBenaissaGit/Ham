@@ -36,6 +36,8 @@ namespace Gravity
             }
         }
 
+        public float GravityMultiplier { get; set; } = 1f;
+
         [SerializeField] private Rigidbody _rigidbody;
         
         private List<GravityArea> _gravityAreas;
@@ -51,7 +53,7 @@ namespace Gravity
             {
                 return;
             }
-            _rigidbody.AddForce(GravityDirection * (AreaData.GravityForce * Time.fixedDeltaTime), ForceMode.Acceleration);
+            _rigidbody.AddForce(GravityDirection * (AreaData.GravityForce * GravityMultiplier * Time.fixedDeltaTime), ForceMode.Acceleration);
 
             Quaternion upRotation = Quaternion.FromToRotation(transform.up, -GravityDirection);
             Quaternion newRotation = Quaternion.Slerp(_rigidbody.rotation, upRotation * _rigidbody.rotation, Time.fixedDeltaTime * AreaData.RotationSpeed);;

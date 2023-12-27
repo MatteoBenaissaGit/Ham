@@ -14,10 +14,13 @@ namespace Character
     /// </summary>
     public class CharacterJumpState : CharacterStateBase
     {
+        public JumpState CurrentJumpState { get; private set; }
+        
+        private const float VelocityMagnitudeToBeAtApex = 1f;
+
         private int _numberOfJumpInputs;
         private float _minimumTimeBeforeCheckingState;
-        private JumpState _currentJumpState;
-
+        
         public CharacterJumpState(CharacterController controller) : base(controller)
         {
         }
@@ -28,10 +31,11 @@ namespace Character
 
             _numberOfJumpInputs = 0;
             _minimumTimeBeforeCheckingState = 0.1f;
-            _currentJumpState = JumpState.Up;
+            CurrentJumpState = JumpState.Up;
 
             Vector3 currentWalkVelocity = Controller.GetCameraRelativeInputDirection() * Controller.Data.WalkSpeed;
             Vector3 jumpForce = Controller.Rigidbody.transform.up * Controller.Data.JumpForce;
+            Controller.Rigidbody.velocity = Vector3.zero;
             Controller.Rigidbody.AddForce(jumpForce + currentWalkVelocity, ForceMode.Impulse);
             
             Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Jump);
@@ -42,13 +46,12 @@ namespace Character
             HandlingInputsAfterJump();
             
             _minimumTimeBeforeCheckingState -= Time.deltaTime;
-            if (_minimumTimeBeforeCheckingState > 0)
+            if (_minimumTimeBeforeCheckingState <= 0)
             {
-                return;
+                CheckJumpState();
             }
 
-            CheckJumpState();
-            if (_currentJumpState == JumpState.Down)
+            if (CurrentJumpState != JumpState.Up)
             {
                 CheckForGroundFall();
             }
@@ -74,10 +77,19 @@ namespace Character
         /// </summary>
         private void CheckJumpState()
         {
+            Vector3 localVelocity = Controller.Rigidbody.transform.InverseTransformDirection(Controller.Rigidbody.velocity);
+            if (Mathf.Abs(localVelocity.y) <= VelocityMagnitudeToBeAtApex)
+            {
+                CurrentJumpState = JumpState.Apex;
+                return;
+            }
+            
             float dotProduct = Vector3.Dot(Controller.Rigidbody.velocity, (-Controller.GravityBody.GravityDirection));
             bool isGoingUp = dotProduct > 0;
 
-            _currentJumpState = isGoingUp ? JumpState.Up : JumpState.Down;
+            CurrentJumpState = isGoingUp ? JumpState.Up : JumpState.Down;
+
+            Controller.GravityBody.GravityMultiplier = CurrentJumpState == JumpState.Down ? Controller.Data.FallGravityMultiplier : 1f;
         }
         
         /// <summary>
@@ -85,12 +97,16 @@ namespace Character
         /// </summary>
         private void HandlingInputsAfterJump()
         {
-            if (Controller.Input.CharacterControllerInput.Jump &&
-                _numberOfJumpInputs <= Controller.Data.MaximumAddedInputAfterJump)
+            if (Controller.Input.CharacterControllerInput.Jump == false
+                || _numberOfJumpInputs > Controller.Data.MaximumAddedInputAfterJump
+                || CurrentJumpState != JumpState.Up)
             {
-                Controller.Rigidbody.AddForce(Controller.Rigidbody.transform.up * Controller.Data.ForceAddedPerInputAfterJump);
-                _numberOfJumpInputs++;
+                return;
             }
+            
+            Debug.Log("add jump");
+            Controller.Rigidbody.AddForce(Controller.Rigidbody.velocity.normalized * Controller.Data.ForceAddedPerInputAfterJump, ForceMode.Impulse);
+            _numberOfJumpInputs++;
         }
         
         /// <summary>

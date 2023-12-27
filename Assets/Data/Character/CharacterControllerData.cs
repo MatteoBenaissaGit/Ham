@@ -19,9 +19,8 @@ namespace Data.Character
         public AnimationCurve AccelerationCurve { get; private set; } = AnimationCurve.Linear(0, 0, 1, 1);
 
         [field: Header("Jump")]
-        [field: SerializeField]
-        public float JumpForce { get; private set; } = 1f;
-
+        [field: SerializeField] public float JumpForce { get; private set; } = 1f;
+        [field: SerializeField] public float FallGravityMultiplier { get; private set; } = 1f;
         [field: SerializeField] public float ForceAddedPerInputAfterJump { get; private set; } = 0.1f;
         [field: SerializeField] public int MaximumAddedInputAfterJump { get; private set; } = 20;
         [field: SerializeField] public float RaycastTowardGroundToDetectFallDistance { get; private set; } = 2f;
