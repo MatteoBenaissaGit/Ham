@@ -1332,7 +1332,7 @@ MonoBehaviour:
   <Priority>k__BackingField: 1
   <AreaData>k__BackingField: {fileID: 11400000, guid: ffaedcdb3823e0f4cbdf44283eb29800,
     type: 2}
-  GizmoTransparency: 0.528
+  GizmoTransparency: 0.673
   _inverseGravity: 0
   _boxCollider: {fileID: 1571344187}
 --- !u!65 &1571344187
@@ -1354,7 +1354,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.6, z: 0.80450433}
+  m_Size: {x: 0.93, y: 1.6, z: 0.80450433}
   m_Center: {x: 0, y: 0.0000000020824487, z: 0.097747594}
 --- !u!1 &2042071797
 GameObject:

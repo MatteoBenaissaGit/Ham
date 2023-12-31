@@ -85,7 +85,7 @@ namespace Character
             }
 
             Quaternion baseLocalRotation = Mesh.localRotation;
-            Mesh.LookAt(Rigidbody.transform.position + GetCameraRelativeInputDirection());
+            Mesh.LookAt(Rigidbody.transform.position + GetCameraRelativeInputDirectionWorld());
             Vector3 lookAtRotation = Mesh.localRotation.eulerAngles;
             lookAtRotation.x = 0;
             lookAtRotation.z = 0;
@@ -106,15 +106,22 @@ namespace Character
         }
 
         /// <summary>
-        /// This method return the input direction relative to the camera
+        /// This method return the input direction relative to the camera in the world space 
         /// </summary>
         /// <returns></returns>
-        public Vector3 GetCameraRelativeInputDirection()
+        public Vector3 GetCameraRelativeInputDirectionWorld(bool notNormalized = false)
         {
             CharacterControllerInput input = Input.CharacterControllerInput;
             Vector2 movementInput = new Vector2(input.HorizontalMovement, input.VerticalMovement).normalized;
-            Vector3 inputDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
-            Vector3 localDirection = CameraController.CameraTarget.transform.TransformDirection(inputDirection);
+            Vector3 inputDirection = new Vector3(movementInput.x, 0f, movementInput.y);
+            
+            if (notNormalized)
+            {
+                Vector3 notNormalizedLocalDirection = CameraController.CameraTarget.transform.TransformDirection(inputDirection);
+                return notNormalizedLocalDirection;
+            }
+            
+            Vector3 localDirection = CameraController.CameraTarget.transform.TransformDirection(inputDirection.normalized);
 
             return localDirection;
         }
@@ -142,7 +149,7 @@ namespace Character
             
             //movement direction
             Gizmos.color = Color.green;
-            Vector3 directionEndPoint = Rigidbody.transform.position + GetCameraRelativeInputDirection() * 3;
+            Vector3 directionEndPoint = Rigidbody.transform.position + GetCameraRelativeInputDirectionWorld() * 3;
             Gizmos.DrawLine(Rigidbody.transform.position, directionEndPoint);
             Gizmos.DrawSphere(directionEndPoint, 0.25f);
             

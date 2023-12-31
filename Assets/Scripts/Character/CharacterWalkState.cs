@@ -63,7 +63,7 @@ namespace Character
             
             Rigidbody rigidbody = Controller.Rigidbody;
             float speed = Controller.Data.WalkSpeed * accelerationMultiplier;
-            rigidbody.MovePosition(rigidbody.position + Controller.GetCameraRelativeInputDirection() * (speed * Time.fixedDeltaTime));
+            rigidbody.MovePosition(rigidbody.position + Controller.GetCameraRelativeInputDirectionWorld() * (speed * Time.fixedDeltaTime));
         }
         
         /// <summary>

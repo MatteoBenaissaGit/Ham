@@ -16,7 +16,7 @@ namespace Character
 
         public override void Enter()
         {
-            Vector3 currentWalkVelocity = Controller.GetCameraRelativeInputDirection() * Controller.Data.WalkSpeed;
+            Vector3 currentWalkVelocity = Controller.GetCameraRelativeInputDirectionWorld() * Controller.Data.WalkSpeed;
             Controller.Rigidbody.AddForce(currentWalkVelocity, ForceMode.Impulse);
             Controller.GameplayData.IsGrounded = false;
 
@@ -40,7 +40,7 @@ namespace Character
 
         public override void FixedUpdate()
         {
-            
+            HandleMovementInTheAir();
         }
 
         public override void Quit()
@@ -59,7 +59,7 @@ namespace Character
         private void CheckForGround()
         {
             RaycastHit hit = Controller.GetRaycastTowardGround();
-            if (hit.collider == null || hit.collider.gameObject == Controller.gameObject)
+            if (hit.collider == null || hit.collider.gameObject == Controller.gameObject  || hit.collider.isTrigger)
             {
                 return;
             }
@@ -108,16 +108,12 @@ namespace Character
         /// </summary>
         private void HandleMovementInTheAir()
         {
-            //TODO | have an acceleration vector the multiply the base movement amount if the player is continuously 
-            //TODO | moving in the same direction (dot product), so values are : baseMovementAmplitude, maxAmplitudeIfSameDirection, timeToAttainMaxAmplitude
-            //TODO | this values needs to be different for the fall
-            // _currentAccelerationTime += Time.fixedDeltaTime;
-            // float accelerationValue = Mathf.Clamp01(_currentAccelerationTime / Controller.Data.AccelerationTime);
-            // float accelerationMultiplier = Controller.Data.AccelerationCurve.Evaluate(accelerationValue);
-            //
-            // Rigidbody rigidbody = Controller.Rigidbody;
-            // float speed = Controller.Data.WalkSpeed * accelerationMultiplier;
-            // rigidbody.MovePosition(rigidbody.position + Controller.GetCameraRelativeInputDirection() * (speed * Time.fixedDeltaTime));
+            Rigidbody rigidbody = Controller.Rigidbody;
+            float speed = Controller.Data.FallAirMovementAmplitude;
+            Vector3 forceDirection = Controller.GetCameraRelativeInputDirectionWorld();
+
+            Vector3 force = forceDirection * (speed * Time.fixedDeltaTime);
+            rigidbody.AddForce(force, ForceMode.Impulse);
         }
     }
 }

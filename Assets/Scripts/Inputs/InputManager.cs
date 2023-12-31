@@ -105,7 +105,6 @@ namespace Inputs
 
             if (context.action.triggered)
             {
-                Debug.Log("last jump input");
                 LastJumpInputTime = 0;
             }
         }

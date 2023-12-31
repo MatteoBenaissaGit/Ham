@@ -24,6 +24,10 @@ namespace Data.Character
         [field: SerializeField] public float ForceAddedPerInputAfterJump { get; private set; } = 0.1f;
         [field: SerializeField] public int MaximumAddedInputAfterJump { get; private set; } = 20;
         [field: SerializeField] public float RaycastTowardGroundToDetectFallDistance { get; private set; } = 2f;
+        [field: SerializeField] public float JumpAirMovementAmplitude { get; private set; } = 10f;
+        
+        [field: Header("Fall")]
+        [field: SerializeField] public float FallAirMovementAmplitude { get; private set; } = 5f;
 
         [field: Header("Coyote Time")]
         [field: SerializeField] public bool DoCoyoteTime { get; private set; } = true;

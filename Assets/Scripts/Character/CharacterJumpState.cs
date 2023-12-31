@@ -20,6 +20,7 @@ namespace Character
 
         private int _numberOfJumpInputs;
         private float _minimumTimeBeforeCheckingState;
+        private Vector3 _baseJumpVelocityDirection;
         
         public CharacterJumpState(CharacterController controller) : base(controller)
         {
@@ -33,10 +34,10 @@ namespace Character
             _minimumTimeBeforeCheckingState = 0.1f;
             CurrentJumpState = JumpState.Up;
 
-            Vector3 currentWalkVelocity = Controller.GetCameraRelativeInputDirection() * Controller.Data.WalkSpeed;
+            _baseJumpVelocityDirection = Controller.GetCameraRelativeInputDirectionWorld(true) * Controller.Data.WalkSpeed;
             Vector3 jumpForce = Controller.Rigidbody.transform.up * Controller.Data.JumpForce;
             Controller.Rigidbody.velocity = Vector3.zero;
-            Controller.Rigidbody.AddForce(jumpForce + currentWalkVelocity, ForceMode.Impulse);
+            Controller.Rigidbody.AddForce(jumpForce + _baseJumpVelocityDirection, ForceMode.Impulse);
             
             Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Jump);
         }
@@ -114,7 +115,7 @@ namespace Character
         private void CheckForGroundFall()
         {
             RaycastHit hit = Controller.GetRaycastTowardGround();
-            if (hit.collider == null || hit.collider.gameObject == Controller.gameObject)
+            if (hit.collider == null || hit.collider.gameObject == Controller.gameObject || hit.collider.isTrigger)
             {
                 return;
             }
@@ -137,15 +138,15 @@ namespace Character
         /// </summary>
         private void HandleMovementInTheAir()
         {
-            //TODO | have an acceleration vector the multiply the base movement amount if the player is continuously 
-            //TODO | moving in the same direction (dot product), so values are : baseMovementAmplitude, maxAmplitudeIfSameDirection, timeToAttainMaxAmplitude
-            // _currentAccelerationTime += Time.fixedDeltaTime;
-            // float accelerationValue = Mathf.Clamp01(_currentAccelerationTime / Controller.Data.AccelerationTime);
-            // float accelerationMultiplier = Controller.Data.AccelerationCurve.Evaluate(accelerationValue);
-            //
-            // Rigidbody rigidbody = Controller.Rigidbody;
-            // float speed = Controller.Data.WalkSpeed * accelerationMultiplier;
-            // rigidbody.MovePosition(rigidbody.position + Controller.GetCameraRelativeInputDirection() * (speed * Time.fixedDeltaTime));
+            Rigidbody rigidbody = Controller.Rigidbody;
+            float speed = Controller.Data.JumpAirMovementAmplitude;
+            Vector3 forceDirection = Controller.GetCameraRelativeInputDirectionWorld();
+
+            float dotProduct = Vector3.Dot(forceDirection, _baseJumpVelocityDirection) / 10f;
+            float dotFactor = dotProduct < 0 ? 1 : 1 - dotProduct;
+
+            Vector3 force = forceDirection * (speed * dotFactor * Time.fixedDeltaTime);
+            rigidbody.AddForce(force, ForceMode.Impulse);
         }
     }
 }
