@@ -1,4 +1,5 @@
-﻿using Inputs;
+﻿using System;
+using Inputs;
 using UnityEngine;
 
 namespace Character
@@ -9,6 +10,7 @@ namespace Character
     public class CharacterWalkState : CharacterStateBase
     {
         private float _currentAccelerationTime;
+        private Vector3 _currentDirection;
         
         public CharacterWalkState(CharacterController controller) : base(controller)
         {
@@ -19,6 +21,8 @@ namespace Character
             _currentAccelerationTime = 0;
             
             Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Walk);
+
+            _currentDirection = Controller.GetCameraRelativeInputDirectionWorld();
         }
 
         public override void Update()
@@ -63,7 +67,18 @@ namespace Character
             
             Rigidbody rigidbody = Controller.Rigidbody;
             float speed = Controller.Data.WalkSpeed * accelerationMultiplier;
-            rigidbody.MovePosition(rigidbody.position + Controller.GetCameraRelativeInputDirectionWorld() * (speed * Time.fixedDeltaTime));
+            
+            Vector3 direction = Controller.GetCameraRelativeInputDirectionWorld();
+            _currentDirection = Vector3.Lerp(_currentDirection, direction, Controller.Data.DirectionChangeLerpSpeed);
+            float dotProduct = Vector3.Dot(direction, _currentDirection);
+            float directionChangeSpeedMultiplier = 1f;
+            if (dotProduct < 0)
+            {
+                float absDotProduct = Mathf.Clamp(Math.Abs(1 - dotProduct), 0.2f , 1f);
+                directionChangeSpeedMultiplier = (absDotProduct * Controller.Data.DirectionChangeSpeedMultiplier);
+            }
+
+            rigidbody.MovePosition(rigidbody.position + direction * (speed * directionChangeSpeedMultiplier * Time.fixedDeltaTime));
         }
         
         /// <summary>

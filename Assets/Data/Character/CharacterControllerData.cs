@@ -9,14 +9,12 @@ namespace Data.Character
         [field: SerializeField] public float JumpTrailLength { get; private set; } = 0.5f;
         
         [field: Header("Walk")]
-        [field: SerializeField]
-        public float WalkSpeed { get; private set; } = 1f;
-
+        [field: SerializeField] public float WalkSpeed { get; private set; } = 1f;
         [field: SerializeField] public float WalkRotationSpeed { get; private set; } = 3f;
         [field: SerializeField] public float AccelerationTime { get; private set; } = 1f;
-
-        [field: SerializeField]
-        public AnimationCurve AccelerationCurve { get; private set; } = AnimationCurve.Linear(0, 0, 1, 1);
+        [field: SerializeField] public AnimationCurve AccelerationCurve { get; private set; } = AnimationCurve.Linear(0, 0, 1, 1);
+        [field: SerializeField] public float DirectionChangeSpeedMultiplier { get; private set; } = 0.5f;
+        [field: SerializeField] public float DirectionChangeLerpSpeed { get; private set; } = 0.01f;
 
         [field: Header("Jump")]
         [field: SerializeField] public float JumpForce { get; private set; } = 1f;

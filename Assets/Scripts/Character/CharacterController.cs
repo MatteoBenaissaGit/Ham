@@ -155,12 +155,13 @@ namespace Character
             
             //jump
             CharacterJumpState jump = StateManager.JumpState;
-            if (StateManager.CurrentState == jump)
+            CharacterFallState fall = StateManager.FallState;
+            if (StateManager.CurrentState == jump || StateManager.CurrentState == fall)
             {
                 Vector3 position = Rigidbody.transform.position;
                 if (_jumpGizmos.ContainsKey(position) == false)
                 {
-                    _jumpGizmos.Add(Rigidbody.transform.position, jump.CurrentJumpState);
+                    _jumpGizmos.Add(Rigidbody.transform.position, StateManager.CurrentState == jump ? jump.CurrentJumpState : JumpState.Down);
                 }
             }
             else if (_jumpGizmos.Count > 200)
