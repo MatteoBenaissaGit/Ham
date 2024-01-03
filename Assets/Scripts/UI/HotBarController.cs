@@ -10,24 +10,24 @@ namespace UI
     /// </summary>
     public class HotBarController : MonoBehaviour
     {
-        [field:SerializeField] public HorizontalOrVerticalLayoutGroup Layout { get; private set; }
-        [field:SerializeField] public HotBarCaseController HotBarCasePrefab { get; private set; }
-        [field:SerializeField] public int CaseNumber { get; private set; } = 3;
+        [SerializeField] private HorizontalOrVerticalLayoutGroup _layout;
+        [SerializeField] private HotBarCaseController _hotBarCasePrefab;
+        [SerializeField] private int _caseNumber;
 
         private List<HotBarCaseController> _cases = new List<HotBarCaseController>();
         private int _currentIndex;
         
         private void Awake()
         {
-            if (CaseNumber <= 0)
+            if (_caseNumber <= 0)
             {
-                Debug.LogWarning($"{CaseNumber} hot bar case !");
+                Debug.LogWarning($"{_caseNumber} hot bar case !");
                 return;
             }
             
-            for (int i = 0; i < CaseNumber; i++)
+            for (int i = 0; i < _caseNumber; i++)
             {
-                HotBarCaseController hotBarCase = Instantiate(HotBarCasePrefab, Layout.transform);
+                HotBarCaseController hotBarCase = Instantiate(_hotBarCasePrefab, _layout.transform);
                 _cases.Add(hotBarCase);
             }
 

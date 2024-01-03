@@ -52,8 +52,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2556f505f350643a42da93d489be5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Item>k__BackingField: {fileID: 0}
-  <ItemImage>k__BackingField: {fileID: 8434135927452425501}
+  _item: {fileID: 0}
+  _itemImage: {fileID: 8434135927452425501}
+  _backgroundImage: {fileID: 5010017965341896432}
+  _unselectedTransparency: 0.589
 --- !u!222 &3073740263041140678
 CanvasRenderer:
   m_ObjectHideFlags: 0
