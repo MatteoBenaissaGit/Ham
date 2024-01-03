@@ -13,11 +13,13 @@ namespace Inputs
         
         public CharacterControllerInput CharacterControllerInput { get; private set; }
         public CameraMovementInput CameraMovementInput { get; private set; }
+        public UIInput UIInput { get; private set; }
 
         public void Initialize()
         {
             CharacterControllerInput = new CharacterControllerInput();
             CameraMovementInput = new CameraMovementInput();
+            UIInput = new UIInput();
 
             _input = new PlayerInput();
             _input.Enable();
@@ -33,6 +35,10 @@ namespace Inputs
             //camera movement
             _input.CameraMovement.XMovement.performed += CameraMovementInput.SetXMovement;
             _input.CameraMovement.XMovement.canceled += CameraMovementInput.SetXMovement;
+            
+            //ui
+            _input.UI.HotBar.performed += UIInput.SetHotBar;
+            _input.UI.HotBar.canceled += UIInput.SetHotBar;
         }
         
         public void Disable()
@@ -131,6 +137,32 @@ namespace Inputs
             }
 
             CameraXMovement = context.ReadValue<float>();
+        }
+    }
+    
+    /// <summary>
+    /// This class receive and store the camera control inputs
+    /// </summary>
+    public class UIInput
+    {
+        public bool HotBarPrevious { get; private set; }
+        public bool HotBarNext { get; private set; }
+
+        
+        public void SetHotBar(InputAction.CallbackContext context)
+        {
+            float axis = context.ReadValue<float>();
+            Debug.Log(axis );
+            if (axis == 0 || context.performed == false)
+            {
+                HotBarNext = false;
+                HotBarPrevious = false;
+                return;
+            }
+            
+            HotBarNext = axis > 0;
+            HotBarPrevious = axis < 0;
+            Debug.Log(HotBarNext + " " + HotBarPrevious);
         }
     }
 }
