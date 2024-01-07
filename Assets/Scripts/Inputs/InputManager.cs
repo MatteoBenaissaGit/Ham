@@ -162,7 +162,6 @@ namespace Inputs
             
             HotBarNext = axis > 0;
             HotBarPrevious = axis < 0;
-            Debug.Log(HotBarNext + " " + HotBarPrevious);
         }
     }
 }
