@@ -4,6 +4,8 @@ using Camera;
 using Data.Character;
 using Gravity;
 using Inputs;
+using MatteoBenaissaLibrary.SingletonClassBase;
+using UI;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -23,13 +25,15 @@ namespace Character
         public bool IsGrounded { get; set; }
     }
     
-    public class CharacterController : MonoBehaviour
+    public class CharacterController : Singleton<CharacterController>
     {
         [field:SerializeField] public CharacterControllerData Data { get; private set; }
         [field:SerializeField] public GravityBody GravityBody { get; private set; }
         [field:SerializeField] public Rigidbody Rigidbody { get; private set; }
         [field:SerializeField] public Transform Mesh { get; private set; }
         [field:SerializeField] public CameraController CameraController { get; private set; }  
+        [field:SerializeField] public CharacterViewManager View { get; private set; }  
+        [field:SerializeField] public UIManager UI { get; private set; }  
         
         public CharacterStateManager StateManager { get; private set; }
         public InputManager Input { get; private set; }
@@ -38,7 +42,7 @@ namespace Character
 
         #region MonoBehaviour methods
 
-        private void Awake()
+        protected override void InternalAwake()
         {
             GameplayData = new CharacterGameplayData();
             

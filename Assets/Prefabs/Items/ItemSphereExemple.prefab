@@ -49,6 +49,7 @@ MonoBehaviour:
   <Data>k__BackingField: {fileID: 11400000, guid: 3f7608de5679ad64e929f0ac5cd14e75,
     type: 2}
   <FloatingMesh>k__BackingField: {fileID: 1579379190964516783}
+  <FloatingColliderCharacterDetection>k__BackingField: {fileID: 2995464754517265597}
 --- !u!135 &2995464754517265597
 SphereCollider:
   m_ObjectHideFlags: 0

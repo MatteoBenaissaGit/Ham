@@ -39,6 +39,8 @@ namespace Inputs
             //ui
             _input.UI.HotBar.performed += UIInput.SetHotBar;
             _input.UI.HotBar.canceled += UIInput.SetHotBar;
+            _input.UI.HotBarDrop.performed += UIInput.SetHotBarDrop;
+            _input.UI.HotBarDrop.canceled += UIInput.SetHotBarDrop;
         }
         
         public void Disable()
@@ -54,6 +56,12 @@ namespace Inputs
             //camera movement
             _input.CameraMovement.XMovement.performed -= CameraMovementInput.SetXMovement;
             _input.CameraMovement.XMovement.canceled -= CameraMovementInput.SetXMovement;
+            
+            //ui
+            _input.UI.HotBar.performed -= UIInput.SetHotBar;
+            _input.UI.HotBar.canceled -= UIInput.SetHotBar;
+            _input.UI.HotBarDrop.performed -= UIInput.SetHotBarDrop;
+            _input.UI.HotBarDrop.canceled -= UIInput.SetHotBarDrop;
         }
 
         public void Update()
@@ -147,12 +155,12 @@ namespace Inputs
     {
         public bool HotBarPrevious { get; private set; }
         public bool HotBarNext { get; private set; }
+        public bool HotBarDrop { get; private set; }
 
         
         public void SetHotBar(InputAction.CallbackContext context)
         {
             float axis = context.ReadValue<float>();
-            Debug.Log(axis );
             if (axis == 0 || context.performed == false)
             {
                 HotBarNext = false;
@@ -162,6 +170,17 @@ namespace Inputs
             
             HotBarNext = axis > 0;
             HotBarPrevious = axis < 0;
+        }
+
+        public void SetHotBarDrop(InputAction.CallbackContext context)
+        {
+            if (context.performed == false || HotBarDrop)
+            {
+                HotBarDrop = false;
+                return;
+            }
+
+            HotBarDrop = true;
         }
     }
 }

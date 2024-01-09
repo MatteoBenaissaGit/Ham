@@ -4,7 +4,7 @@ namespace Items.Weapon
 {
     public class WeaponFloatingState : ItemFloatingState
     {
-        public WeaponFloatingState(ItemController item) : base(item)
+        public WeaponFloatingState(ItemController controller) : base(controller)
         {
         }
 

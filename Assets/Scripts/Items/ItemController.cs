@@ -1,6 +1,7 @@
 using System;
 using Data.Items;
 using Items.Weapon;
+using UI;
 using UnityEngine;
 
 namespace Items
@@ -9,6 +10,7 @@ namespace Items
     {
         [field:SerializeField] public ItemData Data { get; private set; }
         [field:SerializeField] public GameObject FloatingMesh { get; private set; }
+        [field:SerializeField] public Collider FloatingColliderCharacterDetection { get; private set; }
         
         protected ItemBaseState CurrentState;
         protected ItemFloatingState FloatingState;
@@ -52,9 +54,17 @@ namespace Items
             }
             
             CurrentState?.OnTriggerEnter(other);
+
+            if (other.TryGetComponent(out Character.CharacterController character) == false
+                || character.UI.HotBar.IsThereSpaceInHotBar() == false)
+            {
+                return;
+            }
+            character.UI.HotBar.AddItemToBar(this);
+            SetState(UsedState);
         }
 
-        private void SetState(ItemBaseState state)
+        protected void SetState(ItemBaseState state)
         {
             CurrentState?.Exit();
             CurrentState = state;
@@ -70,6 +80,11 @@ namespace Items
             float raycastDistance = 10f;
             Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, raycastDistance);
             return hit;
+        }
+
+        public void Drop()
+        {
+            SetState(FloatingState);
         }
     }
 }

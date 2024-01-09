@@ -2,7 +2,7 @@
 {
     public class WeaponUsedState : ItemUsedState
     {
-        public WeaponUsedState(ItemController item) : base(item)
+        public WeaponUsedState(ItemController controller) : base(controller)
         {
             
         }

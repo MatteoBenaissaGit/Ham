@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using CharacterController = Character.CharacterController;
 
 namespace Items
 {
@@ -16,12 +17,13 @@ namespace Items
         
         private bool _isActive;
         
-        public ItemUsedState(ItemController item) : base(item)
+        public ItemUsedState(ItemController controller) : base(controller)
         {
         }
         
         public override void Enter()
         {
+            Controller.transform.parent = Character.CharacterController.Instance.transform.transform;
         }
 
         public override void Update()
@@ -39,6 +41,10 @@ namespace Items
 
         public override void Exit()
         {
+            Controller.transform.parent = null;
+            Character.CharacterController character = Character.CharacterController.Instance;
+            Controller.transform.up = character.transform.up;
+            Controller.transform.position += character.Mesh.transform.forward * 2 + character.transform.up;
         }
 
         private void Set(bool isActive)

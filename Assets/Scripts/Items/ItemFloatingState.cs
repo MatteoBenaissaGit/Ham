@@ -4,12 +4,14 @@ namespace Items
 {
     public class ItemFloatingState : ItemBaseState
     {
-        public ItemFloatingState(ItemController item) : base(item)
+        public ItemFloatingState(ItemController controller) : base(controller)
         {
         }
         
         public override void Enter()
         {
+            Controller.FloatingMesh.gameObject.SetActive(true);
+            Controller.FloatingColliderCharacterDetection.enabled = true;
         }
 
         public override void Update()
@@ -29,21 +31,23 @@ namespace Items
 
         public override void Exit()
         {
+            Controller.FloatingColliderCharacterDetection.enabled = false;
+            Controller.FloatingMesh.gameObject.SetActive(false);
         }
         
         protected void MakeFloatingMeshFloatOnAboveGround()
         {
             float rotationSpeed = 0.25f;
-            Item.transform.Rotate(Item.transform.up, rotationSpeed);
+            Controller.transform.Rotate(Controller.transform.up, rotationSpeed);
 
-            RaycastHit hit = Item.GetRaycastTowardGround();
+            RaycastHit hit = Controller.GetRaycastTowardGround();
             Collider collider = hit.collider;
             float distanceToFloat = 1f;
             
-            if (collider == null || collider.isTrigger || Vector3.Distance(Item.transform.position, hit.point) > distanceToFloat)
+            if (collider == null || collider.isTrigger || Vector3.Distance(Controller.transform.position, hit.point) > distanceToFloat)
             {
                 float moveSpeed = 0.1f;
-                Item.transform.position -= Item.transform.up * moveSpeed;
+                Controller.transform.position -= Controller.transform.up * moveSpeed;
             }
         }
     }

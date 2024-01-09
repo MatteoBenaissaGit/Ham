@@ -285,6 +285,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "HotBarDrop",
+                    "type": "Button",
+                    "id": "9a23bd69-4199-4cc2-859d-013b0ea34b77",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -353,6 +362,28 @@
                     "action": "HotBar",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "4a4b6108-cce2-4483-9d84-2acb2421a229",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HotBarDrop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d531067d-df60-40d2-9d35-c85e9cc1b912",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HotBarDrop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

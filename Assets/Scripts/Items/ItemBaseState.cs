@@ -4,11 +4,11 @@ namespace Items
 {
     public abstract class ItemBaseState
     {
-        public ItemController Item { get; private set; }
+        public ItemController Controller { get; private set; }
 
-        public ItemBaseState(ItemController item)
+        public ItemBaseState(ItemController controller)
         {
-            Item = item;
+            Controller = controller;
         }
         
         public abstract void Enter();

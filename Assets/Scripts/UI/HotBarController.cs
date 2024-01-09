@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Data.Items;
+using Items;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,13 +39,17 @@ namespace UI
 
         private void Update()
         {
-            if (UIManager.Instance.Character.Input.UIInput.HotBarNext)
+            if (Character.CharacterController.Instance.Input.UIInput.HotBarNext)
             {
                 SetHotBarSelection(true);
             }
-            if (UIManager.Instance.Character.Input.UIInput.HotBarPrevious)
+            if (Character.CharacterController.Instance.Input.UIInput.HotBarPrevious)
             {
                 SetHotBarSelection(false);
+            }
+            if (Character.CharacterController.Instance.Input.UIInput.HotBarDrop)
+            {
+                DropItem();
             }
         }
 
@@ -73,6 +79,63 @@ namespace UI
             }
             
             _cases[_currentIndex].SetSelected(true);
+        }
+
+        /// <summary>
+        /// This method check if there is free space in the hotbar
+        /// </summary>
+        /// <returns>True is there is space, false if not</returns>
+        public bool IsThereSpaceInHotBar()
+        {
+            for (int i = 0; i < _cases.Count; i++)
+            {
+                if (_cases[i].ItemController != null)
+                {
+                    continue;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+        
+        /// <summary>
+        /// Add an item to the hotbar
+        /// </summary>
+        /// <param name="item">The item controller to add</param>
+        public void AddItemToBar(ItemController item)
+        {
+            if (IsThereSpaceInHotBar() == false)
+            {
+                Debug.Log("Item wasn't added to hot bar");
+                return;
+            }
+            
+            for (int i = 0; i < _cases.Count; i++)
+            {
+                if (_cases[i].ItemController != null)
+                {
+                    continue;
+                }
+
+                _cases[i].SetItem(item);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Drop the current hold item
+        /// </summary>
+        private void DropItem()
+        {
+            if (_cases[_currentIndex].ItemController == null)
+            {
+                return;
+            }
+            
+            _cases[_currentIndex].ItemController.Drop();
+            _cases[_currentIndex].SetItem();
         }
     }
 }

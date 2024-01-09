@@ -183,12 +183,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4fdc71eb5a9de468683377092de847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPersistant: 0
   <Data>k__BackingField: {fileID: 11400000, guid: c13ac3f80008f7d41be7aac356623ac7,
     type: 2}
   <GravityBody>k__BackingField: {fileID: 1247605013316555765}
   <Rigidbody>k__BackingField: {fileID: 4024694935359832087}
   <Mesh>k__BackingField: {fileID: 5543117450850651505}
   <CameraController>k__BackingField: {fileID: 1745342712620526044}
+  <View>k__BackingField: {fileID: 4490639652512040491}
+  <UI>k__BackingField: {fileID: 6611798045660116555}
 --- !u!114 &1247605013316555765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,7 +483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c15b0e1f219934b9bf3226eea61a80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPersistant: 0
   <Character>k__BackingField: {fileID: 1342637285171858835}
   <HotBar>k__BackingField: {fileID: 1256400348485907424}
 --- !u!1 &4494825125861431264

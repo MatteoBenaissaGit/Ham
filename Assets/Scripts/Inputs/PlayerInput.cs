@@ -307,6 +307,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""HotBarDrop"",
+                    ""type"": ""Button"",
+                    ""id"": ""9a23bd69-4199-4cc2-859d-013b0ea34b77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -375,6 +384,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""HotBar"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4a4b6108-cce2-4483-9d84-2acb2421a229"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HotBarDrop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d531067d-df60-40d2-9d35-c85e9cc1b912"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HotBarDrop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -392,6 +423,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_HotBar = m_UI.FindAction("HotBar", throwIfNotFound: true);
+        m_UI_HotBarDrop = m_UI.FindAction("HotBarDrop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -562,11 +594,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_HotBar;
+    private readonly InputAction m_UI_HotBarDrop;
     public struct UIActions
     {
         private @PlayerInput m_Wrapper;
         public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @HotBar => m_Wrapper.m_UI_HotBar;
+        public InputAction @HotBarDrop => m_Wrapper.m_UI_HotBarDrop;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -579,6 +613,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @HotBar.started += instance.OnHotBar;
             @HotBar.performed += instance.OnHotBar;
             @HotBar.canceled += instance.OnHotBar;
+            @HotBarDrop.started += instance.OnHotBarDrop;
+            @HotBarDrop.performed += instance.OnHotBarDrop;
+            @HotBarDrop.canceled += instance.OnHotBarDrop;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -586,6 +623,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @HotBar.started -= instance.OnHotBar;
             @HotBar.performed -= instance.OnHotBar;
             @HotBar.canceled -= instance.OnHotBar;
+            @HotBarDrop.started -= instance.OnHotBarDrop;
+            @HotBarDrop.performed -= instance.OnHotBarDrop;
+            @HotBarDrop.canceled -= instance.OnHotBarDrop;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -616,5 +656,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnHotBar(InputAction.CallbackContext context);
+        void OnHotBarDrop(InputAction.CallbackContext context);
     }
 }
