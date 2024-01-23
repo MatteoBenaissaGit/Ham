@@ -41,10 +41,12 @@ namespace UI
         {
             if (Character.CharacterController.Instance.Input.UIInput.HotBarNext)
             {
+                Character.CharacterController.Instance.Input.UIInput.HotBarNext = false;
                 SetHotBarSelection(true);
             }
             if (Character.CharacterController.Instance.Input.UIInput.HotBarPrevious)
             {
+                Character.CharacterController.Instance.Input.UIInput.HotBarPrevious = false;
                 SetHotBarSelection(false);
             }
             if (Character.CharacterController.Instance.Input.UIInput.HotBarDrop)

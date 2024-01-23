@@ -5,22 +5,15 @@ namespace Items
 {
     public class ItemUsedState : ItemBaseState
     {
-        public bool IsActive
-        {
-            get => _isActive;
-            set
-            {
-                _isActive = value;
-                Set(_isActive);
-            } 
-        }
-        
         private bool _isActive;
         
         public ItemUsedState(ItemController controller) : base(controller)
         {
         }
         
+        /// <summary>
+        /// This method is called when the used state is entered
+        /// </summary>
         public override void Enter()
         {
             Controller.transform.parent = Character.CharacterController.Instance.transform.transform;
@@ -33,12 +26,15 @@ namespace Items
         public override void FixedUpdate()
         {
         }
-
+        
         public override void OnTriggerEnter(Collider collider)
         {
             
         }
 
+        /// <summary>
+        /// This method is called when the used state is exited
+        /// </summary>
         public override void Exit()
         {
             Controller.transform.parent = null;
@@ -47,9 +43,13 @@ namespace Items
             Controller.transform.position += character.Mesh.transform.forward * 2 + character.transform.up;
         }
 
-        private void Set(bool isActive)
+        /// <summary>
+        /// Set the item in an active state of use
+        /// </summary>
+        /// <param name="isActive">is the item active</param>
+        public virtual void SetActive(bool isActive)
         {
-            
+            _isActive = isActive;
         }
     }
 }

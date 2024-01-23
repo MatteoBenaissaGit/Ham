@@ -14,12 +14,14 @@ namespace Inputs
         public CharacterControllerInput CharacterControllerInput { get; private set; }
         public CameraMovementInput CameraMovementInput { get; private set; }
         public UIInput UIInput { get; private set; }
+        public ItemInput ItemInput { get; private set; }
 
         public void Initialize()
         {
             CharacterControllerInput = new CharacterControllerInput();
             CameraMovementInput = new CameraMovementInput();
             UIInput = new UIInput();
+            ItemInput = new ItemInput();
 
             _input = new PlayerInput();
             _input.Enable();
@@ -41,6 +43,12 @@ namespace Inputs
             _input.UI.HotBar.canceled += UIInput.SetHotBar;
             _input.UI.HotBarDrop.performed += UIInput.SetHotBarDrop;
             _input.UI.HotBarDrop.canceled += UIInput.SetHotBarDrop;
+            
+            //items
+            _input.ItemController.Aim.performed += ItemInput.SetAim;
+            _input.ItemController.Aim.canceled += ItemInput.SetAim;
+            _input.ItemController.Shoot.performed += ItemInput.SetShoot;
+            _input.ItemController.Shoot.canceled += ItemInput.SetShoot;
         }
         
         public void Disable()
@@ -62,6 +70,12 @@ namespace Inputs
             _input.UI.HotBar.canceled -= UIInput.SetHotBar;
             _input.UI.HotBarDrop.performed -= UIInput.SetHotBarDrop;
             _input.UI.HotBarDrop.canceled -= UIInput.SetHotBarDrop;
+            
+            //items
+            _input.ItemController.Aim.performed -= ItemInput.SetAim;
+            _input.ItemController.Aim.canceled -= ItemInput.SetAim;
+            _input.ItemController.Shoot.performed -= ItemInput.SetShoot;
+            _input.ItemController.Shoot.canceled -= ItemInput.SetShoot;
         }
 
         public void Update()
@@ -153,8 +167,8 @@ namespace Inputs
     /// </summary>
     public class UIInput
     {
-        public bool HotBarPrevious { get; private set; }
-        public bool HotBarNext { get; private set; }
+        public bool HotBarPrevious { get; set; }
+        public bool HotBarNext { get; set; }
         public bool HotBarDrop { get; private set; }
 
         
@@ -181,6 +195,38 @@ namespace Inputs
             }
 
             HotBarDrop = true;
+        }
+    }
+
+    /// <summary>
+    /// This class receive and store the items control inputs
+    /// </summary>
+    public class ItemInput
+    {
+        public bool Aim { get; private set; }
+        public Action OnShootOnce { get; set; }
+        public Action<bool> OnAim { get; set; }
+        
+        public void SetAim(InputAction.CallbackContext context)
+        {
+            bool wasAimingBefore = Aim;
+            
+            Aim = context.performed;
+            
+            if (Aim != wasAimingBefore)
+            {
+                OnAim.Invoke(Aim);
+            }
+        }
+
+        public void SetShoot(InputAction.CallbackContext context)
+        {
+            if (context.started == false)
+            {
+                return;
+            }
+
+            OnShootOnce.Invoke();
         }
     }
 }

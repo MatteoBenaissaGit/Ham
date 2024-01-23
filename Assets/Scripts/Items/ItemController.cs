@@ -12,15 +12,20 @@ namespace Items
         [field:SerializeField] public GameObject FloatingMesh { get; private set; }
         [field:SerializeField] public Collider FloatingColliderCharacterDetection { get; private set; }
         
-        protected ItemBaseState CurrentState;
-        protected ItemFloatingState FloatingState;
-        protected ItemUsedState UsedState;
+        public ItemBaseState CurrentState { get; private set; }
+        public ItemFloatingState FloatingState { get; private set; }
+        public ItemUsedState UsedState { get; private set; }
 
         protected virtual void Awake()
         {
-            Initialize(new ItemFloatingState(this), new WeaponUsedState(this));
+            Initialize(new ItemFloatingState(this), new ItemUsedState(this));
         }
 
+        /// <summary>
+        /// Initialize the item
+        /// </summary>
+        /// <param name="floatingState">the floating state of the item</param>
+        /// <param name="usedState">the used state of the item</param>
         protected virtual void Initialize(ItemFloatingState floatingState, ItemUsedState usedState)
         {
             FloatingState = floatingState;
@@ -64,6 +69,10 @@ namespace Items
             SetState(UsedState);
         }
 
+        /// <summary>
+        /// Set a new state for the weapon
+        /// </summary>
+        /// <param name="state">the state to enter</param>
         protected void SetState(ItemBaseState state)
         {
             CurrentState?.Exit();

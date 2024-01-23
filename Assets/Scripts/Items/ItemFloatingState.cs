@@ -8,6 +8,9 @@ namespace Items
         {
         }
         
+        /// <summary>
+        /// This method is called when the floating state is entered
+        /// </summary>
         public override void Enter()
         {
             Controller.FloatingMesh.gameObject.SetActive(true);
@@ -29,12 +32,18 @@ namespace Items
             
         }
 
+        /// <summary>
+        /// This method is called when the floating state is exited
+        /// </summary>
         public override void Exit()
         {
             Controller.FloatingColliderCharacterDetection.enabled = false;
             Controller.FloatingMesh.gameObject.SetActive(false);
         }
         
+        /// <summary>
+        /// Make the item's mesh float and rotate above the ground
+        /// </summary>
         protected void MakeFloatingMeshFloatOnAboveGround()
         {
             float rotationSpeed = 0.25f;

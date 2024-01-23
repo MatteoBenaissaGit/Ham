@@ -10,5 +10,6 @@ namespace UI
     {
         [field:SerializeField] public Character.CharacterController Character { get; private set; }
         [field:SerializeField] public HotBarController HotBar { get; private set; }
+        [field:SerializeField] public AimUIController Aim { get; private set; }
     }
 }

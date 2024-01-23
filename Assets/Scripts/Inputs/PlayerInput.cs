@@ -305,7 +305,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""356c4ebe-781f-4c7e-ad74-f95a0b239682"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": true
                 },
                 {
@@ -408,6 +408,76 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""ItemController"",
+            ""id"": ""84c1c7cc-7b43-4609-9158-d0e6b74c57d9"",
+            ""actions"": [
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Value"",
+                    ""id"": ""60dc16de-dc11-4342-86c7-a863f7cb0c19"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""253581d6-7af2-4cd4-b05c-07af29562262"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e6153065-de23-40e7-98f7-d4547fc8b5b4"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7f3d8fc-0d8c-4c0f-b1c0-864ce7d57eff"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b069c67a-2be2-4fa3-8668-df14967890c2"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7eb4bdfa-be48-4fb0-ab74-de00bac23b87"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -424,6 +494,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_HotBar = m_UI.FindAction("HotBar", throwIfNotFound: true);
         m_UI_HotBarDrop = m_UI.FindAction("HotBarDrop", throwIfNotFound: true);
+        // ItemController
+        m_ItemController = asset.FindActionMap("ItemController", throwIfNotFound: true);
+        m_ItemController_Aim = m_ItemController.FindAction("Aim", throwIfNotFound: true);
+        m_ItemController_Shoot = m_ItemController.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -643,6 +717,60 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // ItemController
+    private readonly InputActionMap m_ItemController;
+    private List<IItemControllerActions> m_ItemControllerActionsCallbackInterfaces = new List<IItemControllerActions>();
+    private readonly InputAction m_ItemController_Aim;
+    private readonly InputAction m_ItemController_Shoot;
+    public struct ItemControllerActions
+    {
+        private @PlayerInput m_Wrapper;
+        public ItemControllerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Aim => m_Wrapper.m_ItemController_Aim;
+        public InputAction @Shoot => m_Wrapper.m_ItemController_Shoot;
+        public InputActionMap Get() { return m_Wrapper.m_ItemController; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ItemControllerActions set) { return set.Get(); }
+        public void AddCallbacks(IItemControllerActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ItemControllerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ItemControllerActionsCallbackInterfaces.Add(instance);
+            @Aim.started += instance.OnAim;
+            @Aim.performed += instance.OnAim;
+            @Aim.canceled += instance.OnAim;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+        }
+
+        private void UnregisterCallbacks(IItemControllerActions instance)
+        {
+            @Aim.started -= instance.OnAim;
+            @Aim.performed -= instance.OnAim;
+            @Aim.canceled -= instance.OnAim;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+        }
+
+        public void RemoveCallbacks(IItemControllerActions instance)
+        {
+            if (m_Wrapper.m_ItemControllerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IItemControllerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ItemControllerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ItemControllerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public ItemControllerActions @ItemController => new ItemControllerActions(this);
     public interface ICharacterControllerActions
     {
         void OnMoveHorizontal(InputAction.CallbackContext context);
@@ -657,5 +785,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnHotBar(InputAction.CallbackContext context);
         void OnHotBarDrop(InputAction.CallbackContext context);
+    }
+    public interface IItemControllerActions
+    {
+        void OnAim(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }

@@ -52,6 +52,11 @@ namespace UI
                 _itemImage.DOKill();
                 _itemImage.DOColor(_isSelected ? Color.white : new Color(1f, 1f, 1f, _unselectedTransparency), animationTime);
             }
+
+            if (ItemController != null)
+            {
+                ItemController.UsedState.SetActive(isSelected);
+            }
         }
 
         /// <summary>
@@ -77,7 +82,7 @@ namespace UI
 
             if (_isSelected)
             {
-                //TODO setup item in player's hands
+                ItemController.UsedState.SetActive(true);
             }
         }
     }

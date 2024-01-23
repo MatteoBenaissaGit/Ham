@@ -34,6 +34,7 @@ namespace Character
         [field:SerializeField] public CameraController CameraController { get; private set; }  
         [field:SerializeField] public CharacterViewManager View { get; private set; }  
         [field:SerializeField] public UIManager UI { get; private set; }  
+        [field:SerializeField] public Transform GunIK { get; private set; }  
         
         public CharacterStateManager StateManager { get; private set; }
         public InputManager Input { get; private set; }
