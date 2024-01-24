@@ -37,8 +37,8 @@ namespace Character
         {
             if (state == CurrentState && disableSecurityCheck == false)
             {
-                Debug.LogWarning($"You're switching to a state you're already in. {CurrentState.ToString()}");
-                //return;
+                Debug.LogError($"You're switching to a state you're already in. {CurrentState.ToString()}");
+                return;
             }
 
             PreviousState = CurrentState;

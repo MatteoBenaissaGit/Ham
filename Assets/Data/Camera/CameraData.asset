@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8399afc5d1f94cf98bb832aa11c1312d, type: 3}
+  m_Name: CameraData
+  m_EditorClassIdentifier: 
+  <CameraXMovementSpeed>k__BackingField: 30
+  <CameraYMovementSpeed>k__BackingField: 30
+  <BaseCamera>k__BackingField:
+    <Fov>k__BackingField: 40
+    <SpeedToChange>k__BackingField: 0.5
+    <Offset>k__BackingField: {x: 0, y: 0}
+    <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
+    <RotationSpeedMultiplier>k__BackingField: {x: 1, y: 1}
+  <AimCamera>k__BackingField:
+    <Fov>k__BackingField: 30
+    <SpeedToChange>k__BackingField: 0.25
+    <Offset>k__BackingField: {x: 3, y: -1}
+    <Rotation>k__BackingField: {x: -2, y: 0, z: 0}
+    <RotationSpeedMultiplier>k__BackingField: {x: 0.5, y: 0.5}

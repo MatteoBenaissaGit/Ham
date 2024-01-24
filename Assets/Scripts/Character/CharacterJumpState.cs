@@ -15,7 +15,7 @@ namespace Character
     public class CharacterJumpState : CharacterStateBase
     {
         public JumpState CurrentJumpState { get; private set; }
-        
+
         private const float VelocityMagnitudeToBeAtApex = 1f;
 
         private int _numberOfJumpInputs;
@@ -129,7 +129,8 @@ namespace Character
                 Controller.StateManager.SwitchState(Controller.StateManager.JumpState, true);
                 return;
             }
-            
+
+            Controller.transform.position = hit.point;
             Controller.StateManager.SwitchState(inputMoving ? Controller.StateManager.WalkState : Controller.StateManager.IdleState);
         }
 

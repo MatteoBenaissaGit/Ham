@@ -6,7 +6,6 @@ namespace Camera
 {
     public class CameraMoveWithInput : MonoBehaviour
     {
-        [SerializeField] private float _rotationSpeed = 100f;
         [SerializeField] private Transform _cameraTarget;
         [SerializeField] private Character.CharacterController _characterController;
 
@@ -17,9 +16,17 @@ namespace Camera
 
         private void Update()
         {
-            float rotationInput = _characterController.Input.CameraMovementInput.CameraXMovement * _rotationSpeed * Time.deltaTime;
             Vector3 localRotation = _cameraTarget.transform.localRotation.eulerAngles;
+            
+            //x movement
+            float rotationInput = _characterController.Input.CameraMovementInput.CameraXMovement 
+                                  * _characterController.CameraController.Data.CameraXMovementSpeed 
+                                  * _characterController.CameraController.CurrentCameraInformation.RotationSpeedMultiplier.x
+                                  * Time.deltaTime;
             localRotation.y += rotationInput;
+            
+            //TODO y movement
+            
             _cameraTarget.localRotation = Quaternion.Euler(localRotation);
         }
         

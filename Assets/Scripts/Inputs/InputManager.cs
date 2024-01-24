@@ -215,7 +215,7 @@ namespace Inputs
             
             if (Aim != wasAimingBefore)
             {
-                OnAim.Invoke(Aim);
+                OnAim?.Invoke(Aim);
             }
         }
 
@@ -226,7 +226,7 @@ namespace Inputs
                 return;
             }
 
-            OnShootOnce.Invoke();
+            OnShootOnce?.Invoke();
         }
     }
 }

@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3185b8a5da4ab48d0fa51cc06f1ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Data>k__BackingField: {fileID: 11400000, guid: 462c7afd7ba9aab449e104b23592fe3b,
+    type: 2}
   <Camera>k__BackingField: {fileID: 5547664369398408464}
   <CameraTarget>k__BackingField: {fileID: 4080669264523530312}
   <FollowTransform>k__BackingField: {fileID: 8450980362912428960}

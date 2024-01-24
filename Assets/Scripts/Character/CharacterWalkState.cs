@@ -20,6 +20,13 @@ namespace Character
         {
             _currentAccelerationTime = 0;
             
+            //if we were jumping and moving we don't reset the acceleration time of the player
+            if (Controller.StateManager.PreviousState == Controller.StateManager.JumpState
+                && Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical())
+            {
+                _currentAccelerationTime = Controller.Data.AccelerationTime;
+            }
+            
             Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Walk);
 
             _currentDirection = Controller.GetCameraRelativeInputDirectionWorld();
