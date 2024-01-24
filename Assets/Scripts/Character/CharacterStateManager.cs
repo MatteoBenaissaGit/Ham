@@ -8,6 +8,7 @@ namespace Character
     public class CharacterStateManager
     {
         public CharacterStateBase CurrentState { get; private set; }
+        public CharacterStateBase PreviousState { get; private set; }
         public CharacterIdleState IdleState { get; private set; }
         public CharacterWalkState WalkState { get; private set; }
         public CharacterJumpState JumpState { get; private set; }
@@ -40,6 +41,7 @@ namespace Character
                 //return;
             }
 
+            PreviousState = CurrentState;
             CurrentState?.Quit();
 
             CurrentState = state;

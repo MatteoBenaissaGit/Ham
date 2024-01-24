@@ -23,7 +23,10 @@ namespace Character
             _canDoCoyoteTime = true;
             _currentFallTime = 0f;
 
-            if (Controller.Data.DoCoyoteTime == false)
+            CharacterStateManager state = Controller.StateManager;
+            bool wasInAStateThatAllowCoyoteTime = state.PreviousState != state.WalkState || state.PreviousState != state.IdleState;
+            
+            if (Controller.Data.DoCoyoteTime == false || wasInAStateThatAllowCoyoteTime == false)
             {
                 _canDoCoyoteTime = false;
                 StartFall();
