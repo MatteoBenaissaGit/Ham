@@ -232,7 +232,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""dda792f5-286f-46d8-9df9-44e0174ee212"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
-                    ""processors"": ""Scale(factor=0.1)"",
+                    ""processors"": ""Scale(factor=0.5)"",
                     ""groups"": """",
                     ""action"": ""XMovement"",
                     ""isComposite"": true,

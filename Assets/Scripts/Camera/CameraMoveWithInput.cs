@@ -15,9 +15,9 @@ namespace Camera
             Cursor.visible = false;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            float rotationInput = _characterController.Input.CameraMovementInput.CameraXMovement * _rotationSpeed * Time.fixedDeltaTime;
+            float rotationInput = _characterController.Input.CameraMovementInput.CameraXMovement * _rotationSpeed * Time.deltaTime;
             Vector3 localRotation = _cameraTarget.transform.localRotation.eulerAngles;
             localRotation.y += rotationInput;
             _cameraTarget.localRotation = Quaternion.Euler(localRotation);
