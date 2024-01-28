@@ -106,6 +106,8 @@ MonoBehaviour:
   <FloatingColliderCharacterDetection>k__BackingField: {fileID: 6073933274287186294}
   <GunIK>k__BackingField: {fileID: 8567965399210895698}
   <Muzzle>k__BackingField: {fileID: 6554011317202286884}
+  <Projectile>k__BackingField: {fileID: 1830669696267771947, guid: 78be377b1ebebc848abc734773dab60b,
+    type: 3}
 --- !u!1 &6636642458497692569
 GameObject:
   m_ObjectHideFlags: 0

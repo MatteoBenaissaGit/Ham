@@ -1,6 +1,8 @@
 using System;
 using Data.Items;
 using Items.AimBehaviours;
+using Items.Props;
+using Items.Props.Projectile;
 using Items.SetActiveBehaviour;
 using UnityEngine;
 
@@ -15,6 +17,7 @@ namespace Items
         [field:Header("Weapon")]
         [field:SerializeField] public Transform GunIK { get; private set; }
         [field:SerializeField] public Transform Muzzle { get; private set; }
+        [field:SerializeField] public Projectile Projectile { get; private set; }
         
         public ItemBaseState CurrentState { get; private set; }
         public ItemFloatingState FloatingState { get; private set; }
