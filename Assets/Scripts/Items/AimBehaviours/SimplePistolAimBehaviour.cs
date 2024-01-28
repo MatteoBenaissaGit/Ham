@@ -1,10 +1,10 @@
 ﻿using Character;
 
-namespace Items.Weapon.AimBehaviours
+namespace Items.AimBehaviours
 {
-    public class SimplePistolAimBehaviour : WeaponAimBehaviour
+    public class SimplePistolAimBehaviour : ItemAimBehaviour
     {
-        public SimplePistolAimBehaviour(WeaponController weapon) : base(weapon)
+        public SimplePistolAimBehaviour(ItemController item) : base(item)
         {
         }
 

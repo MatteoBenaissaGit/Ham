@@ -1,7 +1,7 @@
 using System;
 using Data.Items;
-using Items.Weapon;
-using UI;
+using Items.AimBehaviours;
+using Items.SetActiveBehaviour;
 using UnityEngine;
 
 namespace Items
@@ -12,13 +12,39 @@ namespace Items
         [field:SerializeField] public GameObject FloatingMesh { get; private set; }
         [field:SerializeField] public Collider FloatingColliderCharacterDetection { get; private set; }
         
+        [field:Header("Weapon")]
+        [field:SerializeField] public Transform GunIK { get; private set; }
+        [field:SerializeField] public Transform Muzzle { get; private set; }
+        
         public ItemBaseState CurrentState { get; private set; }
         public ItemFloatingState FloatingState { get; private set; }
         public ItemUsedState UsedState { get; private set; }
-
+        public ItemAimBehaviour AimBehaviour { get; private set; }
+        public ItemSetActiveBehaviour SetActiveBehaviour { get; private set; }
+        
         protected virtual void Awake()
         {
+            SetBehaviours();
+
             Initialize(new ItemFloatingState(this), new ItemUsedState(this));
+        }
+
+        /// <summary>
+        /// Set the behaviours of the item depending on its type
+        /// </summary>
+        private void SetBehaviours()
+        {
+            switch (Data.Type)
+            {
+                case ItemType.None:
+                    break;
+                case ItemType.SimplePistol:
+                    AimBehaviour = new SimplePistolAimBehaviour(this);
+                    SetActiveBehaviour = new SimplePistolSetActiveBehaviour(this);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
