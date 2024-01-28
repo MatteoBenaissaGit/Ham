@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CameraXMovementSpeed>k__BackingField: 30
   <CameraYMovementSpeed>k__BackingField: 30
+  <CameraYClamp>k__BackingField: {x: -25, y: 30}
   <BaseCamera>k__BackingField:
     <Fov>k__BackingField: 40
     <SpeedToChange>k__BackingField: 0.5

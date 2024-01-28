@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.Mathematics;
 using UnityEngine;
+using CharacterController = Character.CharacterController;
 
 namespace Camera
 {
@@ -9,6 +10,8 @@ namespace Camera
         [SerializeField] private Transform _cameraTarget;
         [SerializeField] private Character.CharacterController _characterController;
 
+        private float _currentYRotation;
+        
         private void Awake()
         {
             Cursor.visible = false;
@@ -30,6 +33,12 @@ namespace Camera
                                    * _characterController.CameraController.Data.CameraYMovementSpeed 
                                    * _characterController.CameraController.CurrentCameraInformation.RotationSpeedMultiplier.y
                                    * Time.deltaTime;
+            if (_currentYRotation + rotationInputY > CharacterController.Instance.CameraController.Data.CameraYClamp.y || 
+                _currentYRotation + rotationInputY < CharacterController.Instance.CameraController.Data.CameraYClamp.x )
+            {
+                rotationInputY = 0;
+            }
+            _currentYRotation += rotationInputY;
             localRotation.x += rotationInputY;
             
             _cameraTarget.localRotation = Quaternion.Euler(localRotation);

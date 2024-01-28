@@ -23,6 +23,7 @@ namespace Character
     public class CharacterGameplayData
     {
         public bool IsGrounded { get; set; }
+        public bool IsLookingTowardCameraAim { get; set; } = false;
     }
     
     public class CharacterController : Singleton<CharacterController>
@@ -41,6 +42,8 @@ namespace Character
         public CharacterGameplayData GameplayData { get; private set; }
         public Action<CharacterGameplayAction> OnCharacterAction { get; set; }
 
+        
+        
         #region MonoBehaviour methods
 
         protected override void InternalAwake()
@@ -59,7 +62,7 @@ namespace Character
             Input.Update();
             StateManager.UpdateState();
             
-            MakeMeshRotationFollowInputs();
+            SetMeshRotation(GameplayData.IsLookingTowardCameraAim);
         }
 
         private void FixedUpdate()
@@ -82,18 +85,34 @@ namespace Character
         /// <summary>
         /// This method rotate the mesh toward where he is moving depending on inputs
         /// </summary>
-        private void MakeMeshRotationFollowInputs()
+        private void SetMeshRotation(bool lookAtCameraAim = false)
         {
             if (Input.CharacterControllerInput.IsMovingHorizontalOrVertical() == false)
             {
                 return;
             }
 
+            //get base local rotation
             Quaternion baseLocalRotation = Mesh.localRotation;
-            Mesh.LookAt(Rigidbody.transform.position + GetCameraRelativeInputDirectionWorld());
+            
+            //change it toward the desired world position
+            Vector3 worldPositionToLook;
+            if (lookAtCameraAim)
+            {
+                worldPositionToLook = Rigidbody.transform.position + CameraController.CameraTarget.transform.forward;
+            }
+            else
+            {
+                worldPositionToLook = Rigidbody.transform.position + GetCameraRelativeInputDirectionWorld();
+            }
+            Mesh.LookAt(worldPositionToLook);
+            
+            //nullify the x and z rotation to only rotate the character's y local rotation
             Vector3 lookAtRotation = Mesh.localRotation.eulerAngles;
             lookAtRotation.x = 0;
             lookAtRotation.z = 0;
+            
+            //set it back to base and lerp it to the new desired one
             Mesh.localRotation = baseLocalRotation;
             Quaternion desiredRotation = Quaternion.Euler(lookAtRotation);
             Mesh.localRotation = Quaternion.Slerp(baseLocalRotation, desiredRotation, Data.WalkRotationSpeed * Time.deltaTime);

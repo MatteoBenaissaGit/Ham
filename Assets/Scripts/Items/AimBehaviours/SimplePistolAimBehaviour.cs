@@ -15,8 +15,8 @@ namespace Items.AimBehaviours
             
             characterController.CameraController.SetCamera(
                 doAim ? characterController.CameraController.Data.AimCamera : characterController.CameraController.Data.BaseCamera);
-            
-            //TODO make character face direction
+
+            characterController.GameplayData.IsLookingTowardCameraAim = doAim;
         }
 
         public override void Shoot()

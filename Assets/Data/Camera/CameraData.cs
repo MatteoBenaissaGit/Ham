@@ -18,6 +18,7 @@ namespace Data.Camera
     {
         [field: SerializeField] public float CameraXMovementSpeed { get; private set; } = 100f;
         [field: SerializeField] public float CameraYMovementSpeed { get; private set; } = 100f;
+        [field: SerializeField] public Vector2 CameraYClamp { get; private set; } = new Vector2(-10,10);
         [field: SerializeField] public CameraInformation BaseCamera { get; private set; }
         [field: SerializeField] public CameraInformation AimCamera { get; private set; }
     }
