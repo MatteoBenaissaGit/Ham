@@ -224,6 +224,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""YMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""cf3e0bc8-7611-4c72-bdbf-5281f7206ec2"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -290,6 +299,72 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""XMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Mouse"",
+                    ""id"": ""e7e17588-de94-45d6-8a98-67609044ec43"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=0.1)"",
+                    ""groups"": """",
+                    ""action"": ""YMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""5beb4ff7-4e76-464d-9de6-69677154b49b"",
+                    ""path"": ""<Mouse>/delta/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""3412af3b-f4c7-4432-ac0e-812e7677dee1"",
+                    ""path"": ""<Mouse>/delta/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Stick"",
+                    ""id"": ""0d28f6c6-9322-405e-bc1e-15ef234d4577"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": """",
+                    ""action"": ""YMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""49e03c88-bbda-48d1-bea3-1579be28dfde"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""ae9df021-c024-4157-ac6b-ed7015a70824"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -490,6 +565,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // CameraMovement
         m_CameraMovement = asset.FindActionMap("CameraMovement", throwIfNotFound: true);
         m_CameraMovement_XMovement = m_CameraMovement.FindAction("XMovement", throwIfNotFound: true);
+        m_CameraMovement_YMovement = m_CameraMovement.FindAction("YMovement", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_HotBar = m_UI.FindAction("HotBar", throwIfNotFound: true);
@@ -622,11 +698,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_CameraMovement;
     private List<ICameraMovementActions> m_CameraMovementActionsCallbackInterfaces = new List<ICameraMovementActions>();
     private readonly InputAction m_CameraMovement_XMovement;
+    private readonly InputAction m_CameraMovement_YMovement;
     public struct CameraMovementActions
     {
         private @PlayerInput m_Wrapper;
         public CameraMovementActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @XMovement => m_Wrapper.m_CameraMovement_XMovement;
+        public InputAction @YMovement => m_Wrapper.m_CameraMovement_YMovement;
         public InputActionMap Get() { return m_Wrapper.m_CameraMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -639,6 +717,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @XMovement.started += instance.OnXMovement;
             @XMovement.performed += instance.OnXMovement;
             @XMovement.canceled += instance.OnXMovement;
+            @YMovement.started += instance.OnYMovement;
+            @YMovement.performed += instance.OnYMovement;
+            @YMovement.canceled += instance.OnYMovement;
         }
 
         private void UnregisterCallbacks(ICameraMovementActions instance)
@@ -646,6 +727,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @XMovement.started -= instance.OnXMovement;
             @XMovement.performed -= instance.OnXMovement;
             @XMovement.canceled -= instance.OnXMovement;
+            @YMovement.started -= instance.OnYMovement;
+            @YMovement.performed -= instance.OnYMovement;
+            @YMovement.canceled -= instance.OnYMovement;
         }
 
         public void RemoveCallbacks(ICameraMovementActions instance)
@@ -780,6 +864,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface ICameraMovementActions
     {
         void OnXMovement(InputAction.CallbackContext context);
+        void OnYMovement(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

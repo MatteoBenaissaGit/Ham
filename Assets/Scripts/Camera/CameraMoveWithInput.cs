@@ -19,13 +19,18 @@ namespace Camera
             Vector3 localRotation = _cameraTarget.transform.localRotation.eulerAngles;
             
             //x movement
-            float rotationInput = _characterController.Input.CameraMovementInput.CameraXMovement 
+            float rotationInputX = _characterController.Input.CameraMovementInput.CameraXMovement 
                                   * _characterController.CameraController.Data.CameraXMovementSpeed 
                                   * _characterController.CameraController.CurrentCameraInformation.RotationSpeedMultiplier.x
                                   * Time.deltaTime;
-            localRotation.y += rotationInput;
+            localRotation.y += rotationInputX;
             
-            //TODO y movement
+            //y movement
+            float rotationInputY = _characterController.Input.CameraMovementInput.CameraYMovement 
+                                   * _characterController.CameraController.Data.CameraYMovementSpeed 
+                                   * _characterController.CameraController.CurrentCameraInformation.RotationSpeedMultiplier.y
+                                   * Time.deltaTime;
+            localRotation.x += rotationInputY;
             
             _cameraTarget.localRotation = Quaternion.Euler(localRotation);
         }

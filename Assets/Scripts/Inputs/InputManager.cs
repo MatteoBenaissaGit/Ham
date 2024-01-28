@@ -37,6 +37,8 @@ namespace Inputs
             //camera movement
             _input.CameraMovement.XMovement.performed += CameraMovementInput.SetXMovement;
             _input.CameraMovement.XMovement.canceled += CameraMovementInput.SetXMovement;
+            _input.CameraMovement.YMovement.performed += CameraMovementInput.SetYMovement;
+            _input.CameraMovement.YMovement.canceled += CameraMovementInput.SetYMovement;
             
             //ui
             _input.UI.HotBar.performed += UIInput.SetHotBar;
@@ -64,6 +66,8 @@ namespace Inputs
             //camera movement
             _input.CameraMovement.XMovement.performed -= CameraMovementInput.SetXMovement;
             _input.CameraMovement.XMovement.canceled -= CameraMovementInput.SetXMovement;
+            _input.CameraMovement.YMovement.performed -= CameraMovementInput.SetYMovement;
+            _input.CameraMovement.YMovement.canceled -= CameraMovementInput.SetYMovement;
             
             //ui
             _input.UI.HotBar.performed -= UIInput.SetHotBar;
@@ -149,6 +153,7 @@ namespace Inputs
     public class CameraMovementInput
     {
         public float CameraXMovement { get; private set; }
+        public float CameraYMovement { get; private set; }
         
         public void SetXMovement(InputAction.CallbackContext context)
         {
@@ -159,6 +164,17 @@ namespace Inputs
             }
 
             CameraXMovement = context.ReadValue<float>();
+        }
+        
+        public void SetYMovement(InputAction.CallbackContext context)
+        {
+            if (context.performed == false)
+            {
+                CameraYMovement = 0;
+                return;
+            }
+
+            CameraYMovement = context.ReadValue<float>();
         }
     }
     
