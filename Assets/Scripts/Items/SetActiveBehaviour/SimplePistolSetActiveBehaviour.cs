@@ -1,4 +1,6 @@
-﻿namespace Items.SetActiveBehaviour
+﻿using UnityEngine;
+
+namespace Items.SetActiveBehaviour
 {
     public class SimplePistolSetActiveBehaviour : ItemSetActiveBehaviour
     {
@@ -10,7 +12,7 @@
         {
             base.SetItemActive(isActive);
             
-            Item.gameObject.SetActive(isActive);
+            Item.FloatingMesh.SetActive(isActive);
         }
     }
 }

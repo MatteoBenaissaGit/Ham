@@ -122,6 +122,10 @@ namespace UI
                 }
 
                 _cases[i].SetItem(item);
+                if (_currentIndex == i)
+                {
+                    item.UsedState.SetActive(true);
+                }
                 return;
             }
         }

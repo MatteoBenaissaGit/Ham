@@ -91,8 +91,8 @@ namespace Items
             {
                 return;
             }
-            character.UI.HotBar.AddItemToBar(this);
             SetState(UsedState);
+            character.UI.HotBar.AddItemToBar(this);
         }
 
         /// <summary>
