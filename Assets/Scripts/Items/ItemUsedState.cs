@@ -27,8 +27,12 @@ namespace Items
                 case ItemType.SimplePistol:
                     Controller.transform.parent = CharacterController.Instance.GunIK;
                     break;
+                case ItemType.ZipLine:
+                    Controller.transform.parent = CharacterController.Instance.GunIK;
+                    break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    Controller.transform.parent = Character.CharacterController.Instance.transform.transform;
+                    break;
             }
             
             Controller.transform.localPosition = Vector3.zero;
@@ -73,7 +77,7 @@ namespace Items
         {
             _isActive = isActive;
             
-            Controller.SetActiveBehaviour?.SetItemActive(isActive);
+            Controller.SetActiveBehaviour?.SetItemActive(_isActive);
         }
         
         private void Aim(bool doAim)

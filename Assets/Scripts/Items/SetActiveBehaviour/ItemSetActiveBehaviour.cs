@@ -1,4 +1,6 @@
-﻿namespace Items.SetActiveBehaviour
+﻿using UnityEngine;
+
+namespace Items.SetActiveBehaviour
 {
     public class ItemSetActiveBehaviour
     {
@@ -11,7 +13,7 @@
 
         public virtual void SetItemActive(bool isActive)
         {
-            
+            Item.UsedMesh.SetActive(isActive);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Items
     {
         [field:SerializeField] public ItemData Data { get; private set; }
         [field:SerializeField] public GameObject FloatingMesh { get; private set; }
+        [field:SerializeField] public GameObject UsedMesh { get; private set; }
         [field:SerializeField] public Collider FloatingColliderCharacterDetection { get; private set; }
         
         [field:Header("Weapon")]
@@ -37,16 +38,13 @@ namespace Items
         /// </summary>
         private void SetBehaviours()
         {
+            SetActiveBehaviour = new ItemSetActiveBehaviour(this);
+            
             switch (Data.Type)
             {
-                case ItemType.None:
-                    break;
                 case ItemType.SimplePistol:
                     AimBehaviour = new SimplePistolAimBehaviour(this);
-                    SetActiveBehaviour = new SimplePistolSetActiveBehaviour(this);
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 

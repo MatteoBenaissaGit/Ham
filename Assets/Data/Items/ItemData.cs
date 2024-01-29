@@ -6,7 +6,8 @@ namespace Data.Items
     public enum ItemType
     {
         None = 0,
-        SimplePistol = 1
+        SimplePistol = 1,
+        ZipLine = 2
     }
     
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Item", order = 3)]
