@@ -13,15 +13,13 @@ namespace Items.Props.Projectile
     public class Projectile : MonoBehaviour
     {
         [field:SerializeField] public ProjectileType Type { get; private set; }
+        [field:SerializeField] public Rigidbody Rigidbody { get; set; }
+        [field:SerializeField] public float Speed { get; set; }
+        [field:SerializeField] public GravityBody GravityBody { get; set; }
         
         public ProjectileBehaviour Behaviour { get; private set; }
+        public Vector3 Forward { get; set; }
         
-        [field:SerializeField] protected float Speed { get; set; }
-        [field:SerializeField] protected Rigidbody Rigidbody { get; set; }
-        [field:SerializeField] protected GravityBody GravityBody { get; set; }
-        
-        protected Vector3 Forward { get; set; }
-
         private void Awake()
         {
             switch (Type)
@@ -29,7 +27,7 @@ namespace Items.Props.Projectile
                 case ProjectileType.None:
                     break;
                 case ProjectileType.Fruit:
-                    Behaviour = new ProjectileFruitBehaviour();
+                    Behaviour = new ProjectileFruitBehaviour(this);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

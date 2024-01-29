@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8399afc5d1f94cf98bb832aa11c1312d, type: 3}
   m_Name: CameraData
   m_EditorClassIdentifier: 
-  <CameraXMovementSpeed>k__BackingField: 30
-  <CameraYMovementSpeed>k__BackingField: 30
+  <CameraXMovementSpeed>k__BackingField: 60
+  <CameraYMovementSpeed>k__BackingField: 60
   <CameraYClamp>k__BackingField: {x: -25, y: 30}
   <BaseCamera>k__BackingField:
     <Fov>k__BackingField: 40

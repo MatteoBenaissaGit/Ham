@@ -120,9 +120,17 @@ namespace Items
             return hit;
         }
 
+        /// <summary>
+        /// Drop the item 
+        /// </summary>
         public void Drop()
         {
             SetState(FloatingState);
+        }
+
+        public GameObject InstantiateGameObject(GameObject gameObjectToInstantiate)
+        {
+            return Instantiate(gameObjectToInstantiate);
         }
     }
 }

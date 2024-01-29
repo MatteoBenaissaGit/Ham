@@ -49,6 +49,7 @@ namespace Inputs
             //items
             _input.ItemController.Aim.performed += ItemInput.SetAim;
             _input.ItemController.Aim.canceled += ItemInput.SetAim;
+            _input.ItemController.Shoot.started += ItemInput.SetShoot;
             _input.ItemController.Shoot.performed += ItemInput.SetShoot;
             _input.ItemController.Shoot.canceled += ItemInput.SetShoot;
         }
@@ -78,6 +79,7 @@ namespace Inputs
             //items
             _input.ItemController.Aim.performed -= ItemInput.SetAim;
             _input.ItemController.Aim.canceled -= ItemInput.SetAim;
+            _input.ItemController.Shoot.started -= ItemInput.SetShoot;
             _input.ItemController.Shoot.performed -= ItemInput.SetShoot;
             _input.ItemController.Shoot.canceled -= ItemInput.SetShoot;
         }
