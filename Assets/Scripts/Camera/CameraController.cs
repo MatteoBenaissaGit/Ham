@@ -73,5 +73,17 @@ namespace Camera
         {
             Camera.transform.DOLocalRotate(_baseRotationEuler + eulerAngles, duration);
         }
+        
+#if UNITY_EDITOR
+
+        private void OnDrawGizmos()
+        {
+            Vector3 origin = Camera.transform.position;
+            Vector3 direction = Camera.transform.forward;
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(origin,direction * 100);
+        }
+
+#endif
     }
 }

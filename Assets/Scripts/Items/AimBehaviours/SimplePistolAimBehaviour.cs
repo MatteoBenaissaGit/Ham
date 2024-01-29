@@ -12,13 +12,12 @@ namespace Items.AimBehaviours
 
         public override void Aim(bool doAim)
         {
-            CharacterController characterController = Character.CharacterController.Instance;
-            characterController.UI.Aim.Set(doAim);
-            
-            characterController.CameraController.SetCamera(
-                doAim ? characterController.CameraController.Data.AimCamera : characterController.CameraController.Data.BaseCamera);
+            MakeCameraAim(doAim);
+        }
 
-            characterController.GameplayData.IsLookingTowardCameraAim = doAim;
+        public override void AimStay()
+        {
+            
         }
 
         public override void Shoot()

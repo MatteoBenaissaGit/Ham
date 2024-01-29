@@ -44,6 +44,10 @@ namespace Items
 
         public override void Update()
         {
+            if (_isAiming)
+            {
+                Controller.AimBehaviour?.AimStay();
+            }
         }
 
         public override void FixedUpdate()
@@ -89,6 +93,11 @@ namespace Items
             
             _isAiming = doAim;
             Controller.AimBehaviour?.Aim(doAim);
+        }
+
+        private void AimStay()
+        {
+            Controller.AimBehaviour?.AimStay();
         }
 
         private void Shoot()

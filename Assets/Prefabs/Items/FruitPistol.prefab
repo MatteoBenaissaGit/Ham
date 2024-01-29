@@ -65,7 +65,7 @@ Transform:
   - {fileID: 8567965399210895698}
   - {fileID: 6554011317202286884}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &6073933274287186294
 SphereCollider:
@@ -105,10 +105,12 @@ MonoBehaviour:
   <FloatingMesh>k__BackingField: {fileID: 6636642458497692569}
   <UsedMesh>k__BackingField: {fileID: 6636642458497692569}
   <FloatingColliderCharacterDetection>k__BackingField: {fileID: 6073933274287186294}
-  <GunIK>k__BackingField: {fileID: 8567965399210895698}
+  <GunIKs>k__BackingField:
+  - {fileID: 8567965399210895698}
   <Muzzle>k__BackingField: {fileID: 6554011317202286884}
   <Projectile>k__BackingField: {fileID: 1830669696267771947, guid: 78be377b1ebebc848abc734773dab60b,
     type: 3}
+  <PreviewMesh>k__BackingField: {fileID: 0}
 --- !u!1 &6636642458497692569
 GameObject:
   m_ObjectHideFlags: 0

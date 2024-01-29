@@ -229,8 +229,8 @@ namespace Inputs
         {
             bool wasAimingBefore = Aim;
             
-            Aim = context.performed;
-            
+            Aim = context.performed || context.started;
+
             if (Aim != wasAimingBefore)
             {
                 OnAim?.Invoke(Aim);

@@ -16,9 +16,12 @@ namespace Items
         [field:SerializeField] public Collider FloatingColliderCharacterDetection { get; private set; }
         
         [field:Header("Weapon")]
-        [field:SerializeField] public Transform GunIK { get; private set; }
+        [field:SerializeField] public Transform[] GunIKs { get; private set; } = new Transform[]{};
         [field:SerializeField] public Transform Muzzle { get; private set; }
         [field:SerializeField] public Projectile Projectile { get; private set; }
+        
+        [field:Header("Preview")]
+        [field:SerializeField] public GameObject PreviewMesh { get; private set; }
         
         public ItemBaseState CurrentState { get; private set; }
         public ItemFloatingState FloatingState { get; private set; }
@@ -44,6 +47,9 @@ namespace Items
             {
                 case ItemType.SimplePistol:
                     AimBehaviour = new SimplePistolAimBehaviour(this);
+                    break;
+                case ItemType.ZipLine:
+                    AimBehaviour = new ZiplineAimBehaviour(this);
                     break;
             }
         }
