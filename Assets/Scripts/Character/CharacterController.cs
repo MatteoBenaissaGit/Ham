@@ -41,7 +41,6 @@ namespace Character
         public InputManager Input { get; private set; }
         public CharacterGameplayData GameplayData { get; private set; }
         public Action<CharacterGameplayAction> OnCharacterAction { get; set; }
-
         
         
         #region MonoBehaviour methods
@@ -87,7 +86,7 @@ namespace Character
         /// </summary>
         private void SetMeshRotation(bool lookAtCameraAim = false)
         {
-            if (Input.CharacterControllerInput.IsMovingHorizontalOrVertical() == false)
+            if (Input.CharacterControllerInput.IsMovingHorizontalOrVertical() == false && lookAtCameraAim == false)
             {
                 return;
             }
