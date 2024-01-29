@@ -44,9 +44,9 @@ namespace Items
 
         public override void Update()
         {
-            if (_isAiming)
+            if (_isAiming && _isActive)
             {
-                Controller.AimBehaviour?.AimStay();
+                AimStay();
             }
         }
 
@@ -86,6 +86,11 @@ namespace Items
         
         private void Aim(bool doAim)
         {
+            if (_isActive == false)
+            {
+                return;
+            }
+            
             if (_isAiming == doAim)
             {
                 return;
@@ -97,11 +102,21 @@ namespace Items
 
         private void AimStay()
         {
+            if (_isActive == false)
+            {
+                return;
+            }
+            
             Controller.AimBehaviour?.AimStay();
         }
 
         private void Shoot()
         {
+            if (_isActive == false)
+            {
+                return;
+            }
+            
             if (_isAiming == false)
             {
                 return;
