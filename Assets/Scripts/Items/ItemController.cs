@@ -19,9 +19,11 @@ namespace Items
         [field:SerializeField] public Transform[] GunIKs { get; private set; } = new Transform[]{};
         [field:SerializeField] public Transform Muzzle { get; private set; }
         [field:SerializeField] public Projectile Projectile { get; private set; }
-        
-        [field:Header("Preview")]
-        [field:SerializeField] public GameObject PreviewMesh { get; private set; }
+
+        [field: Header("Preview")]
+        [field: SerializeField] public GameObject[] PreviewMeshes { get; private set; } = new GameObject[] { };
+        [field: SerializeField] public Material PreviewMaterial { get; private set; }
+        [field: SerializeField] public Material PreviewMaterialError { get; private set; }
         
         public ItemBaseState CurrentState { get; private set; }
         public ItemFloatingState FloatingState { get; private set; }
