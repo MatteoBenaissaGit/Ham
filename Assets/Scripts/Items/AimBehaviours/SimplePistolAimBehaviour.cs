@@ -1,4 +1,5 @@
-﻿using Items.Props.Projectile;
+﻿using Character;
+using Items.Props.Projectile;
 using UnityEngine;
 using CharacterController = Character.CharacterController;
 
@@ -13,6 +14,7 @@ namespace Items.AimBehaviours
         public override void Aim(bool doAim)
         {
             MakeCameraAim(doAim);
+            CharacterController.Instance.OnCharacterAction.Invoke(doAim ? CharacterGameplayAction.Aim : CharacterGameplayAction.StopAim);
         }
 
         public override void AimStay()
@@ -21,6 +23,11 @@ namespace Items.AimBehaviours
         }
 
         public override void Shoot()
+        {
+            
+        }
+
+        public override void ShootOnce()
         {
             Projectile projectile = Item.InstantiateGameObject(Item.Projectile.gameObject).GetComponent<Projectile>();
             

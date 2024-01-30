@@ -14,6 +14,7 @@ namespace Items.AimBehaviours
         public abstract void Aim(bool doAim);
         public abstract void AimStay();
         public abstract void Shoot();
+        public abstract void ShootOnce();
 
         protected void MakeCameraAim(bool doAim)
         {
@@ -25,5 +26,6 @@ namespace Items.AimBehaviours
 
             characterController.GameplayData.IsLookingTowardCameraAim = doAim;
         }
+
     }
 }

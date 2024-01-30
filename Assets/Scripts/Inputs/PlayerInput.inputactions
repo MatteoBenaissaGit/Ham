@@ -483,6 +483,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ShootOnce",
+                    "type": "Value",
+                    "id": "83f5c38f-4b62-42f4-abcc-9364800cfdc6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap(pressPoint=0.5)",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -527,6 +536,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b83c84d-19db-4934-b5bb-19442bf4d9ef",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShootOnce",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "434780a7-56da-46cd-8d31-3594e178189d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShootOnce",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

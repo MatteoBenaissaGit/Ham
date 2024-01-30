@@ -17,7 +17,9 @@ namespace Character
         StopWalk = 1,
         Jump = 2,
         Fall = 3,
-        Land = 4
+        Land = 4,
+        Aim = 5,
+        StopAim = 6
     }
     
     public class CharacterGameplayData

@@ -49,9 +49,9 @@ namespace Inputs
             //items
             _input.ItemController.Aim.performed += ItemInput.SetAim;
             _input.ItemController.Aim.canceled += ItemInput.SetAim;
-            _input.ItemController.Shoot.started += ItemInput.SetShoot;
             _input.ItemController.Shoot.performed += ItemInput.SetShoot;
             _input.ItemController.Shoot.canceled += ItemInput.SetShoot;
+            _input.ItemController.ShootOnce.performed += ItemInput.SetShootOnce;
         }
         
         public void Disable()
@@ -79,9 +79,9 @@ namespace Inputs
             //items
             _input.ItemController.Aim.performed -= ItemInput.SetAim;
             _input.ItemController.Aim.canceled -= ItemInput.SetAim;
-            _input.ItemController.Shoot.started -= ItemInput.SetShoot;
             _input.ItemController.Shoot.performed -= ItemInput.SetShoot;
             _input.ItemController.Shoot.canceled -= ItemInput.SetShoot;
+            _input.ItemController.ShootOnce.performed -= ItemInput.SetShootOnce;
         }
 
         public void Update()
@@ -222,6 +222,7 @@ namespace Inputs
     public class ItemInput
     {
         public bool Aim { get; private set; }
+        public Action OnShoot { get; set; }
         public Action OnShootOnce { get; set; }
         public Action<bool> OnAim { get; set; }
         
@@ -239,11 +240,19 @@ namespace Inputs
 
         public void SetShoot(InputAction.CallbackContext context)
         {
-            if (context.started == false)
+            if (context.performed)
+            {
+                OnShoot?.Invoke();
+            }
+        }
+
+        public void SetShootOnce(InputAction.CallbackContext context)
+        {
+            if (context.performed == false)
             {
                 return;
             }
-
+            
             OnShootOnce?.Invoke();
         }
     }

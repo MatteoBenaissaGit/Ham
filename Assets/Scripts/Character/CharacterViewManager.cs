@@ -39,6 +39,12 @@ namespace Character
                 case CharacterGameplayAction.Land:
                     SetJumpView(false);
                     break;
+                case CharacterGameplayAction.Aim:
+                    SetAimView(true);
+                    break;
+                case CharacterGameplayAction.StopAim:
+                    SetAimView(false);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(action), action, null);
             }
@@ -78,6 +84,11 @@ namespace Character
             _animator.SetBool("isJumping", true);
             _jumpTrail.DOKill();
             _jumpTrail.DOTime(_characterController.Data.JumpTrailLength, 0.1f);
+        }
+
+        private void SetAimView(bool doAim)
+        {
+            _animator.SetBool("isAiming", doAim);
         }
     }
 }

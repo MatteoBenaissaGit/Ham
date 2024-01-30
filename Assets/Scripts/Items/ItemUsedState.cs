@@ -39,7 +39,8 @@ namespace Items
             Controller.transform.localRotation = Quaternion.identity;
             
             CharacterController.Instance.Input.ItemInput.OnAim += Aim;
-            CharacterController.Instance.Input.ItemInput.OnShootOnce += Shoot;
+            CharacterController.Instance.Input.ItemInput.OnShoot += Shoot;
+            CharacterController.Instance.Input.ItemInput.OnShootOnce += ShootOnce;
         }
 
         public override void Update()
@@ -70,7 +71,8 @@ namespace Items
             Controller.transform.position += character.Mesh.transform.forward * 2 + character.transform.up;
             
             CharacterController.Instance.Input.ItemInput.OnAim -= Aim;
-            CharacterController.Instance.Input.ItemInput.OnShootOnce -= Shoot;
+            CharacterController.Instance.Input.ItemInput.OnShoot -= Shoot;
+            CharacterController.Instance.Input.ItemInput.OnShootOnce -= ShootOnce;
         }
 
         /// <summary>
@@ -108,6 +110,21 @@ namespace Items
             }
             
             Controller.AimBehaviour?.AimStay();
+        }
+
+        private void ShootOnce()
+        {
+            if (_isActive == false)
+            {
+                return;
+            }
+            
+            if (_isAiming == false)
+            {
+                return;
+            }
+            
+            Controller.AimBehaviour?.ShootOnce();
         }
 
         private void Shoot()

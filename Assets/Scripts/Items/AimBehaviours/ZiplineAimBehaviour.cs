@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+﻿using Character;
+using Unity.Mathematics;
 using UnityEngine;
 using CharacterController = Character.CharacterController;
 
@@ -28,6 +29,7 @@ namespace Items.AimBehaviours
             }
 
             SetPreviewParents(doAim ? null : _basePreviewParent);
+            CharacterController.Instance.OnCharacterAction.Invoke(doAim ? CharacterGameplayAction.Aim : CharacterGameplayAction.StopAim);
         }
 
         private RaycastHit[] _hits = new RaycastHit[5];
@@ -37,6 +39,11 @@ namespace Items.AimBehaviours
         }
 
         public override void Shoot()
+        {
+            
+        }
+
+        public override void ShootOnce()
         {
             
         }
