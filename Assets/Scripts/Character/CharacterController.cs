@@ -132,19 +132,18 @@ namespace Character
         /// This method return the input direction relative to the camera in the world space 
         /// </summary>
         /// <returns></returns>
-        public Vector3 GetCameraRelativeInputDirectionWorld(bool notNormalized = false)
+        public Vector3 GetCameraRelativeInputDirectionWorld(bool normalized = true)
         {
             CharacterControllerInput input = Input.CharacterControllerInput;
             Vector2 movementInput = new Vector2(input.HorizontalMovement, input.VerticalMovement).normalized;
             Vector3 inputDirection = new Vector3(movementInput.x, 0f, movementInput.y);
             
-            if (notNormalized)
+            if (normalized)
             {
-                Vector3 notNormalizedLocalDirection = CameraController.CameraTarget.transform.TransformDirection(inputDirection);
-                return notNormalizedLocalDirection;
+                inputDirection = inputDirection.normalized;
             }
-            
-            Vector3 localDirection = CameraController.CameraTarget.transform.TransformDirection(inputDirection.normalized);
+
+            Vector3 localDirection = CameraController.CameraTargetMovementRelative.TransformDirection(inputDirection);
 
             return localDirection;
         }
@@ -169,13 +168,7 @@ namespace Character
                 Gizmos.color = new Color(0f, 0.86f, 1f);
                 Gizmos.DrawLine(transform.position, transform.position + (-GravityBody.GravityDirection * 5));
             }
-            
-            //movement direction
-            Gizmos.color = Color.green;
-            Vector3 directionEndPoint = Rigidbody.transform.position + GetCameraRelativeInputDirectionWorld() * 3;
-            Gizmos.DrawLine(Rigidbody.transform.position, directionEndPoint);
-            Gizmos.DrawSphere(directionEndPoint, 0.25f);
-            
+
             //jump
             CharacterJumpState jump = StateManager.JumpState;
             CharacterFallState fall = StateManager.FallState;
@@ -202,6 +195,20 @@ namespace Character
                 };
                 Gizmos.DrawSphere(jumpPosition.Key,0.25f);
             }
+            
+            //movement direction
+            Vector3 direction = GetCameraRelativeInputDirectionWorld();
+            Gizmos.color = new Color(1f, 0.45f, 0f);
+            Gizmos.DrawRay(transform.position,direction * 4);
+            Gizmos.DrawSphere(transform.position + direction * 4, 0.2f);
+            Gizmos.DrawRay(transform.position,CameraController.CameraTargetMovementRelative.up * 2);
+            Gizmos.DrawSphere(transform.position + CameraController.CameraTargetMovementRelative.up * 2, 0.2f);
+            
+            //mesh up
+            Vector3 meshUpDirection = Mesh.up;
+            Gizmos.color = new Color(1f, 0.45f, 0f);
+            Gizmos.DrawRay(transform.position,meshUpDirection * 4);
+            Gizmos.DrawSphere(transform.position + meshUpDirection * 4, 0.2f);
         }
 
 #endif

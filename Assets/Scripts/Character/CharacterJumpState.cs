@@ -34,7 +34,7 @@ namespace Character
             _minimumTimeBeforeCheckingState = 0.1f;
             CurrentJumpState = JumpState.Up;
 
-            _baseJumpVelocityDirection = Controller.GetCameraRelativeInputDirectionWorld(true) * Controller.Data.WalkSpeed;
+            _baseJumpVelocityDirection = Controller.GetCameraRelativeInputDirectionWorld(false) * Controller.Data.WalkSpeed;
             Vector3 jumpForce = Controller.Rigidbody.transform.up * Controller.Data.JumpForce;
             Controller.Rigidbody.velocity = Vector3.zero;
             Controller.Rigidbody.AddForce(jumpForce + _baseJumpVelocityDirection, ForceMode.Impulse);

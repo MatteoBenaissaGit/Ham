@@ -14,6 +14,7 @@ namespace Camera
         [field: SerializeField] public CameraFollowTransform FollowTransform { get; private set; }
         [field: SerializeField] public CameraMoveWithInput MoveWithInput { get; private set; }
 
+        public Transform CameraTargetMovementRelative { get; private set; }
         public CameraInformation CurrentCameraInformation { get; private set; }
         
         private Vector3 _baseRotationEuler;
@@ -22,6 +23,10 @@ namespace Camera
         {
             _baseRotationEuler = Camera.transform.localRotation.eulerAngles;
             CurrentCameraInformation = Data.BaseCamera;
+
+            CameraTargetMovementRelative = Instantiate(new GameObject("CameraTargetRelative")).transform;
+            CameraTargetMovementRelative.parent = CameraTarget.parent;
+            CameraTargetMovementRelative.localPosition = Vector3.zero;
         }
 
         /// <summary>
@@ -80,8 +85,8 @@ namespace Camera
         {
             Vector3 origin = Camera.transform.position;
             Vector3 direction = Camera.transform.forward;
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(origin,direction * 100);
+            Gizmos.color = new Color(1f, 0f, 0f, 0.34f);
+            Gizmos.DrawRay(origin,direction * 60);
         }
 
 #endif
