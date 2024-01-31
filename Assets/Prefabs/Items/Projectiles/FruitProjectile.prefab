@@ -222,7 +222,7 @@ MonoBehaviour:
   <Mesh>k__BackingField: {fileID: 7974656252862717617}
   <GravityBody>k__BackingField: {fileID: 1089262603400922513}
   <Speed>k__BackingField: 50
-  <TimeBeforeDisappearing>k__BackingField: 4
+  <TimeBeforeDisappearing>k__BackingField: 10
 --- !u!135 &1128597138545649668
 SphereCollider:
   m_ObjectHideFlags: 0

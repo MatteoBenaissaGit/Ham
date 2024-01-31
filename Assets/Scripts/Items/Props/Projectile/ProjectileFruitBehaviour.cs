@@ -8,9 +8,9 @@ namespace Items.Props.Projectile
     /// </summary>
     public class ProjectileFruitBehaviour : ProjectileBehaviour
     {
-        private const float MeshRotationSpeed = 2f;
-        private const float TimeBeforeFreezing = 2f;
-        private const float TimeBeforeDestroying = 3f;
+        private const float MeshRotationSpeed = 10f;
+        private const float TimeBeforeFreezing = 3f;
+        private const float TimeBeforeDestroying = 8f;
 
         private float _timeOnColliderStay;
         private bool _froze;
@@ -49,15 +49,7 @@ namespace Items.Props.Projectile
 
         public override void FixedUpdate()
         {
-            Vector3 velocity = Projectile.Rigidbody.velocity;
-
-            if (velocity.magnitude <= 0.1f)
-            {
-                return;
-            }
-
-            Projectile.Mesh.forward = velocity;
-            Projectile.Mesh.Rotate(Projectile.Mesh.right, velocity.magnitude * MeshRotationSpeed);
+            MakeMeshRotateWithVelocity();
         }
 
         public override void OnColliderEnter(Collider collider)
@@ -76,6 +68,25 @@ namespace Items.Props.Projectile
             Projectile.transform.DOKill();
             Projectile.transform.DOScale(Vector3.zero, 1f);
             Object.Destroy(Projectile.gameObject, 1f);
+        }
+        
+        /// <summary>
+        /// This method rotate the mesh of the projectile following its velocity
+        /// </summary>
+        private void MakeMeshRotateWithVelocity()
+        {
+            Vector3 velocity = Projectile.Rigidbody.velocity;
+
+            if (velocity.magnitude <= 0.1f)
+            {
+                return;
+            }
+
+            Vector3 baseForward = Projectile.Mesh.forward;
+            Projectile.Mesh.forward = velocity;
+            Vector3 projectileRight = Projectile.Mesh.right;
+            Projectile.Mesh.forward = baseForward;
+            Projectile.Mesh.Rotate(projectileRight, velocity.magnitude * MeshRotationSpeed);
         }
     }
 }
