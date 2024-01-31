@@ -10,15 +10,26 @@ namespace Items.Props.Projectile
         Fruit = 1
     }
     
+    /// <summary>
+    /// This class manage the projectiles 
+    /// </summary>
     public class Projectile : MonoBehaviour
     {
         [field:SerializeField] public ProjectileType Type { get; private set; }
-        [field:SerializeField] public Rigidbody Rigidbody { get; set; }
-        [field:SerializeField] public float Speed { get; set; }
-        [field:SerializeField] public GravityBody GravityBody { get; set; }
+        [field:SerializeField] public Rigidbody Rigidbody { get; private set; }
+        [field:SerializeField] public Collider Collider { get; private set; }
+        [field:SerializeField] public Transform Mesh { get; private set; }
+        [field:SerializeField] public GravityBody GravityBody { get; private set; }
+        
+        [field:Header("Values")]
+        [field:SerializeField] public float Speed { get; private set; }
+        [field:SerializeField] public float TimeBeforeDisappearing { get; private set; }
         
         public ProjectileBehaviour Behaviour { get; private set; }
-        public Vector3 Forward { get; set; }
+        public Vector3 Forward { get; private set; }
+        public float ExistingTime { get; private set; }
+        public bool HasHit { get; private set; }
+        public bool IsDestroyed { get; set; }
         
         private void Awake()
         {
@@ -42,6 +53,20 @@ namespace Items.Props.Projectile
 
         private void Update()
         {
+            if (IsDestroyed)
+            {
+                return;
+            }
+            
+            ExistingTime += Time.deltaTime;
+            
+            if (ExistingTime > TimeBeforeDisappearing && HasHit == false)
+            {
+                IsDestroyed = true;
+                Behaviour?.Destroy();
+                return;
+            }
+
             Behaviour?.Update();
         }
 
@@ -50,22 +75,14 @@ namespace Items.Props.Projectile
             Behaviour?.FixedUpdate();
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            Behaviour?.OnColliderEnter(other);
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            Behaviour?.OnColliderStay(other);
-        }
-
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.collider == null)
             {
                 return;
             }
+
+            HasHit = true;
             Behaviour?.OnColliderEnter(collision.collider);
         }
 

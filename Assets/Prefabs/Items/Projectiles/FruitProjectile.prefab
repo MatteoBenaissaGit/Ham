@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7974656252862717617}
   - component: {fileID: 4261383931968095767}
   - component: {fileID: 4898862617408574005}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3427794748582752026}
   - component: {fileID: 7874698785072639287}
   - component: {fileID: 1552776506653437461}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 1128597138545649668}
   - component: {fileID: 1651386578327070167}
   - component: {fileID: 1089262603400922513}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FruitProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,8 +218,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 1
   <Rigidbody>k__BackingField: {fileID: 1651386578327070167}
-  <Speed>k__BackingField: 50
+  <Collider>k__BackingField: {fileID: 1128597138545649668}
+  <Mesh>k__BackingField: {fileID: 7974656252862717617}
   <GravityBody>k__BackingField: {fileID: 1089262603400922513}
+  <Speed>k__BackingField: 50
+  <TimeBeforeDisappearing>k__BackingField: 4
 --- !u!135 &1128597138545649668
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -239,7 +242,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.38
+  m_Radius: 0.26
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1651386578327070167
 Rigidbody:
@@ -292,7 +295,7 @@ GameObject:
   - component: {fileID: 4236404716397785083}
   - component: {fileID: 1590357839710424814}
   - component: {fileID: 1894340230053559010}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
