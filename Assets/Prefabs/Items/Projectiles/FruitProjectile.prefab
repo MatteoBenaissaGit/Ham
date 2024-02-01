@@ -216,13 +216,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42f0347e1814b43a4a998448c8f99ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Type>k__BackingField: 1
+  <Data>k__BackingField: {fileID: 11400000, guid: aee79d193f376e442911a5e7855703e1,
+    type: 2}
   <Rigidbody>k__BackingField: {fileID: 1651386578327070167}
   <Collider>k__BackingField: {fileID: 1128597138545649668}
   <Mesh>k__BackingField: {fileID: 7974656252862717617}
   <GravityBody>k__BackingField: {fileID: 1089262603400922513}
-  <Speed>k__BackingField: 50
-  <TimeBeforeDisappearing>k__BackingField: 10
 --- !u!135 &1128597138545649668
 SphereCollider:
   m_ObjectHideFlags: 0

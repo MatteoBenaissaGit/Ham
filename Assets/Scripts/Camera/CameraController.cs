@@ -87,6 +87,9 @@ namespace Camera
             Vector3 direction = Camera.transform.forward;
             Gizmos.color = new Color(1f, 0f, 0f, 0.34f);
             Gizmos.DrawRay(origin,direction * 60);
+            
+            Vector3 cameraForwardAimPosition = transform.position + transform.forward * 30f;
+            Gizmos.DrawSphere(cameraForwardAimPosition,0.2f);
         }
 
 #endif

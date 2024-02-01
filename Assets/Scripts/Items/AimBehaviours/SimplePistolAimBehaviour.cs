@@ -27,14 +27,24 @@ namespace Items.AimBehaviours
             
         }
 
+        private const float NoRaycastHitLaunchDistance = 30f;
         public override void ShootOnce()
         {
             Projectile projectile = Item.InstantiateGameObject(Item.Projectile.gameObject).GetComponent<Projectile>();
-            
+
             projectile.transform.position = Item.Muzzle.position;
             projectile.transform.forward = Item.Muzzle.forward;
+
+            Transform camera = CharacterController.Instance.CameraController.Camera.transform;
             
-            projectile.Launch(Item.Muzzle.forward); //TODO set the forward to raycast result or raycast direction
+            RaycastHit? hit = GetClosestRaycastHitTowardCamera();
+            if (hit == null)
+            {
+                Vector3 cameraForwardAimPosition = camera.position + camera.forward * NoRaycastHitLaunchDistance;
+                projectile.Launch(cameraForwardAimPosition);
+                return;
+            }
+            projectile.Launch(hit.Value.point, true);
         }
     }
 }

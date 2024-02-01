@@ -19,9 +19,15 @@ namespace Items.Props.Projectile
         {
         }
         
-        public override void Launch()
+        public override void Launch(Vector3? target = null)
         {
-            Projectile.Rigidbody.AddForce(Projectile.Speed * Projectile.Forward, ForceMode.Impulse);
+            float speedMultiplier = target == null
+                ? 1f
+                : Vector3.Distance(Projectile.transform.position, (Vector3)target) * Projectile.Data.SpeedMultiplierPerDistance;
+            speedMultiplier = Mathf.Clamp(speedMultiplier, 1, Projectile.Data.MaxSpeedMultiplierPerDistance);
+            //Debug.Log($"speed multiplier = {speedMultiplier}");
+            
+            Projectile.Rigidbody.AddForce(Projectile.transform.forward * Projectile.Data.Speed * speedMultiplier, ForceMode.Impulse);
 
             Projectile.Mesh.DOComplete();
             Projectile.Mesh.DOPunchScale(Vector3.one * 0.5f, 0.3f);

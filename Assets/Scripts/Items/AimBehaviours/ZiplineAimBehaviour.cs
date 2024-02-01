@@ -10,6 +10,8 @@ namespace Items.AimBehaviours
         private Transform _basePreviewParent;
         private Quaternion _desiredZipLineEndPreviewRotation;
         private bool _isPlacementValid;
+        private MeshRenderer _previewEndMeshRenderer;
+        private MeshRenderer _previewStartMeshRenderer;
         
         public ZiplineAimBehaviour(ItemController item) : base(item)
         {
@@ -32,7 +34,6 @@ namespace Items.AimBehaviours
             CharacterController.Instance.OnCharacterAction.Invoke(doAim ? CharacterGameplayAction.Aim : CharacterGameplayAction.StopAim);
         }
 
-        private RaycastHit[] _hits = new RaycastHit[5];
         public override void AimStay()
         {
             SetZipLinePreview();
@@ -59,9 +60,7 @@ namespace Items.AimBehaviours
             Item.PreviewMeshes[0].transform.parent = parent;
             Item.PreviewMeshes[1].transform.parent = parent;
         }
-
-        private MeshRenderer _previewEndMeshRenderer;
-        private MeshRenderer _previewStartMeshRenderer;
+        
         private void SetPreviewMaterials(Material material)
         {
             _previewStartMeshRenderer.material = material;
@@ -75,43 +74,16 @@ namespace Items.AimBehaviours
         {
             Item.PreviewMeshes[0].transform.rotation = Quaternion.Lerp(Item.PreviewMeshes[0].transform.rotation, _desiredZipLineEndPreviewRotation, 0.1f);
 
-            Vector3 origin = CharacterController.Instance.CameraController.Camera.transform.position;
-            Vector3 direction = CharacterController.Instance.CameraController.Camera.transform.forward;
-            int hitAmount = Physics.RaycastNonAlloc(origin, direction, _hits);
-
-            RaycastHit closestHit = default;
-            float closestHitDistance = float.MaxValue;
-            bool didHit = false;
-
-            for (int i = hitAmount - 1; i >= 0; i--)
+            RaycastHit? hit = GetClosestRaycastHitTowardCamera(() => SetPreviewActives(false));
+            if (hit == null)
             {
-                if (_hits[i].collider == null || _hits[i].collider.isTrigger)
-                {
-                    continue;
-                }
-
-                float distance = Vector3.Distance(CharacterController.Instance.CameraController.Camera.transform.position,
-                    _hits[i].point);
-                if (distance > closestHitDistance)
-                {
-                    continue;
-                }
-
-                closestHitDistance = distance;
-                closestHit = _hits[i];
-                didHit = true;
-            }
-
-            if (didHit == false)
-            {
-                SetPreviewActives(false);
                 return;
             }
 
             SetPreviewActives(true);
-            Item.PreviewMeshes[0].transform.position = closestHit.point;
+            Item.PreviewMeshes[0].transform.position = hit.Value.point;
 
-            Vector3 normal = closestHit.normal.normalized;
+            Vector3 normal = hit.Value.normal.normalized;
             Quaternion rotation = Quaternion.LookRotation(normal);
             Vector3 eulerAngles = rotation.eulerAngles;
             _desiredZipLineEndPreviewRotation = Quaternion.Euler(eulerAngles);

@@ -17,7 +17,7 @@ namespace Items.Props.Projectile
         /// <summary>
         /// This method is used at the launch/creation of the projectile
         /// </summary>
-        public abstract void Launch();
+        public abstract void Launch(Vector3? target = null);
        
         public abstract void Update();
        
