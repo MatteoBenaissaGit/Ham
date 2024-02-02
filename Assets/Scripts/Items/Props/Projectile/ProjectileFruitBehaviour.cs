@@ -22,7 +22,7 @@ namespace Items.Props.Projectile
         public override void Launch(Vector3? target = null)
         {
             float speedMultiplier = target == null
-                ? 1f
+                ? Projectile.Data.SpeedMultiplierIfNoRaycastHit
                 : Vector3.Distance(Projectile.transform.position, (Vector3)target) * Projectile.Data.SpeedMultiplierPerDistance;
             speedMultiplier = Mathf.Clamp(speedMultiplier, 1, Projectile.Data.MaxSpeedMultiplierPerDistance);
             //Debug.Log($"speed multiplier = {speedMultiplier}");

@@ -27,7 +27,7 @@ namespace Items.AimBehaviours
             
         }
 
-        private const float NoRaycastHitLaunchDistance = 30f;
+        private const float NoRaycastHitLaunchDistance = 45f;
         public override void ShootOnce()
         {
             Projectile projectile = Item.InstantiateGameObject(Item.Projectile.gameObject).GetComponent<Projectile>();
