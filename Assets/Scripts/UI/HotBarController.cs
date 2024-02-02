@@ -4,6 +4,7 @@ using Data.Items;
 using Items;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace UI
 {
@@ -141,6 +142,20 @@ namespace UI
             }
             
             _cases[_currentIndex].ItemController.Drop();
+            _cases[_currentIndex].SetItem();
+        }
+
+        /// <summary>
+        /// Destroy the current in hand item
+        /// </summary>
+        public void DestroyItem()
+        {
+            if (_cases[_currentIndex].ItemController == null)
+            {
+                return;
+            }
+            
+            Object.Destroy(_cases[_currentIndex].ItemController.gameObject);
             _cases[_currentIndex].SetItem();
         }
     }

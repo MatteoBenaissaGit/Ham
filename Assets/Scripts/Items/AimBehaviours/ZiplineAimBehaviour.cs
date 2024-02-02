@@ -1,4 +1,7 @@
-﻿using Character;
+﻿using System.Data;
+using Character;
+using Common;
+using Items.Props.ZipLine;
 using Unity.Mathematics;
 using UnityEngine;
 using CharacterController = Character.CharacterController;
@@ -41,7 +44,17 @@ namespace Items.AimBehaviours
 
         public override void Shoot()
         {
+            if (IsZipLinePlacementValid() == false)
+            {
+                return;
+            }
             
+            ZipLineController zipLine = ResourceManager.Instance.InstantiateResource(ResourceEnum.ZipLineController).GetComponent<ZipLineController>();
+            zipLine.Initialize(Item.PreviewMeshes[0].transform, Item.PreviewMeshes[1].transform);
+
+            Item.AimBehaviour?.Aim(false);
+            
+            Item.Destroy();
         }
 
         public override void ShootOnce()
@@ -51,12 +64,20 @@ namespace Items.AimBehaviours
 
         private void SetPreviewActives(bool isActive)
         {
+            if (Item.PreviewMeshes[0] == null || Item.PreviewMeshes[0].transform == null)
+            {
+                return;
+            }
             Item.PreviewMeshes[0].SetActive(isActive);
             Item.PreviewMeshes[1].SetActive(isActive);
         }
 
         private void SetPreviewParents(Transform parent)
         {
+            if (Item.PreviewMeshes[0] == null || Item.PreviewMeshes[0].transform == null)
+            {
+                return;
+            }
             Item.PreviewMeshes[0].transform.parent = parent;
             Item.PreviewMeshes[1].transform.parent = parent;
         }
@@ -113,13 +134,15 @@ namespace Items.AimBehaviours
             previewMesh.rotation = Quaternion.Euler(eulerAngles);
         }
 
-        private const float DistanceToValidate = 30f;
+        private const float DistanceToValidate = 25f;
+        private const float DotProductToValidate = 0.5f;
         private bool IsZipLinePlacementValid()
         {
             float distanceBetweenPreviews = Vector3.Distance(Item.PreviewMeshes[0].transform.position, Item.PreviewMeshes[1].transform.position);
+            float dotProductBetweenPreviews = Vector3.Dot(Item.PreviewMeshes[0].transform.up, Item.PreviewMeshes[1].transform.up);
 
-            bool isValid = distanceBetweenPreviews < DistanceToValidate;
-            SetPreviewMaterials(isValid ? Item.PreviewMaterialError : Item.PreviewMaterial);
+            bool isValid = distanceBetweenPreviews > DistanceToValidate && Mathf.Abs(dotProductBetweenPreviews) > DotProductToValidate;
+            SetPreviewMaterials(isValid ? Item.PreviewMaterial : Item.PreviewMaterialError);
             return isValid;
         }
     }

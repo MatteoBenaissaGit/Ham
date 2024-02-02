@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1881007641542912097}
   - component: {fileID: 1161398898086192254}
   m_Layer: 0
-  m_Name: ZipLine
+  m_Name: ItemZipLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

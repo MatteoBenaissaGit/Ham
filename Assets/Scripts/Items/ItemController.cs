@@ -5,6 +5,7 @@ using Items.Props;
 using Items.Props.Projectile;
 using Items.SetActiveBehaviour;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Items
 {
@@ -137,6 +138,24 @@ namespace Items
         public GameObject InstantiateGameObject(GameObject gameObjectToInstantiate)
         {
             return Instantiate(gameObjectToInstantiate);
+        }
+
+        public void Destroy()
+        {
+            if (CurrentState == FloatingState)
+            {
+                Object.Destroy(transform.gameObject);
+                return;
+            }
+
+            if (AimBehaviour != null)
+            {
+                Character.CharacterController.Instance.Input.ItemInput.OnAim -= AimBehaviour.Aim;
+                Character.CharacterController.Instance.Input.ItemInput.OnShoot -= AimBehaviour.Shoot;
+                Character.CharacterController.Instance.Input.ItemInput.OnShootOnce -= AimBehaviour.ShootOnce;
+            }
+
+            Character.CharacterController.Instance.UI.HotBar.DestroyItem();
         }
     }
 }
