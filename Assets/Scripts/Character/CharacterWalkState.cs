@@ -18,6 +18,8 @@ namespace Character
 
         public override void Enter()
         {
+            Controller.CameraController.SetCameraAfterCurrent(Controller.CameraController.Data.RunCamera);
+
             _currentAccelerationTime = 0;
             
             //if we were jumping and moving we don't reset the acceleration time of the player
@@ -54,6 +56,8 @@ namespace Character
 
         public override void Quit()
         {
+            Controller.CameraController.EndCurrentCameraState();
+
             Controller.OnCharacterAction.Invoke(CharacterGameplayAction.StopWalk);
         }
 

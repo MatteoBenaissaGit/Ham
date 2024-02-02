@@ -28,6 +28,8 @@ namespace Character
 
         public override void Enter()
         {
+            Controller.CameraController.SetCameraAfterCurrent(Controller.CameraController.Data.JumpCamera);
+
             Controller.GameplayData.IsGrounded = false;
 
             _numberOfJumpInputs = 0;
@@ -65,6 +67,8 @@ namespace Character
 
         public override void Quit()
         {
+            Controller.CameraController.EndCurrentCameraState();
+
             Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Land);
         }
 

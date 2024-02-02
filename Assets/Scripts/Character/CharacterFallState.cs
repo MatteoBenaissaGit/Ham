@@ -16,6 +16,8 @@ namespace Character
 
         public override void Enter()
         {
+            Controller.CameraController.SetCameraAfterCurrent(Controller.CameraController.Data.FallCamera);
+
             Vector3 currentWalkVelocity = Controller.GetCameraRelativeInputDirectionWorld() * Controller.Data.WalkSpeed;
             Controller.Rigidbody.AddForce(currentWalkVelocity, ForceMode.Impulse);
             Controller.GameplayData.IsGrounded = false;
@@ -48,6 +50,8 @@ namespace Character
 
         public override void Quit()
         {
+            Controller.CameraController.EndCurrentCameraState();
+
             Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Land);
             Controller.GameplayData.IsGrounded = true;
         }

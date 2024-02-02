@@ -22,9 +22,15 @@ namespace Items.AimBehaviours
         {
             CharacterController characterController = Character.CharacterController.Instance;
             characterController.UI.Aim.Set(doAim);
-            
-            characterController.CameraController.SetCamera(
-                doAim ? characterController.CameraController.Data.AimCamera : characterController.CameraController.Data.BaseCamera);
+
+            if (doAim)
+            {
+                characterController.CameraController.SetCameraAfterCurrent(characterController.CameraController.Data.AimCamera);
+            }
+            else
+            {
+                characterController.CameraController.EndCurrentCameraState(true);
+            }
 
             characterController.GameplayData.IsLookingTowardCameraAim = doAim;
         }

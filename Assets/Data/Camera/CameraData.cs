@@ -6,6 +6,8 @@ namespace Data.Camera
     [Serializable]
     public class CameraInformation
     {
+        [field:SerializeField] public string ID { get; private set; }
+        [field:SerializeField] public int Priority { get; private set; }
         [field:SerializeField] public float Fov { get; private set; }
         [field:SerializeField] public float SpeedToChange { get; private set; }
         [field:SerializeField] public Vector2 Offset { get; private set; }
@@ -21,5 +23,8 @@ namespace Data.Camera
         [field: SerializeField] public Vector2 CameraYClamp { get; private set; } = new Vector2(-10,10);
         [field: SerializeField] public CameraInformation BaseCamera { get; private set; }
         [field: SerializeField] public CameraInformation AimCamera { get; private set; }
+        [field: SerializeField] public CameraInformation RunCamera { get; private set; }
+        [field: SerializeField] public CameraInformation JumpCamera { get; private set; }
+        [field: SerializeField] public CameraInformation FallCamera { get; private set; }
     }
 }

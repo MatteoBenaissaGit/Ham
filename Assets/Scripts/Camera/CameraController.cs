@@ -78,6 +78,29 @@ namespace Camera
         {
             Camera.transform.DOLocalRotate(_baseRotationEuler + eulerAngles, duration);
         }
+
+        private CameraInformation _cameraToPutAfterCurrent;
+        public void SetCameraAfterCurrent(CameraInformation cameraInformation)
+        {
+            _cameraToPutAfterCurrent = cameraInformation;
+            if (_cameraToPutAfterCurrent.Priority >= CurrentCameraInformation.Priority)
+            {
+                EndCurrentCameraState();
+            }
+        }
+
+        public void EndCurrentCameraState(bool forcePriority = false)
+        {
+            _cameraToPutAfterCurrent ??= Data.BaseCamera;
+            
+            if ( _cameraToPutAfterCurrent.Priority < CurrentCameraInformation.Priority && forcePriority == false)
+            {
+                return;
+            }
+
+            SetCamera(_cameraToPutAfterCurrent ?? Data.BaseCamera);
+            _cameraToPutAfterCurrent = null;
+        }
         
 #if UNITY_EDITOR
 
