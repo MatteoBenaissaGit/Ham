@@ -4,9 +4,11 @@ using Camera;
 using Data.Character;
 using Gravity;
 using Inputs;
+using Interfaces;
 using MatteoBenaissaLibrary.SingletonClassBase;
 using UI;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 
 namespace Character
@@ -64,6 +66,8 @@ namespace Character
             StateManager.UpdateState();
             
             SetMeshRotation(GameplayData.IsLookingTowardCameraAim);
+
+            CheckNearbyInteractions();
         }
 
         private void FixedUpdate()
@@ -150,6 +154,48 @@ namespace Character
             return localDirection;
         }
 
+        private const float NearbyInteractionSphereCastRadius = 5f;
+        private RaycastHit[] _nearbyInteractionObjectCast = new RaycastHit[64];
+        private IInteractable _currentInteractable;
+        /// <summary>
+        /// This method check if there is any IInteractable near the player and calls them if necessary
+        /// </summary>
+        private void CheckNearbyInteractions()
+        {
+            int sphereCast = Physics.SphereCastNonAlloc(transform.position, NearbyInteractionSphereCastRadius, transform.up, _nearbyInteractionObjectCast);
+            for (int i = 0; i < sphereCast; i++)
+            {
+                RaycastHit hit = _nearbyInteractionObjectCast[i];
+                if (hit.collider == null || hit.collider.isTrigger || hit.collider.gameObject == gameObject)
+                {
+                    continue;
+                }
+                
+                if (hit.collider.TryGetComponent(out IInteractable interactable) == false)
+                {
+                    continue;
+                }
+
+                if (_currentInteractable == null)
+                {
+                    interactable.CharacterIsInRange(true);
+                }
+                else if (interactable != _currentInteractable)
+                {
+                    _currentInteractable.CharacterIsInRange(false);
+                    interactable.CharacterIsInRange(true);
+                }
+                _currentInteractable = interactable;
+                return;
+            }
+
+            if (_currentInteractable != null)
+            {
+                _currentInteractable.CharacterIsInRange(false);
+                _currentInteractable = null;
+            }
+        }
+
 #if UNITY_EDITOR
 
         private Dictionary<Vector3, JumpState> _jumpGizmos = new Dictionary<Vector3, JumpState>();
@@ -211,6 +257,10 @@ namespace Character
             Gizmos.color = new Color(1f, 0.45f, 0f);
             Gizmos.DrawRay(transform.position,meshUpDirection * 4);
             Gizmos.DrawSphere(transform.position + meshUpDirection * 4, 0.2f);
+            
+            //interaction range
+            Handles.color = new Color(1f, 0.41f, 0.93f);
+            Handles.DrawWireDisc(transform.position, transform.up, NearbyInteractionSphereCastRadius);
         }
 
 #endif

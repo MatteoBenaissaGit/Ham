@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1802cfea364d1bb51354729549ed64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ZipLineStartTip>k__BackingField: {fileID: 3893296493796286088}
+  <ZipLineEndTip>k__BackingField: {fileID: 4064742536978636886}
   _zipLineStart: {fileID: 6354349763836986451}
-  _zipLineStartTip: {fileID: 3893296493796286088}
   _zipLineEnd: {fileID: 2569570679437394963}
-  _zipLineEndTip: {fileID: 4064742536978636886}
   _lineRenderer: {fileID: 1438907174304170174}
   _lineResolution: 0
 --- !u!1 &3017248544831439772
@@ -308,6 +308,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3893296493796286088}
+  - component: {fileID: 1374993028733439548}
+  - component: {fileID: 9068781274072103584}
   m_Layer: 0
   m_Name: ZipLineTip
   m_TagString: Untagged
@@ -330,6 +332,40 @@ Transform:
   m_Father: {fileID: 6354349763836986451}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1374993028733439548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3849189958465821557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff3ce3822a45410ab7cbae158b741220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _zipLine: {fileID: 2369641935128179980}
+--- !u!135 &9068781274072103584
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3849189958465821557}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.34
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8865406777206996185
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,6 +375,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4064742536978636886}
+  - component: {fileID: 2091926065761139407}
+  - component: {fileID: 5272621138589270331}
   m_Layer: 0
   m_Name: ZipLineTip
   m_TagString: Untagged
@@ -361,6 +399,40 @@ Transform:
   m_Father: {fileID: 2569570679437394963}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2091926065761139407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865406777206996185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff3ce3822a45410ab7cbae158b741220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _zipLine: {fileID: 2369641935128179980}
+--- !u!135 &5272621138589270331
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865406777206996185}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.34
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4931064922757141410
 PrefabInstance:
   m_ObjectHideFlags: 0

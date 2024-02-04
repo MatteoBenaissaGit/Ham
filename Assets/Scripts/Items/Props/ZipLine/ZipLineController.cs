@@ -6,15 +6,16 @@ namespace Items.Props.ZipLine
 {
     public class ZipLineController : MonoBehaviour
     {
+        [field:SerializeField] public Transform ZipLineStartTip { get; private set; }
+        [field:SerializeField] public Transform ZipLineEndTip { get; private set; }
+        
+        public bool CanBeUsed { get; private set; }
+        
         [SerializeField] private Transform _zipLineStart;
-        [SerializeField] private Transform _zipLineStartTip;
         [SerializeField] private Transform _zipLineEnd;
-        [SerializeField] private Transform _zipLineEndTip;
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private int _lineResolution;
 
-        private bool _canBeUsed;
-        
         public void Initialize(Transform start, Transform end)
         {
             _zipLineStart.position = start.position;
@@ -31,11 +32,11 @@ namespace Items.Props.ZipLine
             
             _zipLineStart.localScale = Vector3.zero;
             _zipLineStart.DOKill();
-            _zipLineStart.DOScale(baseScale, animationTime).SetEase(ease).OnComplete(CreateZipLine);
+            _zipLineStart.DOScale(baseScale, animationTime).SetEase(ease);
             
             _zipLineEnd.localScale = Vector3.zero;
             _zipLineEnd.DOKill();
-            _zipLineEnd.DOScale(baseScale, animationTime).SetEase(ease);
+            _zipLineEnd.DOScale(baseScale, animationTime).SetEase(ease).OnComplete(CreateZipLine);
         }
 
         private void CreateZipLine()
@@ -44,12 +45,12 @@ namespace Items.Props.ZipLine
             
             Vector3[] positions = new[]
             {
-                _zipLineStartTip.position,
-                _zipLineEndTip.position
+                ZipLineStartTip.position,
+                ZipLineEndTip.position
             };
             _lineRenderer.SetPositions(positions);
 
-            _canBeUsed = true;
+            CanBeUsed = true;
         }
     }
 }
