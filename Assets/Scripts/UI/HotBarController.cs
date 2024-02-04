@@ -146,17 +146,22 @@ namespace UI
         }
 
         /// <summary>
-        /// Destroy the current in hand item
+        /// Destroy the specified item in hot bar
         /// </summary>
-        public void DestroyItem()
+        /// <param name="item">the item to destroy</param>
+        public void DestroyItem(ItemController item)
         {
-            if (_cases[_currentIndex].ItemController == null)
+            foreach (HotBarCaseController hotBarCase in _cases)
             {
-                return;
+                if (hotBarCase.ItemController == null || hotBarCase.ItemController != item)
+                {
+                    continue;
+                }
+                GameObject itemGameObject = item.gameObject;
+                Destroy(item);
+                Destroy(itemGameObject);
+                hotBarCase.SetItem();
             }
-            
-            Object.Destroy(_cases[_currentIndex].ItemController.gameObject);
-            _cases[_currentIndex].SetItem();
         }
     }
 }

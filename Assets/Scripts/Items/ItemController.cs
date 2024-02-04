@@ -150,12 +150,12 @@ namespace Items
 
             if (AimBehaviour != null)
             {
-                Character.CharacterController.Instance.Input.ItemInput.OnAim -= AimBehaviour.Aim;
-                Character.CharacterController.Instance.Input.ItemInput.OnShoot -= AimBehaviour.Shoot;
-                Character.CharacterController.Instance.Input.ItemInput.OnShootOnce -= AimBehaviour.ShootOnce;
+                Character.CharacterController.Instance.Input.ItemInput.OnAim -= UsedState.Aim;
+                Character.CharacterController.Instance.Input.ItemInput.OnShoot -= UsedState.Shoot;
+                Character.CharacterController.Instance.Input.ItemInput.OnShootOnce -= UsedState.ShootOnce;
             }
 
-            Character.CharacterController.Instance.UI.HotBar.DestroyItem();
+            Character.CharacterController.Instance.UI.HotBar.DestroyItem(this);
         }
     }
 }

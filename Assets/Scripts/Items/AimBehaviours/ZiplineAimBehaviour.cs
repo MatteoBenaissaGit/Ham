@@ -24,7 +24,7 @@ namespace Items.AimBehaviours
             _previewEndMeshRenderer = Item.PreviewMeshes[1].GetComponentInChildren<MeshRenderer>();
         }
 
-        public override void Aim(bool doAim)
+        public override void AimBehaviour(bool doAim)
         {
             MakeCameraAim(doAim);
 
@@ -37,12 +37,12 @@ namespace Items.AimBehaviours
             CharacterController.Instance.OnCharacterAction.Invoke(doAim ? CharacterGameplayAction.Aim : CharacterGameplayAction.StopAim);
         }
 
-        public override void AimStay()
+        public override void AimStayBehaviour()
         {
             SetZipLinePreview();
         }
 
-        public override void Shoot()
+        public override void ShootBehaviour()
         {
             if (IsZipLinePlacementValid() == false)
             {
@@ -52,12 +52,12 @@ namespace Items.AimBehaviours
             ZipLineController zipLine = ResourceManager.Instance.InstantiateResource(ResourceEnum.ZipLineController).GetComponent<ZipLineController>();
             zipLine.Initialize(Item.PreviewMeshes[0].transform, Item.PreviewMeshes[1].transform);
 
-            Item.AimBehaviour?.Aim(false);
+            Item.AimBehaviour?.AimBehaviour(false);
             
             Item.Destroy();
         }
 
-        public override void ShootOnce()
+        public override void ShootOnceBehaviour()
         {
             
         }

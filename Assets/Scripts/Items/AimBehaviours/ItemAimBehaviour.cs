@@ -13,10 +13,10 @@ namespace Items.AimBehaviours
             Item = item;
         }
 
-        public abstract void Aim(bool doAim);
-        public abstract void AimStay();
-        public abstract void Shoot();
-        public abstract void ShootOnce();
+        public abstract void AimBehaviour(bool doAim);
+        public abstract void AimStayBehaviour();
+        public abstract void ShootBehaviour();
+        public abstract void ShootOnceBehaviour();
 
         protected void MakeCameraAim(bool doAim)
         {

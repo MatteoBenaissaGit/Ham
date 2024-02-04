@@ -11,24 +11,24 @@ namespace Items.AimBehaviours
         {
         }
 
-        public override void Aim(bool doAim)
+        public override void AimBehaviour(bool doAim)
         {
             MakeCameraAim(doAim);
             CharacterController.Instance.OnCharacterAction.Invoke(doAim ? CharacterGameplayAction.Aim : CharacterGameplayAction.StopAim);
         }
 
-        public override void AimStay()
+        public override void AimStayBehaviour()
         {
             
         }
 
-        public override void Shoot()
+        public override void ShootBehaviour()
         {
             
         }
 
         private const float NoRaycastHitLaunchDistance = 45f;
-        public override void ShootOnce()
+        public override void ShootOnceBehaviour()
         {
             Projectile projectile = Item.InstantiateGameObject(Item.Projectile.gameObject).GetComponent<Projectile>();
 

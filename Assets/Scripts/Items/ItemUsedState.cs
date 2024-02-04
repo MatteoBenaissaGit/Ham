@@ -85,8 +85,8 @@ namespace Items
             
             Controller.SetActiveBehaviour?.SetItemActive(_isActive);
         }
-        
-        private void Aim(bool doAim)
+
+        public void Aim(bool doAim)
         {
             if (_isActive == false)
             {
@@ -99,7 +99,7 @@ namespace Items
             }
             
             _isAiming = doAim;
-            Controller.AimBehaviour?.Aim(doAim);
+            Controller.AimBehaviour?.AimBehaviour(doAim);
         }
 
         private void AimStay()
@@ -109,10 +109,10 @@ namespace Items
                 return;
             }
             
-            Controller.AimBehaviour?.AimStay();
+            Controller.AimBehaviour?.AimStayBehaviour();
         }
 
-        private void ShootOnce()
+        public void ShootOnce()
         {
             if (_isActive == false)
             {
@@ -124,10 +124,10 @@ namespace Items
                 return;
             }
             
-            Controller.AimBehaviour?.ShootOnce();
+            Controller.AimBehaviour?.ShootOnceBehaviour();
         }
 
-        private void Shoot()
+        public void Shoot()
         {
             if (_isActive == false)
             {
@@ -139,7 +139,7 @@ namespace Items
                 return;
             }
             
-            Controller.AimBehaviour?.Shoot();
+            Controller.AimBehaviour?.ShootBehaviour();
         }
     }
 }
