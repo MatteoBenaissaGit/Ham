@@ -4,17 +4,25 @@ using UnityEngine.InputSystem;
 
 namespace Inputs
 {
+    public enum InputDevice
+    {
+        Keyboard = 0,
+        XboxGamepad = 1,
+        PlayGamepad = 2
+    }
+    
     /// <summary>
     /// This class handle the inputs the player is making and storing them in dedicated classes
     /// </summary>
     public class InputManager
     {
-        private PlayerInput _input;
-        
         public CharacterControllerInput CharacterControllerInput { get; private set; }
         public CameraMovementInput CameraMovementInput { get; private set; }
         public UIInput UIInput { get; private set; }
         public ItemInput ItemInput { get; private set; }
+        public static InputDevice CurrentDevice { get; set; }
+        
+        private PlayerInput _input;
 
         public void Initialize()
         {
@@ -41,6 +49,9 @@ namespace Inputs
             _input.CameraMovement.YMovement.canceled += CameraMovementInput.SetYMovement;
             
             //ui
+            _input.UI.Keyboard.performed += UIInput.SetDeviceKeyboard;
+            _input.UI.GamepadXbox.performed += UIInput.SetDeviceXbox;
+            _input.UI.GamepadPlay.performed += UIInput.SetDevicePlay;
             _input.UI.HotBar.performed += UIInput.SetHotBar;
             _input.UI.HotBar.canceled += UIInput.SetHotBar;
             _input.UI.HotBarDrop.performed += UIInput.SetHotBarDrop;
@@ -71,6 +82,9 @@ namespace Inputs
             _input.CameraMovement.YMovement.canceled -= CameraMovementInput.SetYMovement;
             
             //ui
+            _input.UI.Keyboard.performed -= UIInput.SetDeviceKeyboard;
+            _input.UI.GamepadXbox.performed -= UIInput.SetDeviceXbox;
+            _input.UI.GamepadPlay.performed -= UIInput.SetDevicePlay;
             _input.UI.HotBar.performed -= UIInput.SetHotBar;
             _input.UI.HotBar.canceled -= UIInput.SetHotBar;
             _input.UI.HotBarDrop.performed -= UIInput.SetHotBarDrop;
@@ -189,6 +203,23 @@ namespace Inputs
         public bool HotBarNext { get; set; }
         public bool HotBarDrop { get; private set; }
 
+        public void SetDeviceKeyboard(InputAction.CallbackContext context)
+        {
+            SetDevice(InputDevice.Keyboard);
+        }
+        public void SetDeviceXbox(InputAction.CallbackContext context)
+        {
+            SetDevice(InputDevice.XboxGamepad);
+        }
+        public void SetDevicePlay(InputAction.CallbackContext context)
+        {
+            SetDevice(InputDevice.PlayGamepad);
+        }
+        
+        private void SetDevice(InputDevice device)
+        {
+            InputManager.CurrentDevice = device;
+        }
         
         public void SetHotBar(InputAction.CallbackContext context)
         {

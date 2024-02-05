@@ -391,6 +391,33 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""type"": ""Value"",
+                    ""id"": ""6ec7e1c5-f363-44b8-9664-24278c8796bd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GamepadXbox"",
+                    ""type"": ""Value"",
+                    ""id"": ""a6329868-f170-462c-a6bd-d5d7e1994dd3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GamepadPlay"",
+                    ""type"": ""Value"",
+                    ""id"": ""c256f0a8-2565-4323-ab9b-adad5f0c4f1c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -479,6 +506,72 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""HotBarDrop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5e7e713-e3b6-49ee-91fe-9eaf2721611f"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Keyboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""25772c6d-8b12-4f2f-8add-bcd2a6ccc915"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Keyboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a9192002-fe92-4169-9da4-fa1bcacd0bc4"",
+                    ""path"": ""<XInputController>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GamepadXbox"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc2d17d6-7080-4772-8ed3-93a55f2ed1b5"",
+                    ""path"": ""<XInputController>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GamepadXbox"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7e5d60d-ea94-48f1-a0ae-fb4053013687"",
+                    ""path"": ""<DualSenseGamepadHID>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GamepadPlay"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""443d265b-2b5d-4494-8fa6-3aa2fa438ce6"",
+                    ""path"": ""<DualSenseGamepadHID>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GamepadPlay"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -601,6 +694,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_HotBar = m_UI.FindAction("HotBar", throwIfNotFound: true);
         m_UI_HotBarDrop = m_UI.FindAction("HotBarDrop", throwIfNotFound: true);
+        m_UI_Keyboard = m_UI.FindAction("Keyboard", throwIfNotFound: true);
+        m_UI_GamepadXbox = m_UI.FindAction("GamepadXbox", throwIfNotFound: true);
+        m_UI_GamepadPlay = m_UI.FindAction("GamepadPlay", throwIfNotFound: true);
         // ItemController
         m_ItemController = asset.FindActionMap("ItemController", throwIfNotFound: true);
         m_ItemController_Aim = m_ItemController.FindAction("Aim", throwIfNotFound: true);
@@ -785,12 +881,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_HotBar;
     private readonly InputAction m_UI_HotBarDrop;
+    private readonly InputAction m_UI_Keyboard;
+    private readonly InputAction m_UI_GamepadXbox;
+    private readonly InputAction m_UI_GamepadPlay;
     public struct UIActions
     {
         private @PlayerInput m_Wrapper;
         public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @HotBar => m_Wrapper.m_UI_HotBar;
         public InputAction @HotBarDrop => m_Wrapper.m_UI_HotBarDrop;
+        public InputAction @Keyboard => m_Wrapper.m_UI_Keyboard;
+        public InputAction @GamepadXbox => m_Wrapper.m_UI_GamepadXbox;
+        public InputAction @GamepadPlay => m_Wrapper.m_UI_GamepadPlay;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -806,6 +908,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @HotBarDrop.started += instance.OnHotBarDrop;
             @HotBarDrop.performed += instance.OnHotBarDrop;
             @HotBarDrop.canceled += instance.OnHotBarDrop;
+            @Keyboard.started += instance.OnKeyboard;
+            @Keyboard.performed += instance.OnKeyboard;
+            @Keyboard.canceled += instance.OnKeyboard;
+            @GamepadXbox.started += instance.OnGamepadXbox;
+            @GamepadXbox.performed += instance.OnGamepadXbox;
+            @GamepadXbox.canceled += instance.OnGamepadXbox;
+            @GamepadPlay.started += instance.OnGamepadPlay;
+            @GamepadPlay.performed += instance.OnGamepadPlay;
+            @GamepadPlay.canceled += instance.OnGamepadPlay;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -816,6 +927,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @HotBarDrop.started -= instance.OnHotBarDrop;
             @HotBarDrop.performed -= instance.OnHotBarDrop;
             @HotBarDrop.canceled -= instance.OnHotBarDrop;
+            @Keyboard.started -= instance.OnKeyboard;
+            @Keyboard.performed -= instance.OnKeyboard;
+            @Keyboard.canceled -= instance.OnKeyboard;
+            @GamepadXbox.started -= instance.OnGamepadXbox;
+            @GamepadXbox.performed -= instance.OnGamepadXbox;
+            @GamepadXbox.canceled -= instance.OnGamepadXbox;
+            @GamepadPlay.started -= instance.OnGamepadPlay;
+            @GamepadPlay.performed -= instance.OnGamepadPlay;
+            @GamepadPlay.canceled -= instance.OnGamepadPlay;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -910,6 +1030,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnHotBar(InputAction.CallbackContext context);
         void OnHotBarDrop(InputAction.CallbackContext context);
+        void OnKeyboard(InputAction.CallbackContext context);
+        void OnGamepadXbox(InputAction.CallbackContext context);
+        void OnGamepadPlay(InputAction.CallbackContext context);
     }
     public interface IItemControllerActions
     {

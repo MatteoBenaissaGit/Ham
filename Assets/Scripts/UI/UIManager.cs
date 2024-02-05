@@ -8,8 +8,8 @@ namespace UI
     /// </summary>
     public class UIManager : MonoBehaviour
     {
-        [field:SerializeField] public Character.CharacterController Character { get; private set; }
         [field:SerializeField] public HotBarController HotBar { get; private set; }
         [field:SerializeField] public AimUIController Aim { get; private set; }
+        [field:SerializeField] public InteractionUIController Interaction { get; private set; }
     }
 }

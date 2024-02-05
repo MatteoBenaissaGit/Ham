@@ -171,7 +171,7 @@ namespace Character
                     continue;
                 }
                 
-                if (hit.collider.TryGetComponent(out IInteractable interactable) == false)
+                if (hit.collider.TryGetComponent(out IInteractable interactable) == false || interactable.CanBeInteractedWith == false)
                 {
                     continue;
                 }
@@ -186,6 +186,7 @@ namespace Character
                     interactable.CharacterIsInRange(true);
                 }
                 _currentInteractable = interactable;
+                UI.Interaction.SetInteractionButton(hit.collider.transform);
                 return;
             }
 
@@ -193,6 +194,8 @@ namespace Character
             {
                 _currentInteractable.CharacterIsInRange(false);
                 _currentInteractable = null;
+                
+                UI.Interaction.SetInteractionButton();
             }
         }
 
