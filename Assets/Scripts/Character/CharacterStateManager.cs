@@ -13,6 +13,7 @@ namespace Character
         public CharacterWalkState WalkState { get; private set; }
         public CharacterJumpState JumpState { get; private set; }
         public CharacterFallState FallState { get; private set; }
+        public CharacterZipLineState ZipLineState { get; private set; }
 
         /// <summary>
         /// This method initialize the state classes
@@ -24,6 +25,7 @@ namespace Character
             WalkState = new CharacterWalkState(controller);
             JumpState = new CharacterJumpState(controller);
             FallState = new CharacterFallState(controller);
+            ZipLineState = new CharacterZipLineState(controller);
             
             SwitchState(IdleState);
         }

@@ -109,7 +109,7 @@ namespace Inputs
     {
         public float HorizontalMovement { get; private set; }
         public float VerticalMovement { get; private set; }
-        public bool Jump { get; private set; }
+        public Action<bool> OnJump { get; set; }
         public float LastJumpInputTime { get; internal set; }
 
         public bool IsMovingHorizontalOrVertical()
@@ -141,13 +141,7 @@ namespace Inputs
         
         public void SetJump(InputAction.CallbackContext context)
         {
-            if (context.performed == false || context.canceled)
-            {
-                Jump = false;
-                return;
-            }
-            
-            Jump = true;
+            OnJump.Invoke(context.performed && context.canceled == false);
 
             if (context.action.triggered)
             {

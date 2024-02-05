@@ -95,11 +95,15 @@ namespace Character
                 _canDoCoyoteTime = false;
                 return;
             }
+        }
 
-            if (Controller.Input.CharacterControllerInput.Jump)
+        public override void Jump(bool isPressingJump)
+        {
+            if (_canDoCoyoteTime == false)
             {
-                Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
+                return;
             }
+            Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
         }
 
         /// <summary>

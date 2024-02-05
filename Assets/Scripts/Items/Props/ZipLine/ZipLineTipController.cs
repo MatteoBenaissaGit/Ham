@@ -15,6 +15,8 @@ namespace Items.Props.ZipLine
 
         public void Interact(Character.CharacterController characterController)
         {
+            characterController.StateManager.SwitchState(characterController.StateManager.ZipLineState);
+            characterController.StateManager.ZipLineState.InitializeZipLine(_zipLine, transform);
         }
     }
 }

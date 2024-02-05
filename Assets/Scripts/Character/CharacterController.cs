@@ -27,6 +27,7 @@ namespace Character
     public class CharacterGameplayData
     {
         public bool IsGrounded { get; set; }
+        public bool IsMeshFollowingInputs { get; set; } = true;
         public bool IsLookingTowardCameraAim { get; set; } = false;
     }
     
@@ -35,6 +36,7 @@ namespace Character
         [field:SerializeField] public CharacterControllerData Data { get; private set; }
         [field:SerializeField] public GravityBody GravityBody { get; private set; }
         [field:SerializeField] public Rigidbody Rigidbody { get; private set; }
+        [field:SerializeField] public Collider Collider { get; private set; }
         [field:SerializeField] public Transform Mesh { get; private set; }
         [field:SerializeField] public CameraController CameraController { get; private set; }  
         [field:SerializeField] public CharacterViewManager View { get; private set; }  
@@ -70,7 +72,7 @@ namespace Character
             Input.Update();
             StateManager.UpdateState();
             
-            SetMeshRotation(GameplayData.IsLookingTowardCameraAim);
+            SetMeshRotationToFollowInputs(GameplayData.IsLookingTowardCameraAim);
 
             CheckNearbyInteractions();
         }
@@ -97,8 +99,13 @@ namespace Character
         /// <summary>
         /// This method rotate the mesh toward where he is moving depending on inputs
         /// </summary>
-        private void SetMeshRotation(bool lookAtCameraAim = false)
+        private void SetMeshRotationToFollowInputs(bool lookAtCameraAim = false)
         {
+            if (GameplayData.IsMeshFollowingInputs == false)
+            {
+                return;
+            }
+            
             if (Input.CharacterControllerInput.IsMovingHorizontalOrVertical() == false && lookAtCameraAim == false)
             {
                 return;

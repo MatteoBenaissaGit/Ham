@@ -17,11 +17,6 @@ namespace Character
 
         public override void Update()
         {
-            if (Controller.Input.CharacterControllerInput.Jump)
-            {
-                Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
-            }
-
             if (Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical())
             {
                 Controller.StateManager.SwitchState(Controller.StateManager.WalkState);
@@ -40,6 +35,11 @@ namespace Character
         public override void OnColliderEnter(Collision collision)
         {
             
+        }
+
+        public override void Jump(bool isPressingJump)
+        {
+            Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
         }
     }
 }

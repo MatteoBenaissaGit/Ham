@@ -36,11 +36,6 @@ namespace Character
 
         public override void Update()
         {
-            if (Controller.Input.CharacterControllerInput.Jump)
-            {
-                Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
-            }
-
             if (Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical() == false)
             {
                 Controller.StateManager.SwitchState(Controller.StateManager.IdleState);
@@ -105,6 +100,11 @@ namespace Character
 
             Controller.GameplayData.IsGrounded = false;
             Controller.StateManager.SwitchState(Controller.StateManager.FallState);
+        }
+        
+        public override void Jump(bool isPressingJump)
+        {
+            Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
         }
     }
 }

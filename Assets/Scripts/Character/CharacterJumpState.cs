@@ -46,7 +46,10 @@ namespace Character
 
         public override void Update()
         {
-            HandlingInputsAfterJump();
+            if (_isPressingJump)
+            {
+                HandlingInputsAfterJump();
+            }
             
             _minimumTimeBeforeCheckingState -= Time.deltaTime;
             if (_minimumTimeBeforeCheckingState <= 0)
@@ -102,8 +105,7 @@ namespace Character
         /// </summary>
         private void HandlingInputsAfterJump()
         {
-            if (Controller.Input.CharacterControllerInput.Jump == false
-                || _numberOfJumpInputs > Controller.Data.MaximumAddedInputAfterJump
+            if (_numberOfJumpInputs > Controller.Data.MaximumAddedInputAfterJump
                 || CurrentJumpState != JumpState.Up)
             {
                 return;
@@ -152,6 +154,12 @@ namespace Character
 
             Vector3 force = forceDirection * (speed * dotFactor * Time.fixedDeltaTime);
             rigidbody.AddForce(force, ForceMode.Impulse);
+        }
+
+        private bool _isPressingJump;
+        public override void Jump(bool isPressingJump)
+        {
+            _isPressingJump = isPressingJump;
         }
     }
 }

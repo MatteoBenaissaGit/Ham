@@ -1,5 +1,6 @@
 ﻿using System;
 using Inputs;
+using Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ namespace UI
         [SerializeField] private Sprite _interactionSpriteKeyboard;
 
         private Transform _transformToFollow;
+        private IInteractable _interactable;
 
         private void Awake()
         {
@@ -23,6 +25,12 @@ namespace UI
         {
             if (_transformToFollow == null)
             {
+                return;
+            }
+
+            if (_interactable?.CanBeInteractedWith == false)
+            {
+                Clear();
                 return;
             }
 
@@ -40,6 +48,12 @@ namespace UI
                 return;
             }
 
+            _interactable = _transformToFollow.GetComponent<IInteractable>();
+            if (_interactable == null)
+            {
+                Debug.LogWarning("No interactable on this transform");
+            }
+            
             _interactionButtonImage.sprite = InputManager.CurrentDevice switch
             {
                 InputDevice.Keyboard => _interactionSpriteKeyboard,

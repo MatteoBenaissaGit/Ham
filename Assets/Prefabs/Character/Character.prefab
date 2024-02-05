@@ -270,6 +270,7 @@ MonoBehaviour:
     type: 2}
   <GravityBody>k__BackingField: {fileID: 1247605013316555765}
   <Rigidbody>k__BackingField: {fileID: 4024694935359832087}
+  <Collider>k__BackingField: {fileID: 992437370583575013}
   <Mesh>k__BackingField: {fileID: 5543117450850651505}
   <CameraController>k__BackingField: {fileID: 1745342712620526044}
   <View>k__BackingField: {fileID: 4490639652512040491}

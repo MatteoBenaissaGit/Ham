@@ -15,6 +15,8 @@ namespace Character
         public CharacterStateBase(CharacterController controller)
         {
             Controller = controller;
+            
+            Controller.Input.CharacterControllerInput.OnJump += Jump;
         }
 
         /// <summary>
@@ -41,5 +43,10 @@ namespace Character
         /// This method is called when the controller collide on something
         /// </summary>
         public abstract void OnColliderEnter(Collision collision);
+        
+        /// <summary>
+        /// This method is called when the jump button is pressed
+        /// </summary>
+        public abstract void Jump(bool isPressingJump);
     }
 }
