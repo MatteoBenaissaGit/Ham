@@ -38,22 +38,11 @@ namespace UI
             _cases[_currentIndex].SetSelected(true);
         }
 
-        private void Update()
+        private void Start()
         {
-            if (Character.CharacterController.Instance.Input.UIInput.HotBarNext)
-            {
-                Character.CharacterController.Instance.Input.UIInput.HotBarNext = false;
-                SetHotBarSelection(true);
-            }
-            if (Character.CharacterController.Instance.Input.UIInput.HotBarPrevious)
-            {
-                Character.CharacterController.Instance.Input.UIInput.HotBarPrevious = false;
-                SetHotBarSelection(false);
-            }
-            if (Character.CharacterController.Instance.Input.UIInput.HotBarDrop)
-            {
-                DropItem();
-            }
+            Character.CharacterController.Instance.Input.UIInput.OnHotBarNext += () => SetHotBarSelection(true);
+            Character.CharacterController.Instance.Input.UIInput.OnHotBarPrevious += () => SetHotBarSelection(false);
+            Character.CharacterController.Instance.Input.UIInput.OnHotBarDrop += DropItem;
         }
 
         /// <summary>

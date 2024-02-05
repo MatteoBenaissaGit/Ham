@@ -53,9 +53,8 @@ namespace Inputs
             _input.UI.GamepadXbox.performed += UIInput.SetDeviceXbox;
             _input.UI.GamepadPlay.performed += UIInput.SetDevicePlay;
             _input.UI.HotBar.performed += UIInput.SetHotBar;
-            _input.UI.HotBar.canceled += UIInput.SetHotBar;
             _input.UI.HotBarDrop.performed += UIInput.SetHotBarDrop;
-            _input.UI.HotBarDrop.canceled += UIInput.SetHotBarDrop;
+            _input.UI.Interact.performed += UIInput.SetInteraction;
             
             //items
             _input.ItemController.Aim.performed += ItemInput.SetAim;
@@ -86,9 +85,8 @@ namespace Inputs
             _input.UI.GamepadXbox.performed -= UIInput.SetDeviceXbox;
             _input.UI.GamepadPlay.performed -= UIInput.SetDevicePlay;
             _input.UI.HotBar.performed -= UIInput.SetHotBar;
-            _input.UI.HotBar.canceled -= UIInput.SetHotBar;
             _input.UI.HotBarDrop.performed -= UIInput.SetHotBarDrop;
-            _input.UI.HotBarDrop.canceled -= UIInput.SetHotBarDrop;
+            _input.UI.Interact.performed -= UIInput.SetInteraction;
             
             //items
             _input.ItemController.Aim.performed -= ItemInput.SetAim;
@@ -199,9 +197,10 @@ namespace Inputs
     /// </summary>
     public class UIInput
     {
-        public bool HotBarPrevious { get; set; }
-        public bool HotBarNext { get; set; }
-        public bool HotBarDrop { get; private set; }
+        public Action OnHotBarPrevious { get; set; }
+        public Action OnHotBarNext { get; set; }
+        public Action OnHotBarDrop { get; set; }
+        public Action OnInteract { get; set; }
 
         public void SetDeviceKeyboard(InputAction.CallbackContext context)
         {
@@ -226,24 +225,37 @@ namespace Inputs
             float axis = context.ReadValue<float>();
             if (axis == 0 || context.performed == false)
             {
-                HotBarNext = false;
-                HotBarPrevious = false;
                 return;
             }
-            
-            HotBarNext = axis > 0;
-            HotBarPrevious = axis < 0;
+
+            if (axis > 0)
+            {
+                OnHotBarNext?.Invoke();
+            }
+            else if (axis < 0)
+            {
+                OnHotBarPrevious?.Invoke();
+            }
         }
 
         public void SetHotBarDrop(InputAction.CallbackContext context)
         {
-            if (context.performed == false || HotBarDrop)
+            if (context.performed == false)
             {
-                HotBarDrop = false;
                 return;
             }
 
-            HotBarDrop = true;
+            OnHotBarDrop?.Invoke();
+        }
+
+        public void SetInteraction(InputAction.CallbackContext context)
+        {
+            if (context.performed == false)
+            {
+                return;
+            }
+
+            OnInteract?.Invoke();
         }
     }
 

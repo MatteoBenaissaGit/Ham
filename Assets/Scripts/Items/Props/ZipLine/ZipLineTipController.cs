@@ -13,7 +13,7 @@ namespace Items.Props.ZipLine
         {
         }
 
-        public void Interact()
+        public void Interact(Character.CharacterController characterController)
         {
         }
     }

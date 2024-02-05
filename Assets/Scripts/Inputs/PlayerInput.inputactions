@@ -353,6 +353,33 @@
             "id": "9b06bdac-9497-4905-bed8-a0a01dec4601",
             "actions": [
                 {
+                    "name": "GamepadPlay",
+                    "type": "Value",
+                    "id": "c256f0a8-2565-4323-ab9b-adad5f0c4f1c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "GamepadXbox",
+                    "type": "Value",
+                    "id": "a6329868-f170-462c-a6bd-d5d7e1994dd3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Keyboard",
+                    "type": "Value",
+                    "id": "6ec7e1c5-f363-44b8-9664-24278c8796bd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "HotBar",
                     "type": "Value",
                     "id": "356c4ebe-781f-4c7e-ad74-f95a0b239682",
@@ -371,31 +398,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Keyboard",
-                    "type": "Value",
-                    "id": "6ec7e1c5-f363-44b8-9664-24278c8796bd",
-                    "expectedControlType": "",
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "d107f9b3-905f-44dc-85c7-c791f2caa304",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "GamepadXbox",
-                    "type": "Value",
-                    "id": "a6329868-f170-462c-a6bd-d5d7e1994dd3",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "GamepadPlay",
-                    "type": "Value",
-                    "id": "c256f0a8-2565-4323-ab9b-adad5f0c4f1c",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
+                    "interactions": "Tap",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -484,6 +493,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "HotBarDrop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d311593a-3fb0-4881-9253-08ba10f18577",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8de4b7bc-e465-4648-b06b-1a24a4e2e716",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

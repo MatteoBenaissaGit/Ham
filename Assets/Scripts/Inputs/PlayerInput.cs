@@ -375,6 +375,33 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""id"": ""9b06bdac-9497-4905-bed8-a0a01dec4601"",
             ""actions"": [
                 {
+                    ""name"": ""GamepadPlay"",
+                    ""type"": ""Value"",
+                    ""id"": ""c256f0a8-2565-4323-ab9b-adad5f0c4f1c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GamepadXbox"",
+                    ""type"": ""Value"",
+                    ""id"": ""a6329868-f170-462c-a6bd-d5d7e1994dd3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""type"": ""Value"",
+                    ""id"": ""6ec7e1c5-f363-44b8-9664-24278c8796bd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""HotBar"",
                     ""type"": ""Value"",
                     ""id"": ""356c4ebe-781f-4c7e-ad74-f95a0b239682"",
@@ -393,31 +420,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Keyboard"",
-                    ""type"": ""Value"",
-                    ""id"": ""6ec7e1c5-f363-44b8-9664-24278c8796bd"",
-                    ""expectedControlType"": """",
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""d107f9b3-905f-44dc-85c7-c791f2caa304"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""GamepadXbox"",
-                    ""type"": ""Value"",
-                    ""id"": ""a6329868-f170-462c-a6bd-d5d7e1994dd3"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""GamepadPlay"",
-                    ""type"": ""Value"",
-                    ""id"": ""c256f0a8-2565-4323-ab9b-adad5f0c4f1c"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -506,6 +515,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""HotBarDrop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d311593a-3fb0-4881-9253-08ba10f18577"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8de4b7bc-e465-4648-b06b-1a24a4e2e716"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -692,11 +723,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_CameraMovement_YMovement = m_CameraMovement.FindAction("YMovement", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_GamepadPlay = m_UI.FindAction("GamepadPlay", throwIfNotFound: true);
+        m_UI_GamepadXbox = m_UI.FindAction("GamepadXbox", throwIfNotFound: true);
+        m_UI_Keyboard = m_UI.FindAction("Keyboard", throwIfNotFound: true);
         m_UI_HotBar = m_UI.FindAction("HotBar", throwIfNotFound: true);
         m_UI_HotBarDrop = m_UI.FindAction("HotBarDrop", throwIfNotFound: true);
-        m_UI_Keyboard = m_UI.FindAction("Keyboard", throwIfNotFound: true);
-        m_UI_GamepadXbox = m_UI.FindAction("GamepadXbox", throwIfNotFound: true);
-        m_UI_GamepadPlay = m_UI.FindAction("GamepadPlay", throwIfNotFound: true);
+        m_UI_Interact = m_UI.FindAction("Interact", throwIfNotFound: true);
         // ItemController
         m_ItemController = asset.FindActionMap("ItemController", throwIfNotFound: true);
         m_ItemController_Aim = m_ItemController.FindAction("Aim", throwIfNotFound: true);
@@ -879,20 +911,22 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_GamepadPlay;
+    private readonly InputAction m_UI_GamepadXbox;
+    private readonly InputAction m_UI_Keyboard;
     private readonly InputAction m_UI_HotBar;
     private readonly InputAction m_UI_HotBarDrop;
-    private readonly InputAction m_UI_Keyboard;
-    private readonly InputAction m_UI_GamepadXbox;
-    private readonly InputAction m_UI_GamepadPlay;
+    private readonly InputAction m_UI_Interact;
     public struct UIActions
     {
         private @PlayerInput m_Wrapper;
         public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @GamepadPlay => m_Wrapper.m_UI_GamepadPlay;
+        public InputAction @GamepadXbox => m_Wrapper.m_UI_GamepadXbox;
+        public InputAction @Keyboard => m_Wrapper.m_UI_Keyboard;
         public InputAction @HotBar => m_Wrapper.m_UI_HotBar;
         public InputAction @HotBarDrop => m_Wrapper.m_UI_HotBarDrop;
-        public InputAction @Keyboard => m_Wrapper.m_UI_Keyboard;
-        public InputAction @GamepadXbox => m_Wrapper.m_UI_GamepadXbox;
-        public InputAction @GamepadPlay => m_Wrapper.m_UI_GamepadPlay;
+        public InputAction @Interact => m_Wrapper.m_UI_Interact;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -902,40 +936,46 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @GamepadPlay.started += instance.OnGamepadPlay;
+            @GamepadPlay.performed += instance.OnGamepadPlay;
+            @GamepadPlay.canceled += instance.OnGamepadPlay;
+            @GamepadXbox.started += instance.OnGamepadXbox;
+            @GamepadXbox.performed += instance.OnGamepadXbox;
+            @GamepadXbox.canceled += instance.OnGamepadXbox;
+            @Keyboard.started += instance.OnKeyboard;
+            @Keyboard.performed += instance.OnKeyboard;
+            @Keyboard.canceled += instance.OnKeyboard;
             @HotBar.started += instance.OnHotBar;
             @HotBar.performed += instance.OnHotBar;
             @HotBar.canceled += instance.OnHotBar;
             @HotBarDrop.started += instance.OnHotBarDrop;
             @HotBarDrop.performed += instance.OnHotBarDrop;
             @HotBarDrop.canceled += instance.OnHotBarDrop;
-            @Keyboard.started += instance.OnKeyboard;
-            @Keyboard.performed += instance.OnKeyboard;
-            @Keyboard.canceled += instance.OnKeyboard;
-            @GamepadXbox.started += instance.OnGamepadXbox;
-            @GamepadXbox.performed += instance.OnGamepadXbox;
-            @GamepadXbox.canceled += instance.OnGamepadXbox;
-            @GamepadPlay.started += instance.OnGamepadPlay;
-            @GamepadPlay.performed += instance.OnGamepadPlay;
-            @GamepadPlay.canceled += instance.OnGamepadPlay;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
         {
+            @GamepadPlay.started -= instance.OnGamepadPlay;
+            @GamepadPlay.performed -= instance.OnGamepadPlay;
+            @GamepadPlay.canceled -= instance.OnGamepadPlay;
+            @GamepadXbox.started -= instance.OnGamepadXbox;
+            @GamepadXbox.performed -= instance.OnGamepadXbox;
+            @GamepadXbox.canceled -= instance.OnGamepadXbox;
+            @Keyboard.started -= instance.OnKeyboard;
+            @Keyboard.performed -= instance.OnKeyboard;
+            @Keyboard.canceled -= instance.OnKeyboard;
             @HotBar.started -= instance.OnHotBar;
             @HotBar.performed -= instance.OnHotBar;
             @HotBar.canceled -= instance.OnHotBar;
             @HotBarDrop.started -= instance.OnHotBarDrop;
             @HotBarDrop.performed -= instance.OnHotBarDrop;
             @HotBarDrop.canceled -= instance.OnHotBarDrop;
-            @Keyboard.started -= instance.OnKeyboard;
-            @Keyboard.performed -= instance.OnKeyboard;
-            @Keyboard.canceled -= instance.OnKeyboard;
-            @GamepadXbox.started -= instance.OnGamepadXbox;
-            @GamepadXbox.performed -= instance.OnGamepadXbox;
-            @GamepadXbox.canceled -= instance.OnGamepadXbox;
-            @GamepadPlay.started -= instance.OnGamepadPlay;
-            @GamepadPlay.performed -= instance.OnGamepadPlay;
-            @GamepadPlay.canceled -= instance.OnGamepadPlay;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1028,11 +1068,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     }
     public interface IUIActions
     {
+        void OnGamepadPlay(InputAction.CallbackContext context);
+        void OnGamepadXbox(InputAction.CallbackContext context);
+        void OnKeyboard(InputAction.CallbackContext context);
         void OnHotBar(InputAction.CallbackContext context);
         void OnHotBarDrop(InputAction.CallbackContext context);
-        void OnKeyboard(InputAction.CallbackContext context);
-        void OnGamepadXbox(InputAction.CallbackContext context);
-        void OnGamepadPlay(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IItemControllerActions
     {

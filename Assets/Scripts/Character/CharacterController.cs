@@ -60,6 +60,11 @@ namespace Character
             StateManager.Initialize(this);
         }
 
+        private void Start()
+        {
+            Input.UIInput.OnInteract += Interact;
+        }
+
         private void Update()
         {
             Input.Update();
@@ -82,6 +87,8 @@ namespace Character
 
         private void OnDisable()
         {
+            Input.UIInput.OnInteract -= Interact;
+            
             Input.Disable();
         }
 
@@ -197,6 +204,16 @@ namespace Character
                 
                 UI.Interaction.SetInteractionButton();
             }
+        }
+
+        private void Interact()
+        {
+            if (_currentInteractable == null)
+            {
+                return;
+            }
+            
+            _currentInteractable.Interact(this);
         }
 
 #if UNITY_EDITOR
