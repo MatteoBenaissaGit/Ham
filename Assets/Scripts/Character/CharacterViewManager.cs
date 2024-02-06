@@ -12,6 +12,7 @@ namespace Character
         [SerializeField] private ParticleSystem _jumpParticles;
         [SerializeField] private ParticleSystem _landParticles;
         [SerializeField] private TrailRenderer _jumpTrail;
+        [SerializeField] private ParticleSystem _ziplineParticles;
 
         private void Awake()
         {
@@ -44,6 +45,12 @@ namespace Character
                     break;
                 case CharacterGameplayAction.StopAim:
                     SetAimView(false);
+                    break;
+                case CharacterGameplayAction.ZipLine:
+                    SetZiplineView(true);
+                    break;
+                case CharacterGameplayAction.StopZipLine:
+                    SetZiplineView(false);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(action), action, null);
@@ -89,6 +96,21 @@ namespace Character
         private void SetAimView(bool doAim)
         {
             _animator.SetBool("isAiming", doAim);
+        }
+
+        private void SetZiplineView(bool doZipline)
+        {
+            if (doZipline)
+            {
+                Vector3 meshRotation = _characterController.Mesh.rotation.eulerAngles;
+                Vector3 baseRotation = _ziplineParticles.transform.rotation.eulerAngles;
+                _ziplineParticles.transform.rotation = Quaternion.Euler(new Vector3(baseRotation.x,-meshRotation.y,baseRotation.z));
+                _ziplineParticles.Play();
+            }
+            else
+            {
+                _ziplineParticles.Stop();
+            }
         }
     }
 }

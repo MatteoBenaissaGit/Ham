@@ -53,3 +53,4 @@ MonoBehaviour:
   <CoyoteTimeTimeToJumpAfterFall>k__BackingField: 0.15
   <DoJumpBuffering>k__BackingField: 1
   <JumpBufferTimeMaxBeforeLand>k__BackingField: 0.2
+  <ZiplineSpeed>k__BackingField: 1

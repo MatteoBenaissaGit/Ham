@@ -25,6 +25,12 @@ namespace Character
         public CharacterJumpState(CharacterController controller) : base(controller)
         {
         }
+        
+        public override string ToString()
+        {
+            return "Jump state";
+        }
+
 
         public override void Enter()
         {
@@ -130,8 +136,10 @@ namespace Character
             Controller.GameplayData.IsGrounded = true;
 
             if (Controller.Data.DoJumpBuffering && 
-                Controller.Input.CharacterControllerInput.LastJumpInputTime < Controller.Data.JumpBufferTimeMaxBeforeLand)
+                Controller.Input.CharacterControllerInput.LastJumpInputTime < Controller.Data.JumpBufferTimeMaxBeforeLand &&
+                CurrentJumpState != JumpState.Up)
             {
+                Debug.Log(CurrentJumpState);
                 Controller.StateManager.SwitchState(Controller.StateManager.JumpState, true);
                 return;
             }

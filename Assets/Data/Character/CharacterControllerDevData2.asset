@@ -44,7 +44,7 @@ MonoBehaviour:
   <DirectionChangeLerpSpeed>k__BackingField: 0.05
   <JumpForce>k__BackingField: 25
   <FallGravityMultiplier>k__BackingField: 1.5
-  <ForceAddedPerInputAfterJump>k__BackingField: 0.05
+  <ForceAddedPerInputAfterJump>k__BackingField: 0.2
   <MaximumAddedInputAfterJump>k__BackingField: 40
   <RaycastTowardGroundToDetectFallDistance>k__BackingField: 0.62
   <JumpAirMovementAmplitude>k__BackingField: 10
@@ -53,3 +53,4 @@ MonoBehaviour:
   <CoyoteTimeTimeToJumpAfterFall>k__BackingField: 0.15
   <DoJumpBuffering>k__BackingField: 1
   <JumpBufferTimeMaxBeforeLand>k__BackingField: 0.2
+  <ZiplineSpeed>k__BackingField: 1

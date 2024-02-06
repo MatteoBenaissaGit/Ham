@@ -11,6 +11,8 @@ namespace Gravity
     [RequireComponent(typeof(Rigidbody))]
     public class GravityBody : MonoBehaviour
     {
+        public bool ApplyAreaGravity { get; set; } = true;
+        
         public Vector3 GravityDirection
         {
             get
@@ -49,7 +51,7 @@ namespace Gravity
     
         private void FixedUpdate()
         {
-            if (AreaData == null)
+            if (AreaData == null || ApplyAreaGravity == false) 
             {
                 return;
             }
@@ -76,6 +78,14 @@ namespace Gravity
         public void RemoveGravityArea(GravityArea gravityArea)
         {
             _gravityAreas.Remove(gravityArea);
+        }
+
+        /// <summary>
+        /// Clear the current area's applied to the player
+        /// </summary>
+        public void ClearGravityAreas()
+        {
+            _gravityAreas.Clear();    
         }
     }
 }

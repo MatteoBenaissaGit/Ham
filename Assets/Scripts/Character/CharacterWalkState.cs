@@ -15,6 +15,12 @@ namespace Character
         public CharacterWalkState(CharacterController controller) : base(controller)
         {
         }
+        
+        public override string ToString()
+        {
+            return "Walk state";
+        }
+
 
         public override void Enter()
         {
@@ -104,6 +110,10 @@ namespace Character
         
         public override void Jump(bool isPressingJump)
         {
+            if (isPressingJump == false)
+            {
+                return;
+            }
             Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
         }
     }

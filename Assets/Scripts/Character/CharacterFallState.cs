@@ -13,6 +13,12 @@ namespace Character
         public CharacterFallState(CharacterController controller) : base(controller)
         {
         }
+        
+        public override string ToString()
+        {
+            return "Fall state";
+        }
+
 
         public override void Enter()
         {
@@ -99,6 +105,10 @@ namespace Character
 
         public override void Jump(bool isPressingJump)
         {
+            if (isPressingJump == false)
+            {
+                return;
+            }
             if (_canDoCoyoteTime == false)
             {
                 return;

@@ -141,9 +141,9 @@ namespace Inputs
         
         public void SetJump(InputAction.CallbackContext context)
         {
-            OnJump.Invoke(context.performed && context.canceled == false);
+            OnJump.Invoke(context.performed);
 
-            if (context.action.triggered)
+            if (context.performed)
             {
                 LastJumpInputTime = 0;
             }

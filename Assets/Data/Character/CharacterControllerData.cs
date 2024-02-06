@@ -34,5 +34,9 @@ namespace Data.Character
         [field: Header("Jump Buffer")]
         [field: SerializeField] public bool DoJumpBuffering { get; private set; } = true;
         [field: SerializeField] public float JumpBufferTimeMaxBeforeLand { get; private set; } = 0.25f;
+        
+        [field: Header("Zipline")]
+        [field: SerializeField] public float ZiplineSpeed { get; private set; } = 1f;
+
     }
 }

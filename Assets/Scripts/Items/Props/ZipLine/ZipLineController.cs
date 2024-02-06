@@ -10,7 +10,7 @@ namespace Items.Props.ZipLine
         [field:SerializeField] public Transform ZipLineEndTip { get; private set; }
         
         public bool CanBeUsed { get; private set; }
-        
+
         [SerializeField] private Transform _zipLineStart;
         [SerializeField] private Transform _zipLineEnd;
         [SerializeField] private LineRenderer _lineRenderer;

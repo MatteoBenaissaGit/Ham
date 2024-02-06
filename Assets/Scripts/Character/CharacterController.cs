@@ -21,7 +21,9 @@ namespace Character
         Fall = 3,
         Land = 4,
         Aim = 5,
-        StopAim = 6
+        StopAim = 6,
+        ZipLine = 7,
+        StopZipLine = 8
     }
     
     public class CharacterGameplayData
