@@ -18,6 +18,7 @@ namespace Character
 
         public override void Enter()
         {
+            Controller.GameplayData.IsGrounded = true;
         }
 
         public override void Update()

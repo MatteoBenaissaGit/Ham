@@ -24,6 +24,8 @@ namespace Character
 
         public override void Enter()
         {
+            Controller.GameplayData.IsGrounded = true;
+
             Controller.CameraController.SetCameraAfterCurrent(Controller.CameraController.Data.RunCamera);
 
             _currentAccelerationTime = 0;

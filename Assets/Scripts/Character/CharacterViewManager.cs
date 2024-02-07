@@ -78,7 +78,10 @@ namespace Character
             if (doLaunch)
             {
                 _jumpTrail.DOTime(_characterController.Data.JumpTrailLength, 0.1f);
-                _jumpParticles.Play();
+                if (_characterController.GameplayData.IsGrounded)
+                {
+                    _jumpParticles.Play();
+                }
                 return;
             }
 

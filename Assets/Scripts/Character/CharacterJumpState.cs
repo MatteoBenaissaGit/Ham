@@ -35,9 +35,7 @@ namespace Character
         public override void Enter()
         {
             Controller.CameraController.SetCameraAfterCurrent(Controller.CameraController.Data.JumpCamera);
-
-            Controller.GameplayData.IsGrounded = false;
-
+            
             _numberOfJumpInputs = 0;
             _minimumTimeBeforeCheckingState = 0.1f;
             CurrentJumpState = JumpState.Up;
@@ -48,6 +46,8 @@ namespace Character
             Controller.Rigidbody.AddForce(jumpForce + _baseJumpVelocityDirection, ForceMode.Impulse);
             
             Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Jump);
+            
+            Controller.GameplayData.IsGrounded = false;
         }
 
         public override void Update()

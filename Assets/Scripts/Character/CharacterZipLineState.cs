@@ -71,12 +71,15 @@ namespace Character
             Vector3 baseRotation = Controller.Mesh.rotation.eulerAngles;
             Controller.Mesh.LookAt(_positionToGoTo);
             Vector3 newRotation = Controller.Mesh.rotation.eulerAngles;
+            Controller.Mesh.rotation = Quaternion.Euler(baseRotation);
             _baseMeshOnZiplineRotation = new Vector3(baseRotation.x, newRotation.y, newRotation.z);
             Controller.Mesh.DORotate(_baseMeshOnZiplineRotation, animTime).SetEase(Ease.Flash);
         }
         
         public override void Enter()
         {
+            Controller.GameplayData.IsGrounded = false;
+            
             _time = 0;
         }
 
@@ -146,6 +149,12 @@ namespace Character
 
         public override void Jump(bool isPressingJump)
         {
+            if (_launchMovement == false)
+            {
+                return;
+            }
+            
+            Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
         }
     }
 }
