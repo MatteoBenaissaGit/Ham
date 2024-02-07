@@ -139,8 +139,7 @@ namespace Character
             _launchMovement = false;
             
             Controller.Mesh.localPosition = Vector3.zero;
-            Vector3 rotation = Controller.Mesh.rotation.eulerAngles;
-            Controller.Mesh.rotation = Quaternion.Euler(new Vector3(0,rotation.y,rotation.z));
+            Controller.Mesh.rotation = Quaternion.Euler(_baseMeshOnZiplineRotation);
         }
 
         public override void OnColliderEnter(Collision collision)
