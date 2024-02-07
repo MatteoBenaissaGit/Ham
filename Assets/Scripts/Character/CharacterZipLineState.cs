@@ -93,7 +93,7 @@ namespace Character
             float rotationAmount = (float)Math.Cos(_time) * rotationAmplitude;
             Controller.Mesh.rotation = Quaternion.Euler(_baseMeshOnZiplineRotation + new Vector3(0,0,rotationAmount));
             
-            float movementAmplitude = 1f * (_isStartingAtZipLineStart ? -1f : 1f);
+            float movementAmplitude = 1f * (Vector3.Dot(Controller.Mesh.forward,Controller.transform.forward));
             float movementAmount = (float)Math.Cos(_time) * movementAmplitude;
             Controller.Mesh.localPosition = new Vector3(movementAmount,0,0);
         }
