@@ -179,7 +179,8 @@ namespace Character
         private void CheckNearbyInteractions()
         {
             int sphereCast = Physics.SphereCastNonAlloc(transform.position, NearbyInteractionSphereCastRadius, transform.up, _nearbyInteractionObjectCast);
-            for (int i = 0; i < sphereCast; i++)
+            
+            for (int i = sphereCast-1; i >= 0; i--)
             {
                 RaycastHit hit = _nearbyInteractionObjectCast[i];
                 if (hit.collider == null || hit.collider.isTrigger || hit.collider.gameObject == gameObject)

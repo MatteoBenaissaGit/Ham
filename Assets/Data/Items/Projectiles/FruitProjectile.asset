@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FruitProjectile
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 1
-  <Speed>k__BackingField: 30
+  <Speed>k__BackingField: 50
   <SpeedMultiplierPerDistance>k__BackingField: 0.1
-  <MaxSpeedMultiplierPerDistance>k__BackingField: 5
+  <SpeedMultiplierIfNoRaycastHit>k__BackingField: 2
+  <MaxSpeedMultiplierPerDistance>k__BackingField: 3
   <TimeBeforeDisappearing>k__BackingField: 10
