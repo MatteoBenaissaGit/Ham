@@ -41,6 +41,8 @@ namespace Items
             CharacterController.Instance.Input.ItemInput.OnAim += Aim;
             CharacterController.Instance.Input.ItemInput.OnShoot += Shoot;
             CharacterController.Instance.Input.ItemInput.OnShootOnce += ShootOnce;
+            
+            Controller.UseBehaviour?.Initialize();
         }
 
         public override void Update()
@@ -49,6 +51,8 @@ namespace Items
             {
                 AimStay();
             }
+            
+            Controller.UseBehaviour?.Update();
         }
 
         public override void FixedUpdate()
@@ -73,6 +77,8 @@ namespace Items
             CharacterController.Instance.Input.ItemInput.OnAim -= Aim;
             CharacterController.Instance.Input.ItemInput.OnShoot -= Shoot;
             CharacterController.Instance.Input.ItemInput.OnShootOnce -= ShootOnce;
+            
+            Controller.UseBehaviour?.Quit();
         }
 
         /// <summary>
@@ -99,7 +105,7 @@ namespace Items
             }
             
             _isAiming = doAim;
-            Controller.AimBehaviour?.AimBehaviour(doAim);
+            Controller.UseBehaviour?.AimBehaviour(doAim);
         }
 
         private void AimStay()
@@ -109,7 +115,7 @@ namespace Items
                 return;
             }
             
-            Controller.AimBehaviour?.AimStayBehaviour();
+            Controller.UseBehaviour?.AimStayBehaviour();
         }
 
         public void ShootOnce()
@@ -124,7 +130,7 @@ namespace Items
                 return;
             }
             
-            Controller.AimBehaviour?.ShootOnceBehaviour();
+            Controller.UseBehaviour?.ShootOnceBehaviour();
         }
 
         public void Shoot()
@@ -139,7 +145,7 @@ namespace Items
                 return;
             }
             
-            Controller.AimBehaviour?.ShootBehaviour();
+            Controller.UseBehaviour?.ShootBehaviour();
         }
     }
 }

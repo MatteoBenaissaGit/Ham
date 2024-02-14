@@ -28,7 +28,17 @@ namespace Character
     
     public class CharacterGameplayData
     {
-        public bool IsGrounded { get; set; }
+        public bool IsGrounded
+        {
+            get => _isGrounded;
+            set
+            {
+                _isGrounded = value;
+                OnGrounded?.Invoke(_isGrounded);
+            } 
+        }
+        private bool _isGrounded;
+        public Action<bool> OnGrounded { get; set; }
         public bool IsMeshFollowingInputs { get; set; } = true;
         public bool IsLookingTowardCameraAim { get; set; } = false;
     }

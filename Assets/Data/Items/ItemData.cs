@@ -7,7 +7,8 @@ namespace Data.Items
     {
         None = 0,
         SimplePistol = 1,
-        ZipLine = 2
+        ZipLine = 2,
+        Jetpack = 3
     }
     
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Item", order = 3)]

@@ -3,11 +3,24 @@ using Items.Props.Projectile;
 using UnityEngine;
 using CharacterController = Character.CharacterController;
 
-namespace Items.AimBehaviours
+namespace Items.UseBehaviours
 {
-    public class SimplePistolAimBehaviour : ItemAimBehaviour
+    public class SimplePistolUseBehaviour : ItemUseBehaviour
     {
-        public SimplePistolAimBehaviour(ItemController item) : base(item)
+        public SimplePistolUseBehaviour(ItemController item) : base(item)
+        {
+        }
+
+        public override void Initialize()
+        {
+        }
+
+        public override void Update()
+        {
+            
+        }
+
+        public override void Quit()
         {
         }
 

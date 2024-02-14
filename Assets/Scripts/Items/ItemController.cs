@@ -1,9 +1,9 @@
 using System;
 using Data.Items;
-using Items.AimBehaviours;
 using Items.Props;
 using Items.Props.Projectile;
 using Items.SetActiveBehaviour;
+using Items.UseBehaviours;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -29,7 +29,7 @@ namespace Items
         public ItemBaseState CurrentState { get; private set; }
         public ItemFloatingState FloatingState { get; private set; }
         public ItemUsedState UsedState { get; private set; }
-        public ItemAimBehaviour AimBehaviour { get; private set; }
+        public ItemUseBehaviour UseBehaviour { get; private set; }
         public ItemSetActiveBehaviour SetActiveBehaviour { get; private set; }
         
         protected virtual void Awake()
@@ -45,14 +45,18 @@ namespace Items
         private void SetBehaviours()
         {
             SetActiveBehaviour = new ItemSetActiveBehaviour(this);
-            
+
             switch (Data.Type)
             {
                 case ItemType.SimplePistol:
-                    AimBehaviour = new SimplePistolAimBehaviour(this);
+                    UseBehaviour = new SimplePistolUseBehaviour(this);
                     break;
                 case ItemType.ZipLine:
-                    AimBehaviour = new ZiplineAimBehaviour(this);
+                    UseBehaviour = new ZiplineUseBehaviour(this);
+                    break;
+                case ItemType.Jetpack:
+                    UseBehaviour = new JetpackUseBehaviour(this);
+                    SetActiveBehaviour = new JetpackSetActiveBehaviour(this);
                     break;
             }
         }
@@ -148,7 +152,7 @@ namespace Items
                 return;
             }
 
-            if (AimBehaviour != null)
+            if (UseBehaviour != null)
             {
                 Character.CharacterController.Instance.Input.ItemInput.OnAim -= UsedState.Aim;
                 Character.CharacterController.Instance.Input.ItemInput.OnShoot -= UsedState.Shoot;

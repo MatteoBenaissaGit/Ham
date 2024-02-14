@@ -1,14 +1,12 @@
-﻿using System.Data;
-using Character;
+﻿using Character;
 using Common;
 using Items.Props.ZipLine;
-using Unity.Mathematics;
 using UnityEngine;
 using CharacterController = Character.CharacterController;
 
-namespace Items.AimBehaviours
+namespace Items.UseBehaviours
 {
-    public class ZiplineAimBehaviour : ItemAimBehaviour
+    public class ZiplineUseBehaviour : ItemUseBehaviour
     {
         private Transform _basePreviewParent;
         private Quaternion _desiredZipLineEndPreviewRotation;
@@ -16,12 +14,25 @@ namespace Items.AimBehaviours
         private MeshRenderer _previewEndMeshRenderer;
         private MeshRenderer _previewStartMeshRenderer;
         
-        public ZiplineAimBehaviour(ItemController item) : base(item)
+        public ZiplineUseBehaviour(ItemController item) : base(item)
         {
             _basePreviewParent = item.PreviewMeshes[0].transform.parent;
 
             _previewStartMeshRenderer = Item.PreviewMeshes[0].GetComponentInChildren<MeshRenderer>();
             _previewEndMeshRenderer = Item.PreviewMeshes[1].GetComponentInChildren<MeshRenderer>();
+        }
+
+        public override void Initialize()
+        {
+        }
+
+        public override void Update()
+        {
+            
+        }
+
+        public override void Quit()
+        {
         }
 
         public override void AimBehaviour(bool doAim)
@@ -52,7 +63,7 @@ namespace Items.AimBehaviours
             ZipLineController zipLine = ResourceManager.Instance.InstantiateResource(ResourceEnum.ZipLineController).GetComponent<ZipLineController>();
             zipLine.Initialize(Item.PreviewMeshes[0].transform, Item.PreviewMeshes[1].transform);
 
-            Item.AimBehaviour?.AimBehaviour(false);
+            Item.UseBehaviour?.AimBehaviour(false);
             
             Item.Destroy();
         }

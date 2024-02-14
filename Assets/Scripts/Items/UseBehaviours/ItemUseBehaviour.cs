@@ -2,17 +2,20 @@
 using UnityEngine;
 using CharacterController = Character.CharacterController;
 
-namespace Items.AimBehaviours
+namespace Items.UseBehaviours
 {
-    public abstract class ItemAimBehaviour
+    public abstract class ItemUseBehaviour
     {
         public ItemController Item { get; private set; }
 
-        public ItemAimBehaviour(ItemController item)
+        public ItemUseBehaviour(ItemController item)
         {
             Item = item;
         }
 
+        public abstract void Initialize();
+        public abstract void Update();
+        public abstract void Quit();
         public abstract void AimBehaviour(bool doAim);
         public abstract void AimStayBehaviour();
         public abstract void ShootBehaviour();
