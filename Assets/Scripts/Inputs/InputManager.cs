@@ -259,7 +259,7 @@ namespace Inputs
     public class ItemInput
     {
         public bool Aim { get; private set; }
-        public Action OnShoot { get; set; }
+        public Action<bool> OnShoot { get; set; }
         public Action OnShootOnce { get; set; }
         public Action<bool> OnAim { get; set; }
         
@@ -277,10 +277,7 @@ namespace Inputs
 
         public void SetShoot(InputAction.CallbackContext context)
         {
-            if (context.performed)
-            {
-                OnShoot?.Invoke();
-            }
+            OnShoot?.Invoke(context.performed);
         }
 
         public void SetShootOnce(InputAction.CallbackContext context)

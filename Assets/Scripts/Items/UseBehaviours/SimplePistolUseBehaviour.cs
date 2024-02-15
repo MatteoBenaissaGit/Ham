@@ -20,6 +20,11 @@ namespace Items.UseBehaviours
             
         }
 
+        public override void FixedUpdate()
+        {
+            
+        }
+
         public override void Quit()
         {
         }
@@ -35,7 +40,7 @@ namespace Items.UseBehaviours
             
         }
 
-        public override void ShootBehaviour()
+        public override void ShootBehaviour(bool isShooting)
         {
             
         }

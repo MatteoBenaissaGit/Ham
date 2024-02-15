@@ -9,6 +9,7 @@ namespace Items
     {
         private bool _isActive;
         private bool _isAiming;
+        private bool _needToAimToShoot = true;
         
         public ItemUsedState(ItemController controller) : base(controller)
         {
@@ -22,7 +23,7 @@ namespace Items
             switch (Controller.Data.Type)
             {
                 case ItemType.None:
-                    Controller.transform.parent = Character.CharacterController.Instance.transform.transform;
+                    Controller.transform.parent = CharacterController.Instance.transform.transform;
                     break;
                 case ItemType.SimplePistol:
                     Controller.transform.parent = CharacterController.Instance.GunIK;
@@ -30,8 +31,12 @@ namespace Items
                 case ItemType.ZipLine:
                     Controller.transform.parent = CharacterController.Instance.GunIK;
                     break;
+                case ItemType.Jetpack:
+                    Controller.transform.parent = CharacterController.Instance.BackpackIK;
+                    _needToAimToShoot = false;
+                    break;
                 default:
-                    Controller.transform.parent = Character.CharacterController.Instance.transform.transform;
+                    Controller.transform.parent = CharacterController.Instance.transform.transform;
                     break;
             }
             
@@ -43,6 +48,8 @@ namespace Items
             CharacterController.Instance.Input.ItemInput.OnShootOnce += ShootOnce;
             
             Controller.UseBehaviour?.Initialize();
+            
+            Controller.UsedMesh.SetActive(_isActive);
         }
 
         public override void Update()
@@ -57,6 +64,7 @@ namespace Items
 
         public override void FixedUpdate()
         {
+            Controller.UseBehaviour?.FixedUpdate();
         }
         
         public override void OnTriggerEnter(Collider collider)
@@ -125,7 +133,7 @@ namespace Items
                 return;
             }
             
-            if (_isAiming == false)
+            if (_isAiming == false && _needToAimToShoot)
             {
                 return;
             }
@@ -133,19 +141,19 @@ namespace Items
             Controller.UseBehaviour?.ShootOnceBehaviour();
         }
 
-        public void Shoot()
+        public void Shoot(bool isShooting)
         {
             if (_isActive == false)
             {
                 return;
             }
             
-            if (_isAiming == false)
+            if (_isAiming == false && _needToAimToShoot)
             {
                 return;
             }
             
-            Controller.UseBehaviour?.ShootBehaviour();
+            Controller.UseBehaviour?.ShootBehaviour(isShooting);
         }
     }
 }

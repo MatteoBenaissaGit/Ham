@@ -10,7 +10,7 @@
         {
             base.SetItemActive(isActive);
             
-            
+            Character.CharacterController.Instance.UI.EnergyBar.SetBar(isActive);
         }
     }
 }

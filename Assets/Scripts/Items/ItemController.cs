@@ -26,6 +26,9 @@ namespace Items
         [field: SerializeField] public Material PreviewMaterial { get; private set; }
         [field: SerializeField] public Material PreviewMaterialError { get; private set; }
         
+        [field: Header("Other")]
+        [field:SerializeField] public ParticleSystem[] Particles { get; private set; } = new ParticleSystem[]{};
+        
         public ItemBaseState CurrentState { get; private set; }
         public ItemFloatingState FloatingState { get; private set; }
         public ItemUsedState UsedState { get; private set; }

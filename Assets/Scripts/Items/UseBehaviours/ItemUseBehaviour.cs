@@ -15,10 +15,11 @@ namespace Items.UseBehaviours
 
         public abstract void Initialize();
         public abstract void Update();
+        public abstract void FixedUpdate();
         public abstract void Quit();
         public abstract void AimBehaviour(bool doAim);
         public abstract void AimStayBehaviour();
-        public abstract void ShootBehaviour();
+        public abstract void ShootBehaviour(bool isShooting);
         public abstract void ShootOnceBehaviour();
 
         protected void MakeCameraAim(bool doAim)

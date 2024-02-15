@@ -31,6 +31,11 @@ namespace Items.UseBehaviours
             
         }
 
+        public override void FixedUpdate()
+        {
+            
+        }
+
         public override void Quit()
         {
         }
@@ -53,7 +58,7 @@ namespace Items.UseBehaviours
             SetZipLinePreview();
         }
 
-        public override void ShootBehaviour()
+        public override void ShootBehaviour(bool isShooting)
         {
             if (IsZipLinePlacementValid() == false)
             {

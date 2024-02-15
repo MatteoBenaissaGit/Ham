@@ -11,5 +11,6 @@ namespace UI
         [field:SerializeField] public HotBarController HotBar { get; private set; }
         [field:SerializeField] public AimUIController Aim { get; private set; }
         [field:SerializeField] public InteractionUIController Interaction { get; private set; }
+        [field:SerializeField] public EnergyBarController EnergyBar { get; private set; }
     }
 }
