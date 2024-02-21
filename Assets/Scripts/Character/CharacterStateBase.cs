@@ -7,6 +7,8 @@ namespace Character
     /// </summary>
     public abstract class CharacterStateBase
     {
+        public bool IsActive { get; set; }
+        
         /// <summary>
         /// The CharacterController the state is attached to 
         /// </summary>
@@ -48,5 +50,34 @@ namespace Character
         /// This method is called when the jump button is pressed
         /// </summary>
         public abstract void Jump(bool isPressingJump);
+
+        /// <summary>
+        /// This method check if the player is on the ground after being in the air and launch a new state if so.
+        /// </summary>
+        /// <param name="specialConditionToSwitchToJumpState">A condition to jump after landing</param>
+        public void CheckForChangeStateAtLanding(bool specialConditionToSwitchToJumpState = true)
+        {
+            RaycastHit hit = Controller.GetRaycastTowardGround();
+            if (hit.collider == null || hit.collider.gameObject == Controller.gameObject  || hit.collider.isTrigger)
+            {
+                return;
+            }
+            
+            Debug.Log(hit.collider.name);
+
+            bool inputMoving = Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical(); 
+            Controller.GameplayData.IsGrounded = true;
+            
+            if (Controller.Data.DoJumpBuffering 
+                && Controller.Input.CharacterControllerInput.LastJumpInputTime < Controller.Data.JumpBufferTimeMaxBeforeLand
+                && specialConditionToSwitchToJumpState)
+            {
+                Debug.Log("#3");
+                Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
+                return;
+            }
+            
+            Controller.StateManager.SwitchState(inputMoving ? Controller.StateManager.WalkState : Controller.StateManager.IdleState);
+        }
     }
 }

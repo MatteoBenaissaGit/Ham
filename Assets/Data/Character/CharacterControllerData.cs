@@ -26,6 +26,9 @@ namespace Data.Character
         
         [field: Header("Fall")]
         [field: SerializeField] public float FallAirMovementAmplitude { get; private set; } = 5f;
+        
+        [field: Header("InAir")]
+        [field: SerializeField] public float InAirMovementAmplitude { get; private set; } = 5f;
 
         [field: Header("Coyote Time")]
         [field: SerializeField] public bool DoCoyoteTime { get; private set; } = true;

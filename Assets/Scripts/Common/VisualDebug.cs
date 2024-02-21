@@ -20,6 +20,10 @@ namespace Common
             //dot product gravity
             string dotProductGravityLabelText = "dot product gravity rb/orbit : " + Vector3.Dot(_character.Rigidbody.transform.up, _character.GravityBody.GravityDirection);
             GUILayout.Label(dotProductGravityLabelText, style);
+            
+            //state
+            string state = "state : " + _character.StateManager.CurrentState.ToString();
+            GUILayout.Label(state, style);
         }
     }
 }

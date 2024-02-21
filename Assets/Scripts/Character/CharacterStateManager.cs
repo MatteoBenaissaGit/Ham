@@ -14,6 +14,7 @@ namespace Character
         public CharacterJumpState JumpState { get; private set; }
         public CharacterFallState FallState { get; private set; }
         public CharacterZipLineState ZipLineState { get; private set; }
+        public CharacterInAirState InAirState { get; private set; }
 
         /// <summary>
         /// This method initialize the state classes
@@ -26,6 +27,7 @@ namespace Character
             JumpState = new CharacterJumpState(controller);
             FallState = new CharacterFallState(controller);
             ZipLineState = new CharacterZipLineState(controller);
+            InAirState = new CharacterInAirState(controller);
             
             SwitchState(IdleState);
         }
@@ -44,9 +46,14 @@ namespace Character
             }
 
             PreviousState = CurrentState;
-            CurrentState?.Quit();
+            if (PreviousState != null)
+            {
+                PreviousState.IsActive = false;
+            }
+            PreviousState?.Quit();
 
             CurrentState = state;
+            CurrentState.IsActive = true;
             CurrentState.Enter();
         }
 

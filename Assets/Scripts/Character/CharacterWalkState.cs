@@ -112,7 +112,7 @@ namespace Character
         
         public override void Jump(bool isPressingJump)
         {
-            if (isPressingJump == false)
+            if (isPressingJump == false || IsActive == false)
             {
                 return;
             }

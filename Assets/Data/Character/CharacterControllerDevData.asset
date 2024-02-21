@@ -49,6 +49,7 @@ MonoBehaviour:
   <RaycastTowardGroundToDetectFallDistance>k__BackingField: 0.62
   <JumpAirMovementAmplitude>k__BackingField: 10
   <FallAirMovementAmplitude>k__BackingField: 5
+  <InAirMovementAmplitude>k__BackingField: 50
   <DoCoyoteTime>k__BackingField: 1
   <CoyoteTimeTimeToJumpAfterFall>k__BackingField: 0.15
   <DoJumpBuffering>k__BackingField: 1

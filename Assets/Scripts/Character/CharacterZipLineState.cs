@@ -148,7 +148,7 @@ namespace Character
 
         public override void Jump(bool isPressingJump)
         {
-            if (_launchMovement == false)
+            if (_launchMovement == false || IsActive == false)
             {
                 return;
             }

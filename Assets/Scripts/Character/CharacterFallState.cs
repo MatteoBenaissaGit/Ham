@@ -71,23 +71,7 @@ namespace Character
         /// </summary>
         private void CheckForGround()
         {
-            RaycastHit hit = Controller.GetRaycastTowardGround();
-            if (hit.collider == null || hit.collider.gameObject == Controller.gameObject  || hit.collider.isTrigger)
-            {
-                return;
-            }
-
-            bool inputMoving = Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical(); 
-            Controller.GameplayData.IsGrounded = true;
-            
-            if (Controller.Data.DoJumpBuffering && 
-                Controller.Input.CharacterControllerInput.LastJumpInputTime < Controller.Data.JumpBufferTimeMaxBeforeLand)
-            {
-                Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
-                return;
-            }
-            
-            Controller.StateManager.SwitchState(inputMoving ? Controller.StateManager.WalkState : Controller.StateManager.IdleState);
+            CheckForChangeStateAtLanding();
         }
 
         /// <summary>
@@ -105,7 +89,7 @@ namespace Character
 
         public override void Jump(bool isPressingJump)
         {
-            if (isPressingJump == false)
+            if (isPressingJump == false || IsActive == false)
             {
                 return;
             }

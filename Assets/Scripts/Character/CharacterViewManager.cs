@@ -84,7 +84,7 @@ namespace Character
                 }
                 return;
             }
-
+            
             _jumpTrail.DOTime(0, 0.25f);
             _landParticles.Play();
         }
