@@ -44,6 +44,7 @@ namespace Character
                 Debug.LogWarning($"You're switching to a state you're already in. {CurrentState.ToString()} to {state.ToString()}");
                 return;
             }
+            
 
             PreviousState = CurrentState;
             if (PreviousState != null)
@@ -51,6 +52,8 @@ namespace Character
                 PreviousState.IsActive = false;
             }
             PreviousState?.Quit();
+            
+            //Debug.Log($"SWITCH STATE : {PreviousState?.ToString()} -> {state.ToString()}");
 
             CurrentState = state;
             CurrentState.IsActive = true;

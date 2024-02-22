@@ -29,10 +29,10 @@ namespace Character
             Controller.CameraController.SetCameraAfterCurrent(Controller.CameraController.Data.RunCamera);
 
             _currentAccelerationTime = 0;
-            
+
             //if we were jumping and moving we don't reset the acceleration time of the player
             if (Controller.StateManager.PreviousState == Controller.StateManager.JumpState
-                && Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical())
+                && Controller.StateManager.JumpState.IsJumpStatic == false)
             {
                 _currentAccelerationTime = Controller.Data.AccelerationTime;
             }
@@ -78,6 +78,7 @@ namespace Character
             _currentAccelerationTime += Time.fixedDeltaTime;
             float accelerationValue = Mathf.Clamp01(_currentAccelerationTime / Controller.Data.AccelerationTime);
             float accelerationMultiplier = Controller.Data.AccelerationCurve.Evaluate(accelerationValue);
+            //Debug.Log($"{accelerationValue*100}%");
             
             Rigidbody rigidbody = Controller.Rigidbody;
             float speed = Controller.Data.WalkSpeed * accelerationMultiplier;
@@ -100,7 +101,7 @@ namespace Character
         /// </summary>
         private void CheckForFall()
         {
-            RaycastHit hit = Controller.GetRaycastTowardGround();
+            RaycastHit hit = Controller.GetRaycastTowardGround(10,1);
             if (hit.collider != null && hit.collider.gameObject != Controller.gameObject)
             {
                 return;

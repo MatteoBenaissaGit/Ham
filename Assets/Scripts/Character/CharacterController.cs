@@ -154,10 +154,10 @@ namespace Character
         /// Create and get the result of a raycast hit toward the ground from the character's feet
         /// </summary>
         /// <returns>The RaycastHit of the raycast</returns>
-        public RaycastHit GetRaycastTowardGround()
+        public RaycastHit GetRaycastTowardGround(float distanceCheckMultiplier = 1f, float upOffset = 0)
         {
             float raycastDistance = Data.RaycastTowardGroundToDetectFallDistance;
-            Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, raycastDistance);
+            Physics.Raycast(transform.position + transform.up * upOffset, -transform.up, out RaycastHit hit, raycastDistance * distanceCheckMultiplier);
             return hit;
         }
 

@@ -15,6 +15,7 @@ namespace Character
     public class CharacterJumpState : CharacterStateBase
     {
         public JumpState CurrentJumpState { get; private set; }
+        public bool IsJumpStatic;
 
         private const float VelocityMagnitudeToBeAtApex = 1f;
 
@@ -44,7 +45,8 @@ namespace Character
             Vector3 jumpForce = Controller.Rigidbody.transform.up * Controller.Data.JumpForce;
             Controller.Rigidbody.velocity = Vector3.zero;
             Controller.Rigidbody.AddForce(jumpForce + _baseJumpVelocityDirection, ForceMode.Impulse);
-            
+            IsJumpStatic = _baseJumpVelocityDirection.magnitude < 0.1f;
+
             Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Jump);
             
             Controller.GameplayData.IsGrounded = false;

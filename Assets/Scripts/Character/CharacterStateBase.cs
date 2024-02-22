@@ -63,8 +63,6 @@ namespace Character
                 return;
             }
             
-            Debug.Log(hit.collider.name);
-
             bool inputMoving = Controller.Input.CharacterControllerInput.IsMovingHorizontalOrVertical(); 
             Controller.GameplayData.IsGrounded = true;
             
@@ -72,8 +70,7 @@ namespace Character
                 && Controller.Input.CharacterControllerInput.LastJumpInputTime < Controller.Data.JumpBufferTimeMaxBeforeLand
                 && specialConditionToSwitchToJumpState)
             {
-                Debug.Log("#3");
-                Controller.StateManager.SwitchState(Controller.StateManager.JumpState);
+                Controller.StateManager.SwitchState(Controller.StateManager.JumpState, true);
                 return;
             }
             

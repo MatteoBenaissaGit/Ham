@@ -42,14 +42,14 @@ MonoBehaviour:
     m_RotationOrder: 4
   <DirectionChangeSpeedMultiplier>k__BackingField: 0.5
   <DirectionChangeLerpSpeed>k__BackingField: 0.05
-  <JumpForce>k__BackingField: 15
-  <FallGravityMultiplier>k__BackingField: 2
-  <ForceAddedPerInputAfterJump>k__BackingField: 0.025
+  <JumpForce>k__BackingField: 25
+  <FallGravityMultiplier>k__BackingField: 1.5
+  <ForceAddedPerInputAfterJump>k__BackingField: 0.2
   <MaximumAddedInputAfterJump>k__BackingField: 40
   <RaycastTowardGroundToDetectFallDistance>k__BackingField: 0.62
   <JumpAirMovementAmplitude>k__BackingField: 10
   <FallAirMovementAmplitude>k__BackingField: 5
-  <InAirMovementAmplitude>k__BackingField: 50
+  <InAirMovementAmplitude>k__BackingField: 20
   <DoCoyoteTime>k__BackingField: 1
   <CoyoteTimeTimeToJumpAfterFall>k__BackingField: 0.15
   <DoJumpBuffering>k__BackingField: 1
