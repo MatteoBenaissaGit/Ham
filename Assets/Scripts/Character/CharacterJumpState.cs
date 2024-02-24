@@ -58,16 +58,16 @@ namespace Character
             {
                 HandlingInputsAfterJump();
             }
-            
+
             _minimumTimeBeforeCheckingState -= Time.deltaTime;
             if (_minimumTimeBeforeCheckingState <= 0)
             {
-                CheckJumpState();
+                CheckJumpState(); //THE JETPACK PROBLEM IS HERE 
             }
-
+            
             if (CurrentJumpState != JumpState.Up)
             {
-                CheckForGroundFall();
+                CheckForGroundFall(); 
             }
         }
 
@@ -78,6 +78,8 @@ namespace Character
 
         public override void Quit()
         {
+            Controller.GravityBody.GravityMultiplier = 1f;
+            
             Controller.CameraController.EndCurrentCameraState();
 
             Controller.OnCharacterAction.Invoke(CharacterGameplayAction.Land);
@@ -94,12 +96,13 @@ namespace Character
         private void CheckJumpState()
         {
             Vector3 localVelocity = Controller.Rigidbody.transform.InverseTransformDirection(Controller.Rigidbody.velocity);
+
             if (Mathf.Abs(localVelocity.y) <= VelocityMagnitudeToBeAtApex)
             {
                 CurrentJumpState = JumpState.Apex;
                 return;
             }
-            
+
             float dotProduct = Vector3.Dot(Controller.Rigidbody.velocity, (-Controller.GravityBody.GravityDirection));
             bool isGoingUp = dotProduct > 0;
 

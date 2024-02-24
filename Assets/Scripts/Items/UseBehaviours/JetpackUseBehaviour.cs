@@ -47,7 +47,6 @@ namespace Items.UseBehaviours
             {
                 if (_character.StateManager.CurrentState == _character.StateManager.InAirState)
                 {
-                    Debug.Log("check for change");
                     _character.StateManager.InAirState.CheckForChangeStateAtLanding();
                 }
                 return;
@@ -60,11 +59,9 @@ namespace Items.UseBehaviours
                 return;
             }
             
-            Debug.Log("add force");
             _rigidbody.AddForce(_rigidbody.transform.up * FlyPower);
             if (_rigidbody.velocity.magnitude > MaxFlyVelocity)
             {
-                Debug.Log("clamp velocity");
                 _rigidbody.velocity *= 0.9f;
             }
         }
@@ -90,7 +87,6 @@ namespace Items.UseBehaviours
                 {
                     return;
                 }
-                
                 _doReload = false;
                 _isUsingJetpack = true;
                 SetParticles(true);

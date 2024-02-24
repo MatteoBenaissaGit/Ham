@@ -17,7 +17,6 @@ namespace Character
         {
             Controller.GameplayData.IsGrounded = false;
             Controller.CameraController.SetCameraAfterCurrent(Controller.CameraController.Data.FallCamera);
-            Debug.Log("in air enter");
         }
 
         public override void Update()
@@ -36,7 +35,6 @@ namespace Character
 
         public override void Quit()
         {
-            Debug.Log("in air quit");
             Controller.CameraController.EndCurrentCameraState();
         }
 

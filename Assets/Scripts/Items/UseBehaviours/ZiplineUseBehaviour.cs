@@ -151,13 +151,19 @@ namespace Items.UseBehaviours
         }
 
         private const float DistanceToValidate = 25f;
+        private const float DistanceMaxToValidateBetweenStartAndCharacter = 10f;
         private const float DotProductToValidate = 0.5f;
         private bool IsZipLinePlacementValid()
         {
             float distanceBetweenPreviews = Vector3.Distance(Item.PreviewMeshes[0].transform.position, Item.PreviewMeshes[1].transform.position);
             float dotProductBetweenPreviews = Vector3.Dot(Item.PreviewMeshes[0].transform.up, Item.PreviewMeshes[1].transform.up);
 
-            bool isValid = distanceBetweenPreviews > DistanceToValidate && Mathf.Abs(dotProductBetweenPreviews) > DotProductToValidate;
+            float distanceBetweenStartAndCharacter = Vector3.Distance(Item.PreviewMeshes[1].transform.position, CharacterController.Instance.Rigidbody.transform.position);
+
+            bool isValid = distanceBetweenPreviews > DistanceToValidate 
+                           && Mathf.Abs(dotProductBetweenPreviews) > DotProductToValidate
+                           && distanceBetweenStartAndCharacter < DistanceMaxToValidateBetweenStartAndCharacter;
+            
             SetPreviewMaterials(isValid ? Item.PreviewMaterial : Item.PreviewMaterialError);
             return isValid;
         }
